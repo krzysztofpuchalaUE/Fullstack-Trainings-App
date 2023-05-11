@@ -1,11 +1,11 @@
 import { Outlet } from "react-router-dom";
-import Nav from "../components/Nav";
-import Footer from "../components/Footer";
+import NavBar from "../components/Nav/Nav";
+import Footer from "../components/Footer/Footer";
 
 export default function RootLayout() {
   return (
     <>
-      <Nav />
+      <NavBar />
       <main>
         <Outlet />
       </main>
