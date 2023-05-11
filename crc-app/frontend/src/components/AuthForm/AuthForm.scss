@@ -1,0 +1,91 @@
+@import "../../variables.scss";
+
+.authentication {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .auth-form-container {
+    width: 400px;
+    height: min-content;
+    padding: 4rem;
+    background-color: $form-dark;
+    text-align: center;
+    border-radius: 16px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+    h2 {
+      font-size: 22px;
+    }
+
+    form {
+      margin-top: 30px;
+
+      label {
+        margin-top: 6px;
+      }
+
+      button {
+        margin-top: 20px;
+        padding: 10px;
+        font-size: 15px;
+        width: 100%;
+        background: #124ce7;
+        cursor: pointer;
+        border-radius: 3px;
+      }
+
+      .auth-property {
+        font-size: 14px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+      }
+
+      input {
+        background: $main-dark;
+        height: 40px;
+        margin-top: 4px;
+        padding: 0 12px 0 34px;
+        border: 2px solid #c4c4c4;
+        border-radius: 3px;
+        font-size: 14px;
+        color: #404040;
+        transition: 0.3s;
+        border-color: $main-dark;
+
+        &:focus {
+          border-color: #124ce7;
+        }
+      }
+
+      i {
+        position: absolute;
+        color: #495057;
+        top: 38px;
+        left: 8px;
+        font-size: 20px;
+      }
+
+      .links {
+        margin-top: 20px;
+        text-align: left;
+
+        p {
+          font-size: 12px;
+          color: #868e96;
+
+          &:hover {
+            color: #343a40;
+            cursor: pointer;
+          }
+
+          & :first-child {
+            margin-bottom: 5px;
+          }
+        }
+      }
+    }
+  }
+}
