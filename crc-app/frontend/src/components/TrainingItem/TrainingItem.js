@@ -7,7 +7,7 @@ export default function TrainingItem() {
     <div className={"item-container"}>
       <img src={pythonImage} alt={`Hello`} />
       <h2>Training python</h2>
-      <div className="trining-description">
+      <div className={"trining-description"}>
         <div className={"item-description-label"}>
           <div>
             <i className="bx bx-calendar"></i>
