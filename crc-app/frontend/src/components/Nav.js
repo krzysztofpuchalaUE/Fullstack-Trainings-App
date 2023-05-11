@@ -1,1 +1,3 @@
-export default function Nav() {}
+import "./Nav.scss";
+
+export default function NavBar() {}
