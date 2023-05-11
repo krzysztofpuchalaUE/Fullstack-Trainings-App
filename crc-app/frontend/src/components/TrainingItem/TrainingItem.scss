@@ -1,0 +1,93 @@
+@import "../../variables.scss";
+
+.item-container {
+  width: 280px;
+  height: min-content;
+  padding: 16px;
+  background: $main-dark;
+  border-radius: 10px;
+  transition: 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+
+  h2 {
+    margin-top: 15px;
+  }
+
+  &:hover {
+    scale: 1.04;
+  }
+
+  img {
+    width: 70%;
+    padding: 20px;
+    border-radius: 8px;
+    transition: 0.3s ease-in-out;
+  }
+
+  .trining-description {
+    padding: 10px;
+    margin-top: 20px;
+    font-size: 14px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .item-description-label {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+
+    div {
+      display: flex;
+      gap: 6px;
+    }
+
+    .trainer {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+  }
+
+  .description-chevron {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    font-size: 25px;
+    cursor: pointer;
+    margin-top: 20px;
+
+    &:hover {
+      color: $select;
+    }
+  }
+
+  .delete-training {
+    cursor: pointer;
+    font-size: 25px;
+
+    &:hover {
+      color: #e03131;
+      transition: 0.3s;
+    }
+  }
+
+  .update-training {
+    cursor: pointer;
+    font-size: 25px;
+
+    &:hover {
+      color: $select;
+      transition: 0.3s;
+    }
+  }
+}

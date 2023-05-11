@@ -1,0 +1,30 @@
+*   [33mb3594cc[m[33m ([m[1;36mHEAD -> [m[1;32mcreate-training-item-component[m[33m, [m[1;32mmaster[m[33m)[m Merge branch 'create-auth-component'
+[31m|[m[32m\[m  
+[31m|[m * [33m4049ffd[m[33m ([m[1;32mcreate-auth-component[m[33m)[m Add AuthForm content, style
+* [32m|[m [33m3ae8f56[m Merge branch 'navbar-features'
+[33m|[m[32m\[m[32m|[m 
+[33m|[m * [33maed59a0[m Setup NavLinks, add active link classes
+[33m|[m[33m/[m  
+*   [33m6f662bf[m Merge branch 'create-navbar-component'
+[35m|[m[36m\[m  
+[35m|[m * [33m5869d82[m Add navbar content, style navbar
+[35m|[m[35m/[m  
+*   [33m9d1eb7f[m Merge branch 'setup-router'
+[1;31m|[m[1;32m\[m  
+[1;31m|[m * [33m62eed22[m Add routes: trainings, user-trainings, new-training, auth
+[1;31m|[m * [33m86be556[m Add root / route in router
+[1;31m|[m * [33m762a7dc[m Add Nav, Footer components to Root
+[1;31m|[m[1;31m/[m  
+*   [33m39dcb03[m Merge branch 'create-app-layout'
+[1;33m|[m[1;34m\[m  
+[1;33m|[m * [33m1df3425[m Create scss variables
+[1;33m|[m * [33m6710281[m Style app base
+[1;33m|[m * [33mffd0d79[m Style index.css
+[1;33m|[m * [33ma12ad94[m Install sass, add fonts and icons links in index.html
+[1;33m|[m[1;33m/[m  
+*   [33m4d98cef[m Merge branch 'project-setup'
+[1;35m|[m[1;36m\[m  
+[1;35m|[m * [33mad45298[m Add Trainings, UserTrainings, Home, Error, Edit, Categories, Authentication, Root pages
+[1;35m|[m * [33mc2b72fe[m Add pages, hooks, helpers, components folders
+[1;35m|[m[1;35m/[m  
+* [33m128feff[m Initial commit
