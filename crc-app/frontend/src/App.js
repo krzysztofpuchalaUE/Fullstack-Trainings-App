@@ -1,3 +1,5 @@
+import RootLayout from "./pages/Root";
+
 export default function App() {
-  return <h1>Test Test Test</h1>;
+  return <RootLayout />;
 }
