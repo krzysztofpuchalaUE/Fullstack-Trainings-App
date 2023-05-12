@@ -52,8 +52,8 @@ export default function TrainingItem() {
           <p>location</p>
         </div>
         <div className={"description-chevron"}>
-          <i class={"bx bxs-chevron-up"}></i>
-          {/* <i class="bx bxs-chevron-down"></i> */}
+          {/* <i class={"bx bxs-chevron-up"}></i> */}
+          <i className={"bx bxs-chevron-down"}></i>
         </div>
         <div className={"item-description-label"}>
           <div className={"update-training"}>
