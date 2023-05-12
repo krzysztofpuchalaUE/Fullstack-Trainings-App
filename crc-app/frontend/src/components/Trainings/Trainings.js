@@ -16,11 +16,19 @@ const slideRightHandler = () => {
 
 export default function Trainings() {
   return (
-    <div className={"trainings"}>
-      <TrainingItem />
-      <TrainingItem />
-      <TrainingItem />
-      <TrainingItem />
+    <div className={"trainings-container"}>
+      <div className={"trainings"}>
+        <TrainingItem />
+        <TrainingItem />
+        <TrainingItem />
+        <TrainingItem />
+      </div>
+      <button className={"slider-button btn-right"} onClick={slideLeftHandler}>
+        <i className={"bx bxs-chevron-right"}></i>
+      </button>
+      <button className={"slider-button btn-left"} onClick={slideRightHandler}>
+        <i className={"bx bxs-chevron-left"}></i>
+      </button>
     </div>
   );
 }
