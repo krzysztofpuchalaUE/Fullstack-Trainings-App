@@ -18,4 +18,66 @@
   ::-webkit-scrollbar {
     display: none;
   }
+
+  .item-features {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .delete-training {
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 20px;
+
+    &:hover {
+      color: #e03131;
+      transition: 0.3s;
+    }
+
+    p {
+      font-size: 20px;
+    }
+  }
+
+  .update-training {
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      color: $select;
+      transition: 0.3s;
+    }
+
+    p {
+      font-size: 20px;
+    }
+  }
+
+  .right {
+    display: flex;
+    align-items: center;
+    width: 35%;
+    overflow: scroll;
+
+    .item-description {
+      width: 100%;
+      overflow-wrap: break-word;
+      padding: 30px;
+      background-color: $main-dark;
+      border-radius: 15px;
+
+      &:hover {
+        scale: 1;
+      }
+    }
+  }
 }
