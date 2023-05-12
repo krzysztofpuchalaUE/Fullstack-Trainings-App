@@ -1,7 +1,7 @@
 @import "../../variables.scss";
 
 .item-container {
-  width: 280px;
+  min-width: 280px;
   height: min-content;
   padding: 16px;
   background: $main-dark;
@@ -12,9 +12,11 @@
   align-items: center;
   cursor: pointer;
   box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+  margin: 20px 5px;
 
   h2 {
     margin-top: 15px;
+    font-size: 20px;
   }
 
   &:hover {
@@ -22,7 +24,7 @@
   }
 
   img {
-    width: 70%;
+    width: 60%;
     padding: 20px;
     border-radius: 8px;
     transition: 0.3s ease-in-out;
@@ -45,6 +47,7 @@
     display: flex;
     justify-content: space-between;
     gap: 10px;
+    color: #868e96;
 
     div {
       display: flex;

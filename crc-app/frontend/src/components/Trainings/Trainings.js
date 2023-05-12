@@ -22,11 +22,15 @@ export default function Trainings() {
         <TrainingItem />
         <TrainingItem />
         <TrainingItem />
+        <TrainingItem />
+        <TrainingItem />
+        <TrainingItem />
+        <TrainingItem />
       </div>
-      <button className={"slider-button btn-right"} onClick={slideLeftHandler}>
+      <button className={"slider-button btn-right"} onClick={slideRightHandler}>
         <i className={"bx bxs-chevron-right"}></i>
       </button>
-      <button className={"slider-button btn-left"} onClick={slideRightHandler}>
+      <button className={"slider-button btn-left"} onClick={slideLeftHandler}>
         <i className={"bx bxs-chevron-left"}></i>
       </button>
     </div>

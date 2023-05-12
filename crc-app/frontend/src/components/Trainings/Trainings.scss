@@ -2,6 +2,8 @@
 
 .trainings-container {
   position: relative;
+  padding: 0 100px;
+  overflow: hidden;
 
   .btn-left {
     position: absolute;
@@ -20,14 +22,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 40px;
+  gap: 50px;
 
   margin-top: 30px;
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 .slider-button {
-  background-color: #ffffff93;
+  background-color: #ffffff53;
   border: none;
   height: 60px;
   width: 60px;
