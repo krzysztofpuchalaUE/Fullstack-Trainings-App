@@ -2,5 +2,20 @@
 
 .Items-container {
   display: flex;
-  padding: 50px;
+  height: 85vh;
+  padding: 20px 50px;
+  overflow: scroll;
+
+  .left {
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 10px;
+    overflow: scroll;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 }

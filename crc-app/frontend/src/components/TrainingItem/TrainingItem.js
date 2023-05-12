@@ -34,7 +34,11 @@ export default function TrainingItem({ isUserTraining }) {
   };
 
   return (
-    <div className={"item-container"}>
+    <div
+      className={`item-container ${
+        isUserTraining ? "is-user-training" : undefined
+      }`}
+    >
       <img src={pythonImage} alt={`Hello`} />
       <h2>Training python</h2>
       <div className={"trining-description"}>
