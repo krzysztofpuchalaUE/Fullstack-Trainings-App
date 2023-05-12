@@ -1,0 +1,55 @@
+@import "../../variables.scss";
+
+.trainings-container {
+  position: relative;
+  padding: 0 100px;
+  overflow: hidden;
+
+  .btn-left {
+    position: absolute;
+    top: 50%;
+    left: 1.2rem;
+  }
+
+  .btn-right {
+    position: absolute;
+    top: 50%;
+    right: 1.2rem;
+  }
+}
+
+.trainings {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+
+  margin-top: 30px;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.slider-button {
+  background-color: #ffffff53;
+  border: none;
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  i {
+    cursor: pointer;
+    font-size: 32px;
+    color: $main-dark;
+
+    &:hover {
+      color: $select;
+    }
+  }
+}
