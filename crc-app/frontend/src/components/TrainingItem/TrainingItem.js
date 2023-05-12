@@ -1,8 +1,38 @@
+import { useCallback, useState } from "react";
+
 import "./TrainingItem.scss";
 
 import pythonImage from "../../assets/python_icon.svg";
 
 export default function TrainingItem() {
+  const expandDescription = useCallback(
+    {
+      chevron: "rotate-chevron-up",
+      description: "show-desc",
+    },
+    []
+  );
+
+  const hideDescription = useCallback(
+    {
+      chevron: "rotate-chevron-down",
+      description: "hide-desc",
+    },
+    []
+  );
+
+  const [showClass, setShowClass] = useState(hideDescription);
+
+  const onShowDescription = () => {
+    if (
+      showClass.chevron === "rotate-chevron-down" &&
+      showClass.description === "hide-desc"
+    ) {
+      return setShowClass(expandDescription);
+    }
+    setShowClass(hideDescription);
+  };
+
   return (
     <div className={"item-container"}>
       <img src={pythonImage} alt={`Hello`} />
@@ -51,18 +81,25 @@ export default function TrainingItem() {
           </div>
           <p>location</p>
         </div>
-        <div className={"description-chevron"}>
-          {/* <i class={"bx bxs-chevron-up"}></i> */}
-          <i className={"bx bxs-chevron-down"}></i>
+        <div className={`description ${showClass.description}`}>
+          <p>
+            ndaiowda iowawoidmawimdoawm doawmdaowdma wodmawodm waoodawdmaowd
+            anodnaodoawnooawnoadw fiaofmoaifnfa owimfoiawfoawnfaoif
+            faionwfniwan9iof jfnfnaofawim awodmwao aniownadawonfaiofnwaon
+          </p>
+          <p></p>
         </div>
-        <div className={"item-description-label"}>
+        <div className={`description-chevron ${showClass.chevron}`}>
+          <i className={"bx bxs-chevron-down"} onClick={onShowDescription}></i>
+        </div>
+        {/* <div className={"item-description-label"}>
           <div className={"update-training"}>
             <i className={"bx bx-edit"}></i>
           </div>
           <div className={"delete-training"}>
             <i className={"bx bx-trash"}></i>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

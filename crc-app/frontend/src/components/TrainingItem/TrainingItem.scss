@@ -4,7 +4,7 @@
   min-width: 280px;
   height: min-content;
   padding: 16px;
-  background: $main-dark;
+  background: $form-dark;
   border-radius: 10px;
   transition: 0.3s ease-in-out;
   display: flex;
@@ -40,6 +40,13 @@
     align-items: start;
     gap: 10px;
     flex-wrap: wrap;
+    position: relative;
+
+    div {
+      &:nth-child(6) {
+        margin-bottom: 40px;
+      }
+    }
   }
 
   .item-description-label {
@@ -62,12 +69,12 @@
   }
 
   .description-chevron {
-    display: flex;
-    justify-content: center;
-    width: 100%;
+    position: absolute;
     font-size: 25px;
     cursor: pointer;
     margin-top: 20px;
+    bottom: 0px;
+    left: 45%;
 
     &:hover {
       color: $select;
@@ -93,4 +100,82 @@
       transition: 0.3s;
     }
   }
+}
+
+.description {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  background-color: $main-dark;
+  max-width: 248px;
+  min-width: 248px;
+  left: 0px;
+  bottom: 40px;
+  display: flex;
+  inline-size: 150px;
+  inline-size: min-content;
+  overflow-wrap: break-word;
+  z-index: 10;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+  border-radius: 10px;
+  overflow: scroll;
+  overflow-x: hidden;
+
+  p:first-child {
+    padding: 30px;
+  }
+}
+
+.show-desc {
+  height: 200px;
+  animation-name: show-description;
+  animation-duration: 0.3s;
+}
+
+.hide-desc {
+  height: 0px;
+  animation-name: hide-description;
+  animation-duration: 0.3s;
+}
+
+.rotate-chevron-up {
+  transform: rotate(180deg);
+  transition: 0.3s;
+}
+
+.rotate-chevron-down {
+  transform: rotate(0deg);
+  transition: 0.3s;
+}
+
+@keyframes show-description {
+  from {
+    height: 0px;
+    overflow: hidden;
+  }
+  to {
+    height: 200px;
+  }
+}
+
+@keyframes hide-description {
+  from {
+    height: 200px;
+  }
+  to {
+  }
+}
+
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+::-webkit-scrollbar-track {
+  display: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $main-dark;
+  border-radius: 15px;
+  margin: 10px 0;
 }
