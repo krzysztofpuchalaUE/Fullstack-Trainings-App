@@ -4,7 +4,7 @@ import "./TrainingItem.scss";
 
 import pythonImage from "../../assets/python_icon.svg";
 
-export default function TrainingItem() {
+export default function TrainingItem({ isUserTraining }) {
   const expandDescription = useCallback(
     {
       chevron: "rotate-chevron-up",
@@ -92,14 +92,16 @@ export default function TrainingItem() {
         <div className={`description-chevron ${showClass.chevron}`}>
           <i className={"bx bxs-chevron-down"} onClick={onShowDescription}></i>
         </div>
-        {/* <div className={"item-description-label"}>
-          <div className={"update-training"}>
-            <i className={"bx bx-edit"}></i>
+        {isUserTraining && (
+          <div className={"item-description-label"}>
+            <div className={"update-training"}>
+              <i className={"bx bx-edit"}></i>
+            </div>
+            <div className={"delete-training"}>
+              <i className={"bx bx-trash"}></i>
+            </div>
           </div>
-          <div className={"delete-training"}>
-            <i className={"bx bx-trash"}></i>
-          </div>
-        </div> */}
+        )}
       </div>
     </div>
   );
