@@ -144,3 +144,11 @@
     width: 70%;
   }
 }
+
+.training-item {
+  padding-right: 150px;
+
+  &:hover {
+    scale: unset;
+  }
+}

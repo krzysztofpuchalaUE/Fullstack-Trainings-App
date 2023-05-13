@@ -187,6 +187,25 @@
   max-width: 280px;
 }
 
+.is-edit {
+  height: max-content;
+  position: relative;
+
+  &:hover {
+    scale: unset;
+  }
+
+  &::before {
+    content: "New training";
+    background-color: $main-dark;
+    padding: 5px;
+    border-radius: 15px;
+    position: absolute;
+    top: -15px;
+    font-size: 26px;
+  }
+}
+
 .select {
   border: solid 3px $select;
 }
