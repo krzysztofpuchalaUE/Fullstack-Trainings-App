@@ -64,12 +64,24 @@
 
   .right {
     display: flex;
+    flex-direction: column;
     align-items: center;
     width: 35%;
     overflow: scroll;
+    padding-top: 30px;
+
+    h2 {
+      margin: 20px 0;
+    }
 
     .item-description {
-      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      max-height: 400px;
+      min-height: 400px;
+      gap: 30px;
+      width: 90%;
       overflow-wrap: break-word;
       padding: 30px;
       background-color: $main-dark;
@@ -79,5 +91,33 @@
         scale: 1;
       }
     }
+
+    .create-training {
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+      padding: 12px;
+      margin: 20px 0px 40px 0px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      border-radius: 10px;
+      transition: 0.3s;
+
+      &:hover {
+        box-shadow: 0 0 10px rgba(144, 143, 143, 0.5);
+      }
+
+      cursor: pointer;
+
+      i {
+        color: $font-white;
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+.link-active {
+  .navbar-element {
+    box-shadow: 0 0 10px rgba(144, 143, 143, 0.5);
   }
 }

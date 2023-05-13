@@ -1,8 +1,13 @@
-import "./userTrainings.scss";
+import "./UserTrainingsComp.scss";
 
 import TrainingItem from "../TrainingItem/TrainingItem";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
-export default function userTrainings() {
+export default function UserTrainingsComp() {
+  const [newTraining, setNewTraining] = useState(false);
+  const link = window.location.href.split("/").at(-1);
+
   return (
     <div className={"Items-container"}>
       <div className={"left"}>
@@ -13,6 +18,16 @@ export default function userTrainings() {
         <TrainingItem isUserTraining={true} />
       </div>
       <div className={"right"}>
+        <Link
+          to={"new-training"}
+          className={({ isActive }) => (isActive ? "link-active" : undefined)}
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          <div className={"create-training"}>
+            <i class="bx bx-tennis-ball"></i>
+            <h3>Create training</h3>
+          </div>
+        </Link>
         <div className={"item-description"}>
           <p>
             asdpadawopdkopkawaw
