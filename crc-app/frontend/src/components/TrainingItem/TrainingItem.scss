@@ -179,3 +179,14 @@
   border-radius: 15px;
   margin: 10px 0;
 }
+
+.is-user-training {
+  display: flex;
+  flex-direction: column;
+  max-height: max-content;
+  max-width: 280px;
+}
+
+.select {
+  border: solid 3px $select;
+}
