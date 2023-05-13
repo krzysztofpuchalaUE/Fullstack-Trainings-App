@@ -1,5 +1,5 @@
 import UserTrainingsComp from "../components/UserTrainings/UserTrainingsComp";
 
 export default function NewTrainingPage() {
-  return <UserTrainingsComp />;
+  return <UserTrainingsComp isNewTraining={true} />;
 }

@@ -4,7 +4,7 @@ import "./TrainingItem.scss";
 
 import pythonImage from "../../assets/python_icon.svg";
 
-export default function TrainingItem({ isUserTraining }) {
+export default function TrainingItem({ isUserTraining, isEdit }) {
   const expandDescription = useCallback(
     {
       chevron: "rotate-chevron-up",
@@ -36,7 +36,7 @@ export default function TrainingItem({ isUserTraining }) {
   return (
     <div
       className={`item-container ${
-        isUserTraining ? "is-user-training" : undefined
+        isUserTraining ? "is-user-training" : isEdit ? "is-edit" : undefined
       }`}
     >
       <img src={pythonImage} alt={`Hello`} />
