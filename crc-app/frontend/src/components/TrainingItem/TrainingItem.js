@@ -5,13 +5,10 @@ import "./TrainingItem.scss";
 import pythonImage from "../../assets/python_icon.svg";
 
 export default function TrainingItem({ isUserTraining, isEdit }) {
-  const expandDescription = useCallback(
-    {
-      chevron: "rotate-chevron-up",
-      description: "show-desc",
-    },
-    []
-  );
+  const expandDescription = {
+    chevron: "rotate-chevron-up",
+    description: "show-desc",
+  };
 
   const hideDescription = useCallback(
     {

@@ -127,9 +127,9 @@
 }
 
 .show-desc {
-  height: 200px;
   animation-name: show-description;
   animation-duration: 0.3s;
+  height: 200px;
 }
 
 .hide-desc {
@@ -167,7 +167,7 @@
 }
 
 ::-webkit-scrollbar {
-  width: 3px;
+  display: none;
 }
 
 ::-webkit-scrollbar-track {
