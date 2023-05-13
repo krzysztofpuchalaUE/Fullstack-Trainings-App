@@ -1,12 +1,151 @@
 @import "../../variables.scss";
 
+.container {
+  position: relative;
+  width: 70%;
+  margin: 0 100px;
+
+  h2 {
+    position: absolute;
+  }
+}
+
 .form-container {
+  display: flex;
   background-color: $form-dark;
   padding: 50px;
   border-radius: 15px;
   height: max-content;
+  position: relative;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+
+  .delete-image {
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+    width: 50px;
+    background-color: $main-dark;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    i {
+      color: #fff;
+      font-size: 20px;
+    }
+  }
 }
 
 .form {
   display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  .training-property {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    justify-content: space-between;
+    margin-bottom: 15px;
+
+    i {
+      position: absolute;
+    }
+  }
+
+  .description-button {
+    width: 56%;
+    color: $font-white;
+    background-color: $main-dark;
+    font-size: 14px;
+    position: relative;
+    display: flex;
+    padding-left: 20px;
+
+    i {
+      position: absolute;
+      right: 10px;
+      top: 12px;
+      color: $font-white;
+    }
+  }
+
+  .submit-button {
+    margin-top: 20px;
+    width: 150px;
+    position: relative;
+
+    i {
+      position: absolute;
+      right: 10px;
+      top: 12px;
+      color: $main-dark;
+    }
+  }
+
+  select {
+    background-color: $main-dark;
+    border-radius: 15px;
+    padding: 5px;
+    color: #fff;
+  }
+
+  option {
+    background-color: $main-dark;
+    width: 90%;
+    border-radius: 50px;
+  }
+
+  #file {
+    all: unset;
+    position: absolute;
+    bottom: 50%;
+    right: 0px;
+    font-size: 12px;
+  }
+}
+
+.custom_training_description {
+  position: relative;
+  margin-bottom: 15px;
+
+  #custom_training_description {
+    position: absolute;
+    right: -320px;
+    bottom: 2px;
+    background-color: $main-dark;
+    color: $font-white;
+    border-radius: 5px;
+    width: 27rem;
+    animation-name: show-description;
+    animation-duration: 0.3s;
+
+    transition: 0.3s;
+    border-color: $main-dark;
+
+    &:hover {
+      border: solid 1px #124ce7;
+    }
+
+    &:focus {
+      border: solid 1px #124ce7;
+    }
+  }
+
+  span {
+    position: absolute;
+    font-size: 13px;
+    right: -320px;
+    color: $font-white;
+  }
+}
+
+@keyframes show-description {
+  from {
+    width: 0rem;
+  }
+  to {
+    width: 27rem;
+  }
 }

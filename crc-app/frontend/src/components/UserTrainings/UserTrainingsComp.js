@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 export default function UserTrainingsComp({ isNewTraining }) {
   return (
     <div className={"Items-container"}>
-      <div className={"left"}>
+      <div className={isNewTraining ? "left-new-training" : "left-trainings"}>
         {isNewTraining && <NewTrainingForm />}
         {!isNewTraining && (
           <>

@@ -6,13 +6,26 @@
   padding: 20px 50px;
   overflow: scroll;
 
-  .left {
+  .left-trainings {
     width: 80%;
     display: flex;
     flex-wrap: wrap;
     gap: 30px;
     padding: 10px;
     overflow: scroll;
+    animation-name: show;
+    animation-duration: 0.2s;
+  }
+
+  .left-new-training {
+    position: relative;
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 10px;
+    animation-name: show;
+    animation-duration: 0.3s;
   }
 
   ::-webkit-scrollbar {
@@ -86,6 +99,7 @@
       padding: 30px;
       background-color: $main-dark;
       border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 1);
 
       &:hover {
         scale: 1;
@@ -119,5 +133,14 @@
 .link-active {
   .navbar-element {
     box-shadow: 0 0 10px rgba(144, 143, 143, 0.5);
+  }
+}
+
+@keyframes show {
+  from {
+    width: 0px;
+  }
+  to {
+    width: 70%;
   }
 }
