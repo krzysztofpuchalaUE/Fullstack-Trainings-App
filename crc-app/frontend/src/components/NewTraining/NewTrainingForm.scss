@@ -40,14 +40,17 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
+  gap: 20px;
 
   .training-property {
     width: 100%;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     align-items: center;
-    gap: 20px;
+    column-gap: 20px;
     justify-content: space-between;
     margin-bottom: 15px;
+    position: relative;
 
     i {
       position: absolute;
@@ -104,6 +107,15 @@
     right: 0px;
     font-size: 12px;
   }
+}
+
+.invalid-info {
+  font-size: 10px;
+  grid-column-start: 1;
+  grid-column-end: -1;
+  margin-top: 8px;
+  color: #fa5252;
+  justify-self: end;
 }
 
 .custom_training_description {
