@@ -1,16 +1,29 @@
 @import "../../variables.scss";
 
 .main-header {
-  margin-left: 6rem;
-  font-size: 2rem;
+  margin-top: 30px;
+  margin-left: 120px;
 
   .categories span {
-    padding: 1rem;
-    border-radius: 5px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
     margin-right: 1rem;
     cursor: pointer;
     font-size: 14px;
     font-weight: 700;
+    color: $font-white;
+
+    padding: 12px;
+    margin-top: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    transition: 0.3s;
+
+    &:hover {
+      box-shadow: 0 0 10px rgba(144, 143, 143, 0.5);
+    }
   }
+}
+
+.active {
+  box-shadow: 0 0 10px rgba(144, 143, 143, 0.5);
 }
