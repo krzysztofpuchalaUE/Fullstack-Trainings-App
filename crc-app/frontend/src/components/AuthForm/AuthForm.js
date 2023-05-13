@@ -1,4 +1,5 @@
 import "./AuthForm.scss";
+import Form from "../Reusable/Form";
 
 export default function AuthForm() {
   return (
@@ -6,7 +7,7 @@ export default function AuthForm() {
       <div className={"auth-form-container"}>
         <h2>Sign in</h2>
 
-        <form>
+        <Form>
           <div className={"auth-property"}>
             <label htmlFor="first-name"> First Name </label>
             <i className={"bx bxs-user"}></i>
@@ -43,7 +44,7 @@ export default function AuthForm() {
             </p>
           </div>
           <button type="submit">Register</button>
-        </form>
+        </Form>
       </div>
     </div>
   );
