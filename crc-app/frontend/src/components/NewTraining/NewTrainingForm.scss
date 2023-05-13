@@ -107,6 +107,17 @@
     right: 0px;
     font-size: 12px;
   }
+
+  .image-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 120px;
+      margin-top: 30px;
+    }
+  }
 }
 
 .invalid-info {

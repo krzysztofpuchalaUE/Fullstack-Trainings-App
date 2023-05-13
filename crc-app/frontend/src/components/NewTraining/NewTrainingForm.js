@@ -110,7 +110,10 @@ export default function NewTrainingForm({ isNew, isEdit }) {
     reset: resetDescriptionInputField,
   } = useForm((value) => value.length < 250);
 
-  const onShowDescriptionHandler = () => {};
+  const onShowDescriptionHandler = (e) => {
+    e.preventDefault();
+    setshowDescription((prev) => !prev);
+  };
 
   return (
     <div className={"container"}>
@@ -139,6 +142,9 @@ export default function NewTrainingForm({ isNew, isEdit }) {
               <select
                 id="custom_training_category"
                 name="custom_training_category"
+                value={category}
+                onChange={setCategoryValue}
+                onBlur={categoryInputOnBlur}
               >
                 <option hidden>Category</option>
               </select>
@@ -150,7 +156,13 @@ export default function NewTrainingForm({ isNew, isEdit }) {
                 id="custom_training_start_date"
                 name="custom_training_start_date"
                 size="15"
+                value={startDate}
+                onChange={setStartDateValue}
+                onBlur={startDateInputOnBlur}
               />
+              {!startDateIsValid && startDateInputActivated && (
+                <p className="invalid-info">Date must be greater than today</p>
+              )}
             </div>
             <div className={`training-property`}>
               <label htmlFor="custom_training_end_date">End date</label>
@@ -159,7 +171,15 @@ export default function NewTrainingForm({ isNew, isEdit }) {
                 id="custom_training_end_date"
                 name="custom_training_end_date"
                 size="15"
+                value={endDate}
+                onChange={setEndDateValue}
+                onBlur={endDateInputOnBlur}
               />
+              {!endDateIsValid && endDateInputActivated && (
+                <p className="invalid-info">
+                  Date must be greater than today and training start date
+                </p>
+              )}
             </div>
             <div className={`training-property`}>
               <label htmlFor="custom_training_start_time">Start time</label>
@@ -168,7 +188,13 @@ export default function NewTrainingForm({ isNew, isEdit }) {
                 id="custom_training_start_time"
                 name="custom_training_start_time"
                 size="15"
+                value={startTime}
+                onChange={setStartTimeValue}
+                onBlur={startTimeInputOnBlur}
               />
+              {!startTimeIsValid && startTimeInputActivated && (
+                <p className={"invalid-info"}>Start time must be defined</p>
+              )}
             </div>
             <div className={`training-property`}>
               <label htmlFor="custom_training_end_time">End time</label>
@@ -177,7 +203,13 @@ export default function NewTrainingForm({ isNew, isEdit }) {
                 id="custom_training_end_time"
                 name="custom_training_end_time"
                 size="15"
+                value={endTime}
+                onChange={setEndTimeValue}
+                onBlur={endTimeInputOnBlur}
               />
+              {!endTimeIsValid && endTimeInputActivated && (
+                <p className={"invalid-info"}>End Time must be defined</p>
+              )}
             </div>
             <div className="custom_training_description">
               <label htmlFor="custom_training_description">
@@ -194,8 +226,10 @@ export default function NewTrainingForm({ isNew, isEdit }) {
                       type="text"
                       id="custom_training_description"
                       name="custom_training_description"
+                      value={description}
+                      onChange={setDescriptionValue}
                     ></textarea>
-                    <span>/250</span>
+                    <span>{description.length}/250</span>
                   </div>
                 )}
               </label>
@@ -207,7 +241,13 @@ export default function NewTrainingForm({ isNew, isEdit }) {
           <div className={"form-right"}>
             <div className={`training-property`}>
               <label htmlFor="training_language">Language</label>
-              <select id="training_language" name="training_language">
+              <select
+                id="training_language"
+                name="training_language"
+                value={language}
+                onChange={setLanguageValue}
+                onBlur={languageInputOnBlur}
+              >
                 <option hidden>Language</option>
                 <option>english</option>
               </select>
@@ -219,26 +259,48 @@ export default function NewTrainingForm({ isNew, isEdit }) {
                 id="custom_training_loaction"
                 name="custom_training_loaction"
                 size="15"
+                value={location}
+                onChange={setLocationValue}
+                onBlur={locationInputOnBlur}
               />
+              {!locationIsValid && locationInputActivated && (
+                <p className={"invalid-info"}>Location must be defined</p>
+              )}
             </div>
             <div className={`training-property`}>
               <label htmlFor="custom_training_level">Level</label>
-              <select id="custom_training_level" name="custom_training_level">
+              <select
+                id="custom_training_level"
+                name="custom_training_level"
+                value={level}
+                onChange={setLevelValue}
+                onBlur={levelInputOnBlur}
+              >
                 <option hidden>Level</option>
               </select>
             </div>
-            <input
-              type="file"
-              id="file"
-              accept="image/jpeg, image/png image/jpg"
-              name="training_image"
-            />
+            <div className={"image-div"}>
+              {!image && (
+                <input
+                  type="file"
+                  id="file"
+                  accept="image/jpeg, image/png image/jpg"
+                  name="training_image"
+                  onChange={(e) => {
+                    setImage(e.target.files[0]);
+                  }}
+                />
+              )}
+              {image && <img src={URL.createObjectURL(image)} />}
+            </div>
           </div>
         </Form>
         <div className="custom-training-form--image"></div>
-        <button className="delete-image">
-          <i class="bx bx-repost"></i>
-        </button>
+        {image && (
+          <button className="delete-image" onClick={() => setImage(null)}>
+            <i class="bx bx-repost"></i>
+          </button>
+        )}
       </div>
     </div>
   );
