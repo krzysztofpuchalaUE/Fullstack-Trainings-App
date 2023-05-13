@@ -9,6 +9,7 @@ import UserTrainingsPage from "./pages/UserTrainings";
 import AuthenticationPage from "./pages/Authentication";
 import NewTrainingPage from "./pages/NewTraining";
 import TrainingsPage from "./pages/Trainings";
+import UserTrainingsRoot from "./pages/UserTrainingsRoot";
 
 const router = createBrowserRouter([
   {
@@ -26,8 +27,12 @@ const router = createBrowserRouter([
       },
       {
         path: "user-trainings",
-        element: <UserTrainingsPage />,
+        element: <UserTrainingsRoot />,
         children: [
+          {
+            index: true,
+            element: <UserTrainingsPage />,
+          },
           {
             path: "new-training",
             element: <NewTrainingPage />,

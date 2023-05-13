@@ -1,25 +1,25 @@
 import "./UserTrainingsComp.scss";
 
 import TrainingItem from "../TrainingItem/TrainingItem";
-import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-export default function UserTrainingsComp() {
-  const [newTraining, setNewTraining] = useState(false);
-  const link = window.location.href.split("/").at(-1);
-
+export default function UserTrainingsComp({ isNewTraining }) {
   return (
     <div className={"Items-container"}>
       <div className={"left"}>
-        <TrainingItem isUserTraining={true} />
-        <TrainingItem isUserTraining={true} />
-        <TrainingItem isUserTraining={true} />
-        <TrainingItem isUserTraining={true} />
-        <TrainingItem isUserTraining={true} />
+        {!isNewTraining && (
+          <>
+            <TrainingItem isUserTraining={true} />
+            <TrainingItem isUserTraining={true} />
+            <TrainingItem isUserTraining={true} />
+            <TrainingItem isUserTraining={true} />
+            <TrainingItem isUserTraining={true} />
+          </>
+        )}
       </div>
       <div className={"right"}>
         <Link
-          to={"new-training"}
+          to={"/user-trainings/new-training"}
           className={({ isActive }) => (isActive ? "link-active" : undefined)}
           style={{ textDecoration: "none", color: "inherit" }}
         >
