@@ -1,10 +1,114 @@
 import { useState } from "react";
+import useForm from "../../hooks/useForm";
 
 import Form from "../Reusable/Form";
 import "./NewTrainingForm.scss";
 
 export default function NewTrainingForm({ isNew, isEdit }) {
+  const [image, setImage] = useState(null);
   const [showDescription, setshowDescription] = useState(false);
+
+  const {
+    value: title,
+    activated: titleInputActivated,
+    isValid: titleIsValid,
+    setValueHandler: setTitleValue,
+    onBlurHandler: titleInputOnBlur,
+    reset: resetTitleInputField,
+  } = useForm((value) => value.length > 4);
+
+  const {
+    value: category,
+    activated: categoryInputActivated,
+    isValid: categoryIsValid,
+    setValueHandler: setCategoryValue,
+    onBlurHandler: categoryInputOnBlur,
+    reset: resetCategoryInputField,
+  } = useForm((value) => value !== null);
+
+  const {
+    value: startDate,
+    activated: startDateInputActivated,
+    isValid: startDateIsValid,
+    setValueHandler: setStartDateValue,
+    onBlurHandler: startDateInputOnBlur,
+    reset: resetStartDateInputField,
+  } = useForm((inputDate) => {
+    if (endDate.length === 0) return Date.parse(inputDate) > Date.now();
+    if (endDate.length > 0)
+      return (
+        Date.parse(inputDate) > Date.now() &&
+        Date.parse(inputDate) < Date.parse(endDate)
+      );
+  });
+
+  const {
+    value: endDate,
+    activated: endDateInputActivated,
+    isValid: endDateIsValid,
+    setValueHandler: setEndDateValue,
+    onBlurHandler: endDateInputOnBlur,
+    reset: resetEndDateInputField,
+  } = useForm((inputDate) => {
+    if (startDate.length === 0) {
+      return Date.parse(inputDate) > Date.now();
+    }
+    if (startDate.length > 0) return Date.parse(inputDate) > Date.now() + 1;
+  });
+
+  const {
+    value: startTime,
+    activated: startTimeInputActivated,
+    isValid: startTimeIsValid,
+    setValueHandler: setStartTimeValue,
+    onBlurHandler: startTimeInputOnBlur,
+    reset: resetStartTimeInputField,
+  } = useForm((value) => value.length > 0);
+
+  const {
+    value: endTime,
+    activated: endTimeInputActivated,
+    isValid: endTimeIsValid,
+    setValueHandler: setEndTimeValue,
+    onBlurHandler: endTimeInputOnBlur,
+    reset: resetEndTimeInputField,
+  } = useForm((value) => value.length > 0);
+
+  const {
+    value: language,
+    activated: languageInputActivated,
+    isValid: languageIsValid,
+    setValueHandler: setLanguageValue,
+    onBlurHandler: languageInputOnBlur,
+    reset: resetLanguageInputField,
+  } = useForm((value) => value !== "");
+
+  const {
+    value: location,
+    activated: locationInputActivated,
+    isValid: locationIsValid,
+    setValueHandler: setLocationValue,
+    onBlurHandler: locationInputOnBlur,
+    reset: resetLocationInputField,
+  } = useForm((value) => value.length > 4);
+
+  const {
+    value: level,
+    activated: levelInputActivated,
+    isValid: levelIsValid,
+    setValueHandler: setLevelValue,
+    onBlurHandler: levelInputOnBlur,
+    reset: resetLevelInputField,
+  } = useForm((value) => value !== "");
+
+  const {
+    value: description,
+    activated: descriptionInputActivated,
+    isValid: descriptionIsValid,
+    setValueHandler: setDescriptionValue,
+    onBlurHandler: descriptionInputOnBlur,
+    reset: resetDescriptionInputField,
+  } = useForm((value) => value.length < 250);
 
   const onShowDescriptionHandler = () => {};
 
@@ -20,7 +124,15 @@ export default function NewTrainingForm({ isNew, isEdit }) {
                 type="text"
                 id="custom_training_title"
                 name="custom_training_title"
+                value={title}
+                onChange={setTitleValue}
+                onBlur={titleInputOnBlur}
               />
+              {!titleIsValid && titleInputActivated && (
+                <p className="invalid-info">
+                  Training title must have at least 4 characters
+                </p>
+              )}
             </div>
             <div className={`training-property`}>
               <label htmlFor="custom_training_category">Category</label>
