@@ -1,12 +1,14 @@
 import "./UserTrainingsComp.scss";
 
 import TrainingItem from "../TrainingItem/TrainingItem";
+import NewTrainingForm from "../NewTraining/NewTrainingForm";
 import { Link } from "react-router-dom";
 
 export default function UserTrainingsComp({ isNewTraining }) {
   return (
     <div className={"Items-container"}>
       <div className={"left"}>
+        {isNewTraining && <NewTrainingForm />}
         {!isNewTraining && (
           <>
             <TrainingItem isUserTraining={true} />

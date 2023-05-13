@@ -1,9 +1,9 @@
 import "./Form.scss";
 
-export default function Form({ children }) {
+export default function Form({ className, children }) {
   return (
     <>
-      <form>{children}</form>
+      <form className={className}>{children}</form>
     </>
   );
 }

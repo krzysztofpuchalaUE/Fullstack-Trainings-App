@@ -1,0 +1,12 @@
+@import "../../variables.scss";
+
+.form-container {
+  background-color: $form-dark;
+  padding: 50px;
+  border-radius: 15px;
+  height: max-content;
+}
+
+.form {
+  display: flex;
+}
