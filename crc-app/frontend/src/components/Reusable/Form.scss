@@ -1,0 +1,28 @@
+@import "../../variables.scss";
+
+button {
+  margin-top: 20px;
+  padding: 10px;
+  font-size: 15px;
+  width: 100%;
+  background: $select;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+input {
+  background: $main-dark;
+  height: 40px;
+  margin-top: 4px;
+  padding: 0 12px 0 34px;
+  border: 2px solid #c4c4c4;
+  border-radius: 3px;
+  font-size: 14px;
+  color: #404040;
+  transition: 0.3s;
+  border-color: $main-dark;
+
+  &:focus {
+    border-color: #124ce7;
+  }
+}
