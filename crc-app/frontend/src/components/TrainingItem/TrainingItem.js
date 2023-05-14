@@ -104,6 +104,9 @@ export default function TrainingItem({ isUserTraining, isEdit }) {
           </div>
         )}
       </div>
+      {!isUserTraining && !isEdit && (
+        <div className={"register-btn"}>Register</div>
+      )}
     </div>
   );
 }
