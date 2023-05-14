@@ -1,6 +1,8 @@
 import { useState } from "react";
 import useForm from "../../hooks/useForm";
 
+import { setConfig } from "../../utils/requestConfig";
+
 import Form from "../Reusable/Form";
 import "./NewTrainingForm.scss";
 
@@ -114,6 +116,21 @@ export default function NewTrainingForm({ isNew, isEdit }) {
     e.preventDefault();
     setshowDescription((prev) => !prev);
   };
+
+  let formIsValid = false;
+
+  if (
+    titleIsValid &&
+    categoryIsValid &&
+    startDateIsValid &&
+    endDateIsValid &&
+    startTimeIsValid &&
+    endTimeIsValid &&
+    languageIsValid &&
+    locationIsValid &&
+    levelIsValid
+  )
+    formIsValid = true;
 
   return (
     <div className={"container"}>
