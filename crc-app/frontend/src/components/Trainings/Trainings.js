@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { requestGetConfig } from "../../utils/requestConfig.js";
+import { formatTrainingData } from "../../utils/formatTrainingData.js";
 
 import TrainingItem from "../TrainingItem/TrainingItem";
 import useHttp from "../../hooks/useHttp";
@@ -22,7 +23,11 @@ export default function Trainings({ trainingCategory }) {
   const [trainings, setTrainings] = useState([]);
   const applyData = (data) => {
     const trainings = data;
-    return trainings;
+
+    const appliedData = trainings.map((item) => {
+      return formatTrainingData(item);
+    });
+    return appliedData;
   };
 
   useEffect(() => {
