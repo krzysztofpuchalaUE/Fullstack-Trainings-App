@@ -43,6 +43,10 @@ export default function TrainingItem({ item, isUserTraining, isEdit }) {
     };
   };
 
+  if (item.isRegistered === false) {
+    register();
+  }
+
   return (
     <div
       className={`item-container ${
