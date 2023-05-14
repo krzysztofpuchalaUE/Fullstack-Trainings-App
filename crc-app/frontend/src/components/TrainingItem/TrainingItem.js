@@ -8,6 +8,8 @@ export default function TrainingItem({
   isUserTraining,
   isEdit,
   registerAction,
+  onShowDetails,
+  watchedTraining,
 }) {
   const [userRegistered, setUserRegistered] = useState(item.isRegistered);
 
@@ -78,11 +80,18 @@ export default function TrainingItem({
     }
   };
 
+  const onShowDetailshandler = () => {
+    if (isUserTraining) {
+      onShowDetails(item);
+    }
+  };
+
   return (
     <div
       className={`item-container ${
         isUserTraining ? "is-user-training" : isEdit ? "is-edit" : undefined
-      }`}
+      } ${watchedTraining?.id === item.id ? "select" : undefined}`}
+      onClick={onShowDetailshandler}
     >
       <img src={item.image} alt={""} />
       <h2>{item.title}</h2>

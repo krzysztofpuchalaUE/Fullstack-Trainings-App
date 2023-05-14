@@ -11,6 +11,8 @@ import { formatTrainingData } from "../../utils/formatTrainingData";
 
 export default function UserTrainingsComp({ isNewTraining }) {
   const [userTrainings, setUserTrainings] = useState([]);
+  const [watchedTraining, setWatchedTraining] = useState({});
+
   const applyData = (data) => {
     const appliedData = data.map((item) => {
       return formatTrainingData(item);
@@ -35,12 +37,23 @@ export default function UserTrainingsComp({ isNewTraining }) {
     getMyTrainings();
   }, []);
 
+  const onShowDetails = (item) => {
+    setWatchedTraining(item);
+  };
+
   return (
     <div className={"Items-container"}>
       <div className={isNewTraining ? "left-new-training" : "left-trainings"}>
         {isNewTraining && <NewTrainingForm />}
         {userTrainings?.map((training) => {
-          return <TrainingItem item={training} isUserTraining={true} />;
+          return (
+            <TrainingItem
+              item={training}
+              isUserTraining={true}
+              onShowDetails={onShowDetails}
+              watchedTraining={watchedTraining}
+            />
+          );
         })}
       </div>
       {!isNewTraining && (
@@ -56,10 +69,8 @@ export default function UserTrainingsComp({ isNewTraining }) {
             </div>
           </Link>
           <div className={"item-description"}>
-            <p>
-              asdpadawopdkopkawaw
-              dawdwaawddwawahuaegsrrrrrrrrrrauiiiiiiiiiiiiiiiiiiiwado
-            </p>
+            <h3>{watchedTraining.title}</h3>
+            <p>{watchedTraining.description}</p>
             <div>
               <div className={"item-features"}>
                 <div className={"update-training"}>
