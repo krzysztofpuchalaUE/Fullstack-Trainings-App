@@ -1,9 +1,8 @@
 import { useCallback, useState } from "react";
 
 import "./TrainingItem.scss";
-
-import pythonImage from "../../assets/python_icon.svg";
-
+import useHttp from "../../hooks/useHttp";
+import { setConfig } from "../../utils/requestConfig";
 export default function TrainingItem({
   item,
   isUserTraining,
@@ -36,6 +35,16 @@ export default function TrainingItem({
     }
     setShowClass(hideDescription);
   };
+
+  const applyPostData = (data) => {
+    return data;
+  };
+
+  const {
+    requestForData: postTraining,
+    isLoading: postTrainingLoading,
+    isError: postTrainingError,
+  } = useHttp(applyPostData);
 
   const onTrainingRegisterHandler = () => {
     const register = () => {
