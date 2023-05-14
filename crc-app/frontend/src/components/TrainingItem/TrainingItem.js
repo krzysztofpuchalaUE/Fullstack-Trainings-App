@@ -1,10 +1,14 @@
 import { useCallback, useState } from "react";
 
 import "./TrainingItem.scss";
-
-import pythonImage from "../../assets/python_icon.svg";
-
-export default function TrainingItem({ item, isUserTraining, isEdit }) {
+import useHttp from "../../hooks/useHttp";
+import { setConfig } from "../../utils/requestConfig";
+export default function TrainingItem({
+  item,
+  isUserTraining,
+  isEdit,
+  registerAction,
+}) {
   const [userRegistered, setUserRegistered] = useState(item.isRegistered);
 
   const expandDescription = {
@@ -32,6 +36,16 @@ export default function TrainingItem({ item, isUserTraining, isEdit }) {
     setShowClass(hideDescription);
   };
 
+  const applyPostData = (data) => {
+    return data;
+  };
+
+  const {
+    requestForData: postTraining,
+    isLoading: postTrainingLoading,
+    isError: postTrainingError,
+  } = useHttp(applyPostData);
+
   const onTrainingRegisterHandler = () => {
     const register = () => {
       postTraining(
@@ -42,6 +56,7 @@ export default function TrainingItem({ item, isUserTraining, isEdit }) {
         })
       );
       setUserRegistered(!userRegistered);
+      registerAction();
     };
 
     const unregister = () => {
