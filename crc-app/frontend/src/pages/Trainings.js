@@ -16,7 +16,7 @@ export default function TrainingsPage() {
   return (
     <>
       <Categories setTrainingCategory={filterByCategory} />
-      <Trainings trainingCategory={categoryURL.category} />;
+      <Trainings trainingCategory={categoryURL.category} />
     </>
   );
 }
