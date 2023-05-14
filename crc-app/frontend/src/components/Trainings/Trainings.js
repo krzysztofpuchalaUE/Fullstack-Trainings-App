@@ -21,14 +21,28 @@ const slideRightHandler = () => {
 
 export default function Trainings({ trainingCategory }) {
   const [trainings, setTrainings] = useState([]);
-  const applyData = (data) => {
-    const trainings = data;
+  const [registerAction, setRegisterAction] = useState(false);
 
+  const applyData = (data) => {
+    const { isRegistered, trainings } = data;
+    const registeredTrainings = isRegistered.map(
+      (training) => training.training_id
+    );
     const appliedData = trainings.map((item) => {
-      return formatTrainingData(item);
+      const fixedItem = formatTrainingData(item);
+      const registered = registeredTrainings.some((id) => +fixedItem.id === id);
+      if (registered) fixedItem.isRegistered = true;
+      if (!registered) fixedItem.isRegistered = false;
+      return fixedItem;
     });
     return appliedData;
   };
+
+  const {
+    requestForData: fetchTrainings,
+    isLoading,
+    isError,
+  } = useHttp(applyData);
 
   useEffect(() => {
     async function getTrainings() {
@@ -40,13 +54,9 @@ export default function Trainings({ trainingCategory }) {
       setTrainings(getTrainings);
     }
     getTrainings();
-  }, []);
+  }, [registerAction]);
 
-  const {
-    requestForData: fetchTrainings,
-    isLoading,
-    isError,
-  } = useHttp(applyData);
+  const onRegisterUser = () => setRegisterAction((prev) => !prev);
 
   return (
     <div className={"trainings-container"}>
@@ -54,9 +64,13 @@ export default function Trainings({ trainingCategory }) {
         {trainings &&
           trainings?.map((training) => {
             if (training.category === trainingCategory)
-              return <TrainingItem item={training} />;
+              return (
+                <TrainingItem item={training} registerAction={onRegisterUser} />
+              );
             if (trainingCategory === undefined)
-              return <TrainingItem item={training} />;
+              return (
+                <TrainingItem item={training} registerAction={onRegisterUser} />
+              );
           })}
       </div>
       <button className={"slider-button btn-right"} onClick={slideRightHandler}>
