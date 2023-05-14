@@ -4,7 +4,12 @@ import "./TrainingItem.scss";
 
 import pythonImage from "../../assets/python_icon.svg";
 
-export default function TrainingItem({ item, isUserTraining, isEdit }) {
+export default function TrainingItem({
+  item,
+  isUserTraining,
+  isEdit,
+  registerAction,
+}) {
   const [userRegistered, setUserRegistered] = useState(item.isRegistered);
 
   const expandDescription = {
@@ -42,6 +47,7 @@ export default function TrainingItem({ item, isUserTraining, isEdit }) {
         })
       );
       setUserRegistered(!userRegistered);
+      registerAction();
     };
 
     const unregister = () => {
