@@ -41,11 +41,25 @@ export default function TrainingItem({ item, isUserTraining, isEdit }) {
       );
       setUserRegistered(!userRegistered);
     };
-  };
 
-  if (item.isRegistered === false) {
-    register();
-  }
+    const unregister = () => {
+      postTraining(
+        "http://localhost:8800/trainings",
+        setConfig("DELETE", {
+          trainingId: item.id,
+        })
+      );
+      setUserRegistered(!userRegistered);
+    };
+
+    if (item.isRegistered === false) {
+      register();
+    }
+
+    if (item.isRegistered === true) {
+      unregister();
+    }
+  };
 
   return (
     <div
