@@ -1,9 +1,11 @@
 import "./Form.scss";
 
-export default function Form({ className, children }) {
+export default function Form({ className, children, onSubmit }) {
   return (
     <>
-      <form className={className}>{children}</form>
+      <form className={className} onSubmit={onSubmit}>
+        {children}
+      </form>
     </>
   );
 }
