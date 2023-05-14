@@ -155,7 +155,11 @@ export default function TrainingItem({
           }`}
           onClick={onTrainingRegisterHandler}
         >
-          {userRegistered ? "Unregister" : "Register"}
+          {postTrainingLoading
+            ? "Processing..."
+            : userRegistered
+            ? "Unregister"
+            : "Register"}
         </div>
       )}
     </div>
