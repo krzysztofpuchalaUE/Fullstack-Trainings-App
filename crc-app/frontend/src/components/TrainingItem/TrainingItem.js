@@ -30,6 +30,23 @@ export default function TrainingItem({ item, isUserTraining, isEdit }) {
     setShowClass(hideDescription);
   };
 
+  const onTrainingRegisterHandler = () => {
+    const register = () => {
+      postTraining(
+        "http://localhost:8800/trainings",
+        setConfig("POST", {
+          trainingId: item.id,
+          trainerId: item.trainerId,
+        })
+      );
+      setUserRegistered(!userRegistered);
+    };
+  };
+
+  if (item.isRegistered === false) {
+    register();
+  }
+
   return (
     <div
       className={`item-container ${
@@ -101,7 +118,9 @@ export default function TrainingItem({ item, isUserTraining, isEdit }) {
         )}
       </div>
       {!isUserTraining && !isEdit && (
-        <div className={"register-btn"}>Register</div>
+        <div className={"register-btn"} onClick={onTrainingRegisterHandler}>
+          Register
+        </div>
       )}
     </div>
   );
