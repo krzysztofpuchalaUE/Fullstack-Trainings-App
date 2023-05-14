@@ -1,4 +1,8 @@
+import { useState, useEffect } from "react";
+import { requestGetConfig } from "../../utils/requestConfig.js";
+
 import TrainingItem from "../TrainingItem/TrainingItem";
+import useHttp from "../../hooks/useHttp";
 
 import "./Trainings.scss";
 
@@ -14,20 +18,34 @@ const slideRightHandler = () => {
   trainingsSelector.scrollLeft = trainingsSelector.scrollLeft + width;
 };
 
-const trainings = [];
-
 export default function Trainings({ trainingCategory }) {
+  const [trainings, setTrainings] = useState([]);
+  const applyData = (data) => {
+    const trainings = data;
+    return trainings;
+  };
+
+  useEffect(() => {
+    async function getTrainings() {
+      const getTrainings = await fetchTrainings(
+        "http://localhost:8800/trainings",
+        requestGetConfig
+      );
+      console.log(getTrainings);
+      setTrainings(getTrainings);
+    }
+    getTrainings();
+  }, []);
+
+  const {
+    requestForData: fetchTrainings,
+    isLoading,
+    isError,
+  } = useHttp(applyData);
+
   return (
     <div className={"trainings-container"}>
       <div className={"trainings"}>
-        <TrainingItem />
-        <TrainingItem />
-        <TrainingItem />
-        <TrainingItem />
-        <TrainingItem />
-        <TrainingItem />
-        <TrainingItem />
-        <TrainingItem />
         {trainings &&
           trainings?.map((training) => {
             if (training.category === trainingCategory) return <TrainingItem />;
