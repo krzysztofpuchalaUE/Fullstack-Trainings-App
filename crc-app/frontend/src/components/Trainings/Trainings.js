@@ -48,8 +48,10 @@ export default function Trainings({ trainingCategory }) {
       <div className={"trainings"}>
         {trainings &&
           trainings?.map((training) => {
-            if (training.category === trainingCategory) return <TrainingItem />;
-            if (trainingCategory === undefined) return <TrainingItem />;
+            if (training.category === trainingCategory)
+              return <TrainingItem item={training} />;
+            if (trainingCategory === undefined)
+              return <TrainingItem item={training} />;
           })}
       </div>
       <button className={"slider-button btn-right"} onClick={slideRightHandler}>

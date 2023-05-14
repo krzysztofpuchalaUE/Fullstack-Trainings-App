@@ -4,7 +4,7 @@ import "./TrainingItem.scss";
 
 import pythonImage from "../../assets/python_icon.svg";
 
-export default function TrainingItem({ isUserTraining, isEdit }) {
+export default function TrainingItem({ item, isUserTraining, isEdit }) {
   const expandDescription = {
     chevron: "rotate-chevron-up",
     description: "show-desc",
@@ -36,58 +36,54 @@ export default function TrainingItem({ isUserTraining, isEdit }) {
         isUserTraining ? "is-user-training" : isEdit ? "is-edit" : undefined
       }`}
     >
-      <img src={pythonImage} alt={`Hello`} />
-      <h2>Training python</h2>
+      <img src={item.image} alt={""} />
+      <h2>{item.title}</h2>
       <div className={"trining-description"}>
         <div className={"item-description-label"}>
           <div>
             <i className="bx bx-calendar"></i>
             <p>Date</p>
           </div>
-          <p>date</p>
+          <p>{item.date}</p>
         </div>
         <div className={"item-description-label"}>
           <div>
             <i className={"bx bx-time-five"}></i>
             <p>Time</p>
           </div>
-          <p>time</p>
+          <p>{item.time}</p>
         </div>
         <div className={"item-description-label"}>
           <div>
             <i class={"bx bx-chat"}></i>
             <p>Language</p>
           </div>
-          <p>polish</p>
+          <p>{item.language}</p>
         </div>
         <div className={"item-description-label"}>
           <div>
             <i className={"bx bx-bar-chart-alt-2"}></i>
             <p>Level</p>
           </div>
-          <p>beginner</p>
+          <p>{item.level}</p>
         </div>
         <div className={"item-description-label"}>
           <div>
             <i className={"bx bx-user-circle"}></i> <p>Trainer</p>
           </div>
           <div className={"trainer"}>
-            <p>name</p>
-            <p>last name</p>
+            <p>{item.trainerId}</p>
+            <p>{item.trainerId}</p>
           </div>
         </div>
         <div className={"item-description-label"}>
           <div>
             <i class={"bx bx-been-here"}></i> <p>Location</p>
           </div>
-          <p>location</p>
+          <p>{item.location}</p>
         </div>
         <div className={`description ${showClass.description}`}>
-          <p>
-            ndaiowda iowawoidmawimdoawm doawmdaowdma wodmawodm waoodawdmaowd
-            anodnaodoawnooawnoadw fiaofmoaifnfa owimfoiawfoawnfaoif
-            faionwfniwan9iof jfnfnaofawim awodmwao aniownadawonfaiofnwaon
-          </p>
+          <p>{item.description}</p>
           <p></p>
         </div>
         <div className={`description-chevron ${showClass.chevron}`}>
