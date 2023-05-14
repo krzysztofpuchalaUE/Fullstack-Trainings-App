@@ -5,6 +5,8 @@ import "./TrainingItem.scss";
 import pythonImage from "../../assets/python_icon.svg";
 
 export default function TrainingItem({ item, isUserTraining, isEdit }) {
+  const [userRegistered, setUserRegistered] = useState(item.isRegistered);
+
   const expandDescription = {
     chevron: "rotate-chevron-up",
     description: "show-desc",
@@ -41,11 +43,25 @@ export default function TrainingItem({ item, isUserTraining, isEdit }) {
       );
       setUserRegistered(!userRegistered);
     };
-  };
 
-  if (item.isRegistered === false) {
-    register();
-  }
+    const unregister = () => {
+      postTraining(
+        "http://localhost:8800/trainings",
+        setConfig("DELETE", {
+          trainingId: item.id,
+        })
+      );
+      setUserRegistered(!userRegistered);
+    };
+
+    if (item.isRegistered === false) {
+      register();
+    }
+
+    if (item.isRegistered === true) {
+      unregister();
+    }
+  };
 
   return (
     <div
@@ -118,8 +134,13 @@ export default function TrainingItem({ item, isUserTraining, isEdit }) {
         )}
       </div>
       {!isUserTraining && !isEdit && (
-        <div className={"register-btn"} onClick={onTrainingRegisterHandler}>
-          Register
+        <div
+          className={`register-btn ${
+            !userRegistered ? undefined : "unregsiter"
+          }`}
+          onClick={onTrainingRegisterHandler}
+        >
+          {userRegistered ? "Unregister" : "Register"}
         </div>
       )}
     </div>
