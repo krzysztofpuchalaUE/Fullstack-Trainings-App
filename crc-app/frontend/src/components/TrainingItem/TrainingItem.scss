@@ -207,6 +207,10 @@
   flex-direction: column;
   max-height: max-content;
   max-width: 280px;
+
+  &:hover {
+    scale: unset;
+  }
 }
 
 .is-edit {
@@ -229,5 +233,10 @@
 }
 
 .select {
-  border: solid 3px $select;
+  border: solid 2px $select;
+  transition: unset;
+
+  &:hover {
+    scale: unset;
+  }
 }

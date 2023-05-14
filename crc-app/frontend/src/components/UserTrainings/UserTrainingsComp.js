@@ -1,23 +1,60 @@
 import "./UserTrainingsComp.scss";
+import { useState, useEffect } from "react";
+import useHttp from "../../hooks/useHttp";
 
 import TrainingItem from "../TrainingItem/TrainingItem";
 import NewTrainingForm from "../NewTraining/NewTrainingForm";
 import { Link } from "react-router-dom";
 
+import { requestGetConfig } from "../../utils/requestConfig";
+import { formatTrainingData } from "../../utils/formatTrainingData";
+
 export default function UserTrainingsComp({ isNewTraining }) {
+  const [userTrainings, setUserTrainings] = useState([]);
+  const [watchedTraining, setWatchedTraining] = useState({});
+
+  const applyData = (data) => {
+    const appliedData = data.map((item) => {
+      return formatTrainingData(item);
+    });
+    return appliedData;
+  };
+
+  const {
+    requestForData: fetchMyTrainings,
+    isLoading,
+    isError,
+  } = useHttp(applyData);
+
+  useEffect(() => {
+    async function getMyTrainings() {
+      const myTrainings = await fetchMyTrainings(
+        "http://localhost:8800/user-trainings",
+        requestGetConfig
+      );
+      setUserTrainings(myTrainings);
+    }
+    getMyTrainings();
+  }, []);
+
+  const onShowDetails = (item) => {
+    setWatchedTraining(item);
+  };
+
   return (
     <div className={"Items-container"}>
       <div className={isNewTraining ? "left-new-training" : "left-trainings"}>
         {isNewTraining && <NewTrainingForm />}
-        {!isNewTraining && (
-          <>
-            <TrainingItem isUserTraining={true} />
-            <TrainingItem isUserTraining={true} />
-            <TrainingItem isUserTraining={true} />
-            <TrainingItem isUserTraining={true} />
-            <TrainingItem isUserTraining={true} />
-          </>
-        )}
+        {userTrainings?.map((training) => {
+          return (
+            <TrainingItem
+              item={training}
+              isUserTraining={true}
+              onShowDetails={onShowDetails}
+              watchedTraining={watchedTraining}
+            />
+          );
+        })}
       </div>
       {!isNewTraining && (
         <div className={"right"}>
@@ -32,10 +69,8 @@ export default function UserTrainingsComp({ isNewTraining }) {
             </div>
           </Link>
           <div className={"item-description"}>
-            <p>
-              asdpadawopdkopkawaw
-              dawdwaawddwawahuaegsrrrrrrrrrrauiiiiiiiiiiiiiiiiiiiwado
-            </p>
+            <h3>{watchedTraining.title}</h3>
+            <p>{watchedTraining.description}</p>
             <div>
               <div className={"item-features"}>
                 <div className={"update-training"}>
