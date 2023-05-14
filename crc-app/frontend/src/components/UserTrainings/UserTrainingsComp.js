@@ -39,15 +39,9 @@ export default function UserTrainingsComp({ isNewTraining }) {
     <div className={"Items-container"}>
       <div className={isNewTraining ? "left-new-training" : "left-trainings"}>
         {isNewTraining && <NewTrainingForm />}
-        {!isNewTraining && (
-          <>
-            <TrainingItem isUserTraining={true} />
-            <TrainingItem isUserTraining={true} />
-            <TrainingItem isUserTraining={true} />
-            <TrainingItem isUserTraining={true} />
-            <TrainingItem isUserTraining={true} />
-          </>
-        )}
+        {userTrainings?.map((training) => {
+          return <TrainingItem item={training} isUserTraining={true} />;
+        })}
       </div>
       {!isNewTraining && (
         <div className={"right"}>
