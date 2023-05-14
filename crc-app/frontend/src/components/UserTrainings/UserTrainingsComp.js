@@ -1,10 +1,40 @@
 import "./UserTrainingsComp.scss";
+import { useState, useEffect } from "react";
+import useHttp from "../../hooks/useHttp";
 
 import TrainingItem from "../TrainingItem/TrainingItem";
 import NewTrainingForm from "../NewTraining/NewTrainingForm";
 import { Link } from "react-router-dom";
 
+import { requestGetConfig } from "../../utils/requestConfig";
+import { formatTrainingData } from "../../utils/formatTrainingData";
+
 export default function UserTrainingsComp({ isNewTraining }) {
+  const [userTrainings, setUserTrainings] = useState([]);
+  const applyData = (data) => {
+    const appliedData = data.map((item) => {
+      return formatTrainingData(item);
+    });
+    return appliedData;
+  };
+
+  const {
+    requestForData: fetchMyTrainings,
+    isLoading,
+    isError,
+  } = useHttp(applyData);
+
+  useEffect(() => {
+    async function getMyTrainings() {
+      const myTrainings = await fetchMyTrainings(
+        "http://localhost:8800/user-trainings",
+        requestGetConfig
+      );
+      setUserTrainings(myTrainings);
+    }
+    getMyTrainings();
+  }, []);
+
   return (
     <div className={"Items-container"}>
       <div className={isNewTraining ? "left-new-training" : "left-trainings"}>
