@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 
-export default function useForm(validateFn) {
+export default function useForm(validateFn, property) {
   const [value, setValue] = useState("");
   const [activated, setIsActivated] = useState(false);
   const [isValid, setIsValid] = useState(false);

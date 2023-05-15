@@ -1,5 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import useForm from "../../hooks/useForm";
+import useHttp from "../../hooks/useHttp";
+import { useParams, useNavigate } from "react-router-dom";
+import { categories, languages, levels } from "../../appConfig";
+
+import { setConfig } from "../../utils/requestConfig";
+import { newTrainingItemContext } from "../../context/newTrainingItemContext";
 
 import Form from "../Reusable/Form";
 import "./NewTrainingForm.scss";
@@ -7,6 +13,20 @@ import "./NewTrainingForm.scss";
 export default function NewTrainingForm({ isNew, isEdit }) {
   const [image, setImage] = useState(null);
   const [showDescription, setshowDescription] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [send, setSend] = useState(false);
+  const link = window.location.href.split("/");
+  const createLink = link.length === 5;
+  const editLink = link.length === 7;
+  const { trainingId } = useParams();
+  const navigate = useNavigate();
+  const newTrainingCtx = useContext(newTrainingItemContext);
+
+  const {
+    requestForData: postCustomTraining,
+    isLoading: postCustomTrainingLoading,
+    isError: postCustomTrainingError,
+  } = useHttp((value) => value);
 
   const {
     value: title,
@@ -90,7 +110,7 @@ export default function NewTrainingForm({ isNew, isEdit }) {
     setValueHandler: setLocationValue,
     onBlurHandler: locationInputOnBlur,
     reset: resetLocationInputField,
-  } = useForm((value) => value.length > 4);
+  } = useForm((value) => value !== "");
 
   const {
     value: level,
@@ -115,11 +135,125 @@ export default function NewTrainingForm({ isNew, isEdit }) {
     setshowDescription((prev) => !prev);
   };
 
+  let formIsValid = false;
+
+  if (
+    titleIsValid &&
+    categoryIsValid &&
+    startDateIsValid &&
+    endDateIsValid &&
+    startTimeIsValid &&
+    endTimeIsValid &&
+    languageIsValid &&
+    locationIsValid &&
+    levelIsValid
+  )
+    formIsValid = true;
+
+  const onTrainingFormHandler = (e) => {
+    e.preventDefault();
+    let img = null;
+    const trainerId = 1;
+    if (image !== null) {
+      img = URL.createObjectURL(image);
+    }
+
+    if (formIsValid) {
+      const data = {
+        title,
+        category,
+        startDate,
+        endDate,
+        startTime,
+        endTime,
+        language,
+        location,
+        level,
+        description,
+        trainerId, // user id
+        img,
+      };
+
+      if (createLink) {
+        const addCustomTraining = () => {
+          postCustomTraining(
+            "http://localhost:8800/user-trainings/new-training",
+            setConfig("POST", {
+              data,
+            })
+          );
+        };
+        console.log(data);
+        addCustomTraining();
+      }
+
+      if (editLink) {
+        const updateTraining = () => {
+          postCustomTraining(
+            `http://localhost:8800/user-trainings/${trainingId}/edit`,
+            setConfig("PATCH", {
+              trainingId,
+              data,
+            })
+          );
+        };
+        updateTraining();
+      }
+
+      // resetTitleInputField();
+      // resetCategoryInputField();
+      // resetStartDateInputField();
+      // resetEndDateInputField();
+      // resetStartTimeInputField();
+      // resetEndTimeInputField();
+      // resetLanguageInputField();
+      // resetLevelInputField();
+      // resetLocationInputField();
+      // resetDescriptionInputField();
+      // setImage(null);
+    }
+
+    setSend(true);
+    setTimeout(() => navigate("/user-trainings"), 3000);
+  };
+
+  useEffect(() => {
+    newTrainingCtx.setTrainingItemTitle(title);
+  }, [title]);
+
+  useEffect(() => {
+    newTrainingCtx.setTrainingItemDate(startDate, endDate);
+  }, [startDate, endDate]);
+
+  useEffect(() => {
+    newTrainingCtx.setTrainingItemTime(startTime, endTime);
+  }, [startTime, endTime]);
+
+  useEffect(() => {
+    newTrainingCtx.setTrainingItemLanguage(language);
+  }, [language]);
+
+  useEffect(() => {
+    newTrainingCtx.setTrainingItemLevel(level);
+  }, [level]);
+
+  useEffect(() => {
+    newTrainingCtx.setTrainingItemLocation(location);
+  }, [location]);
+
+  useEffect(() => {
+    newTrainingCtx.setTrainingItemDescription(description);
+  }, [description]);
+
+  useEffect(() => {
+    newTrainingCtx.setItemImage(image);
+  }, [image]);
+
   return (
     <div className={"container"}>
       <h2>Create training</h2>
       <div className={"form-container"}>
-        <Form className={"form"}>
+        <Form className={"form"} onSubmit={onTrainingFormHandler}>
           <div className={"form-left"}>
             <div className={`training-property`}>
               <label htmlFor="custom_training_title">Title</label>
@@ -147,6 +281,13 @@ export default function NewTrainingForm({ isNew, isEdit }) {
                 onBlur={categoryInputOnBlur}
               >
                 <option hidden>Category</option>
+                {categories.map((category) => {
+                  return (
+                    <option key={Math.random() * 1000} value={category}>
+                      {category}
+                    </option>
+                  );
+                })}
               </select>
             </div>
             <div className={`training-property`}>
@@ -234,8 +375,15 @@ export default function NewTrainingForm({ isNew, isEdit }) {
                 )}
               </label>
             </div>
-            <button type="submit" className="submit-button">
-              Send <i class="bx bxs-send"></i>
+            <button
+              type="submit"
+              disabled={!formIsValid || send}
+              className="submit-button"
+            >
+              {!send && createLink && "Create"}
+              {!send && editLink && "Edit"}
+              {send && "Success"}
+              <i class="bx bxs-send"></i>
             </button>
           </div>
           <div className={"form-right"}>
@@ -249,7 +397,11 @@ export default function NewTrainingForm({ isNew, isEdit }) {
                 onBlur={languageInputOnBlur}
               >
                 <option hidden>Language</option>
-                <option>english</option>
+                {languages.map((language) => (
+                  <option key={Math.random() * 1000} value={language}>
+                    {language}
+                  </option>
+                ))}
               </select>
             </div>
             <div className={`training-property`}>
@@ -277,6 +429,11 @@ export default function NewTrainingForm({ isNew, isEdit }) {
                 onBlur={levelInputOnBlur}
               >
                 <option hidden>Level</option>
+                {levels.map((level) => (
+                  <option key={Math.random() * 1000} value={level}>
+                    {level}
+                  </option>
+                ))}
               </select>
             </div>
             <div className={"image-div"}>

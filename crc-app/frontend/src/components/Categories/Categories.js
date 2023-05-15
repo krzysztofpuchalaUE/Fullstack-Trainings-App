@@ -1,13 +1,7 @@
 import "./Categories.scss";
+import { categories } from "../../appConfig";
 
 import { Link, useParams } from "react-router-dom";
-
-const categories = [
-  "data science",
-  "software engineering",
-  "game development",
-  "mobile development",
-];
 
 export default function Categories({ setTrainingCategory }) {
   const onChangeCategoryHandler = (category) => {
