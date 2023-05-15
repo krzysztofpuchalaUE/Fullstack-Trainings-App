@@ -1,4 +1,4 @@
-const formatDate = (date) => {
+export const formatDate = (date) => {
   const splitGenericDate = new Date(date.split("-").join(","));
   return splitGenericDate.toLocaleDateString("pl-PL");
 };

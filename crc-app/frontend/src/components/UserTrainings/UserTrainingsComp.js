@@ -1,6 +1,7 @@
 import "./UserTrainingsComp.scss";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import useHttp from "../../hooks/useHttp";
+import { newTrainingItemContext } from "../../context/newTrainingItemContext";
 
 import TrainingItem from "../TrainingItem/TrainingItem";
 import NewTrainingForm from "../NewTraining/NewTrainingForm";
@@ -12,6 +13,7 @@ import { formatTrainingData } from "../../utils/formatTrainingData";
 export default function UserTrainingsComp({ isNewTraining }) {
   const [userTrainings, setUserTrainings] = useState([]);
   const [watchedTraining, setWatchedTraining] = useState({});
+  const newTrainingItemCtx = useContext(newTrainingItemContext);
 
   const applyData = (data) => {
     const appliedData = data.map((item) => {
@@ -88,7 +90,7 @@ export default function UserTrainingsComp({ isNewTraining }) {
       )}
       {isNewTraining && (
         <div className={"right training-item"}>
-          <TrainingItem isEdit={true} />
+          <TrainingItem isEdit={true} item={newTrainingItemCtx.trainingItem} />
         </div>
       )}
     </div>
