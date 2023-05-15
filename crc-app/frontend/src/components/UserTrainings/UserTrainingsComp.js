@@ -14,6 +14,7 @@ export default function UserTrainingsComp({ isNewTraining, isEdited }) {
   const [userTrainings, setUserTrainings] = useState([]);
   const [watchedTraining, setWatchedTraining] = useState({});
   const newTrainingItemCtx = useContext(newTrainingItemContext);
+  const [trainingId, setTrainingId] = useState("");
 
   const applyData = (data) => {
     const appliedData = data.map((item) => {
@@ -74,19 +75,29 @@ export default function UserTrainingsComp({ isNewTraining, isEdited }) {
             </div>
           </Link>
           <div className={"item-description"}>
-            <h3>{watchedTraining.title}</h3>
-            <p>{watchedTraining.description}</p>
+            {Object.keys(watchedTraining).length === 0 && (
+              <h3>Select training to see the description</h3>
+            )}
+            <h3>{watchedTraining?.title}</h3>
+            <p>{watchedTraining?.description}</p>
             <div>
-              <div className={"item-features"}>
-                <div className={"update-training"}>
-                  <i className={"bx bx-edit"}></i>
-                  <p>Update</p>
+              {Object.keys(watchedTraining).length > 0 && (
+                <div className={"item-features"}>
+                  <Link
+                    to={`${watchedTraining.id}/edit`}
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    <div className={"update-training"}>
+                      <i className={"bx bx-edit"}></i>
+                      <p>Update</p>
+                    </div>
+                  </Link>
+                  <div className={"delete-training"}>
+                    <i className={"bx bx-trash"}></i>
+                    <p>Delete</p>
+                  </div>
                 </div>
-                <div className={"delete-training"}>
-                  <i className={"bx bx-trash"}></i>
-                  <p>Delete</p>
-                </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
