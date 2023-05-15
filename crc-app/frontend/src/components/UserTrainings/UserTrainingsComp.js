@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { requestGetConfig } from "../../utils/requestConfig";
 import { formatTrainingData } from "../../utils/formatTrainingData";
 
-export default function UserTrainingsComp({ isNewTraining }) {
+export default function UserTrainingsComp({ isNewTraining, isEdited }) {
   const [userTrainings, setUserTrainings] = useState([]);
   const [watchedTraining, setWatchedTraining] = useState({});
   const newTrainingItemCtx = useContext(newTrainingItemContext);
@@ -46,19 +46,22 @@ export default function UserTrainingsComp({ isNewTraining }) {
   return (
     <div className={"Items-container"}>
       <div className={isNewTraining ? "left-new-training" : "left-trainings"}>
-        {isNewTraining && <NewTrainingForm />}
-        {userTrainings?.map((training) => {
-          return (
-            <TrainingItem
-              item={training}
-              isUserTraining={true}
-              onShowDetails={onShowDetails}
-              watchedTraining={watchedTraining}
-            />
-          );
-        })}
+        {isNewTraining && !isEdited && <NewTrainingForm />}
+        {isNewTraining && isEdited && <NewTrainingForm />}
+        {!isNewTraining &&
+          !isEdited &&
+          userTrainings?.map((training) => {
+            return (
+              <TrainingItem
+                item={training}
+                isUserTraining={true}
+                onShowDetails={onShowDetails}
+                watchedTraining={watchedTraining}
+              />
+            );
+          })}
       </div>
-      {!isNewTraining && (
+      {!isNewTraining && !isEdited && (
         <div className={"right"}>
           <Link
             to={"/user-trainings/new-training"}
@@ -88,7 +91,12 @@ export default function UserTrainingsComp({ isNewTraining }) {
           </div>
         </div>
       )}
-      {isNewTraining && (
+      {isNewTraining && !isEdited && (
+        <div className={"right training-item"}>
+          <TrainingItem isEdit={true} item={newTrainingItemCtx.trainingItem} />
+        </div>
+      )}
+      {isNewTraining && isEdited && (
         <div className={"right training-item"}>
           <TrainingItem isEdit={true} item={newTrainingItemCtx.trainingItem} />
         </div>
