@@ -267,6 +267,7 @@ export default function NewTrainingForm({ isEdit }) {
   }, [image]);
 
   useEffect(() => {
+    newTrainingCtx.clearTrainingItem();
     if (isEdit) {
       async function getTraining() {
         const getTraining = await getTrainingByID(
