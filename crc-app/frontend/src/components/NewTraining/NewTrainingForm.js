@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useForm from "../../hooks/useForm";
+import useHttp from "../../hooks/useHttp";
+import { useParams, useNavigate } from "react-router-dom";
 
 import { setConfig } from "../../utils/requestConfig";
 
@@ -9,6 +11,17 @@ import "./NewTrainingForm.scss";
 export default function NewTrainingForm({ isNew, isEdit }) {
   const [image, setImage] = useState(null);
   const [showDescription, setshowDescription] = useState(false);
+  const link = window.location.href.split("/");
+  const createLink = link.length === 4;
+  const editLink = link.length === 6;
+  const { trainingId } = useParams();
+  const navigate = useNavigate();
+
+  const {
+    requestForData: postCustomTraining,
+    isLoading: postCustomTrainingLoading,
+    isError: postCustomTrainingError,
+  } = useHttp((value) => value);
 
   const {
     value: title,
@@ -132,11 +145,75 @@ export default function NewTrainingForm({ isNew, isEdit }) {
   )
     formIsValid = true;
 
+  const onTrainingFormHandler = (e) => {
+    e.preventDefault();
+    let img = null;
+    const trainerId = 1;
+    if (image !== null) {
+      img = URL.createObjectURL(image);
+    }
+
+    if (formIsValid) {
+      const data = {
+        title,
+        category,
+        startDate,
+        endDate,
+        startTime,
+        endTime,
+        language,
+        location,
+        level,
+        description,
+        trainerId, // user id
+        img,
+      };
+
+      if (createLink) {
+        const addCustomTraining = () => {
+          postCustomTraining(
+            "http://localhost:8800/user-trainings/new-training",
+            setConfig("POST", {
+              data,
+            })
+          );
+        };
+        addCustomTraining();
+      }
+
+      if (editLink) {
+        const updateTraining = () => {
+          postCustomTraining(
+            `http://localhost:8800/user-trainings/${trainingId}/edit`,
+            setConfig("PATCH", {
+              trainingId,
+              data,
+            })
+          );
+        };
+        updateTraining();
+      }
+
+      // resetTitleInputField();
+      // resetCategoryInputField();
+      // resetStartDateInputField();
+      // resetEndDateInputField();
+      // resetStartTimeInputField();
+      // resetEndTimeInputField();
+      // resetLanguageInputField();
+      // resetLevelInputField();
+      // resetLocationInputField();
+      // resetDescriptionInputField();
+      // setImage(null);
+    }
+    setTimeout(() => navigate("/my-trainings"), 3000);
+  };
+
   return (
     <div className={"container"}>
       <h2>Create training</h2>
       <div className={"form-container"}>
-        <Form className={"form"}>
+        <Form className={"form"} onSubmit={onTrainingFormHandler}>
           <div className={"form-left"}>
             <div className={`training-property`}>
               <label htmlFor="custom_training_title">Title</label>
