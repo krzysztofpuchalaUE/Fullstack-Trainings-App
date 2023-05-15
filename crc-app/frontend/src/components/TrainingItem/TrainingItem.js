@@ -11,7 +11,9 @@ export default function TrainingItem({
   onShowDetails,
   watchedTraining,
 }) {
-  const [userRegistered, setUserRegistered] = useState(item.isRegistered);
+  const [userRegistered, setUserRegistered] = useState(
+    item?.isRegistered || null
+  );
 
   const expandDescription = {
     chevron: "rotate-chevron-up",
@@ -53,8 +55,8 @@ export default function TrainingItem({
       postTraining(
         "http://localhost:8800/trainings",
         setConfig("POST", {
-          trainingId: item.id,
-          trainerId: item.trainerId,
+          trainingId: item?.id,
+          trainerId: item?.trainerId,
         })
       );
       setUserRegistered(!userRegistered);
@@ -65,17 +67,17 @@ export default function TrainingItem({
       postTraining(
         "http://localhost:8800/trainings",
         setConfig("DELETE", {
-          trainingId: item.id,
+          trainingId: item?.id,
         })
       );
       setUserRegistered(!userRegistered);
     };
 
-    if (item.isRegistered === false) {
+    if (item?.isRegistered === false) {
       register();
     }
 
-    if (item.isRegistered === true) {
+    if (item?.isRegistered === true) {
       unregister();
     }
   };
@@ -90,57 +92,57 @@ export default function TrainingItem({
     <div
       className={`item-container ${
         isUserTraining ? "is-user-training" : isEdit ? "is-edit" : undefined
-      } ${watchedTraining?.id === item.id ? "select" : undefined}`}
+      } ${watchedTraining?.id === item?.id ? "select" : undefined}`}
       onClick={onShowDetailshandler}
     >
-      <img src={item.image} alt={""} />
-      <h2>{item.title}</h2>
+      <img src={item?.image} alt={""} />
+      <h2>{item?.title}</h2>
       <div className={"trining-description"}>
         <div className={"item-description-label"}>
           <div>
             <i className="bx bx-calendar"></i>
             <p>Date</p>
           </div>
-          <p>{item.date}</p>
+          <p>{item?.date}</p>
         </div>
         <div className={"item-description-label"}>
           <div>
             <i className={"bx bx-time-five"}></i>
             <p>Time</p>
           </div>
-          <p>{item.time}</p>
+          <p>{item?.time}</p>
         </div>
         <div className={"item-description-label"}>
           <div>
             <i class={"bx bx-chat"}></i>
             <p>Language</p>
           </div>
-          <p>{item.language}</p>
+          <p>{item?.language}</p>
         </div>
         <div className={"item-description-label"}>
           <div>
             <i className={"bx bx-bar-chart-alt-2"}></i>
             <p>Level</p>
           </div>
-          <p>{item.level}</p>
+          <p>{item?.level}</p>
         </div>
         <div className={"item-description-label"}>
           <div>
             <i className={"bx bx-user-circle"}></i> <p>Trainer</p>
           </div>
           <div className={"trainer"}>
-            <p>{item.trainerId}</p>
-            <p>{item.trainerId}</p>
+            <p>{item?.trainerId}</p>
+            <p>{item?.trainerId}</p>
           </div>
         </div>
         <div className={"item-description-label"}>
           <div>
             <i class={"bx bx-been-here"}></i> <p>Location</p>
           </div>
-          <p>{item.location}</p>
+          <p>{item?.location}</p>
         </div>
         <div className={`description ${showClass.description}`}>
-          <p>{item.description}</p>
+          <p>{item?.description}</p>
           <p></p>
         </div>
         <div className={`description-chevron ${showClass.chevron}`}>
