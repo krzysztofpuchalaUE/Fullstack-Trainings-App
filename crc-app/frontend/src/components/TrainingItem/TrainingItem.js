@@ -1,4 +1,6 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useContext } from "react";
+
+import { newTrainingItemContext } from "../../context/newTrainingItemContext";
 
 import "./TrainingItem.scss";
 import useHttp from "../../hooks/useHttp";
@@ -10,10 +12,13 @@ export default function TrainingItem({
   registerAction,
   onShowDetails,
   watchedTraining,
+  editImage,
 }) {
   const [userRegistered, setUserRegistered] = useState(
     item?.isRegistered || null
   );
+
+  const newTrainingItemCtx = useContext(newTrainingItemContext);
 
   const expandDescription = {
     chevron: "rotate-chevron-up",
@@ -95,7 +100,15 @@ export default function TrainingItem({
       } ${watchedTraining?.id === item?.id ? "select" : undefined}`}
       onClick={onShowDetailshandler}
     >
-      <img src={item?.image} alt={""} />
+      <img
+        className={isEdit ? "edited-image" : ""}
+        src={
+          isEdit && newTrainingItemCtx.image
+            ? URL.createObjectURL(newTrainingItemCtx.image)
+            : item?.image
+        }
+        alt={""}
+      />
       <h2>{item?.title}</h2>
       <div className={"trining-description"}>
         <div className={"item-description-label"}>

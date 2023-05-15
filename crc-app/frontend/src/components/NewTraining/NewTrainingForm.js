@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import useForm from "../../hooks/useForm";
 import useHttp from "../../hooks/useHttp";
 import { useParams, useNavigate } from "react-router-dom";
 
 import { setConfig } from "../../utils/requestConfig";
+import { newTrainingItemContext } from "../../context/newTrainingItemContext";
 
 import Form from "../Reusable/Form";
 import "./NewTrainingForm.scss";
@@ -16,6 +17,7 @@ export default function NewTrainingForm({ isNew, isEdit }) {
   const editLink = link.length === 6;
   const { trainingId } = useParams();
   const navigate = useNavigate();
+  const newTrainingCtx = useContext(newTrainingItemContext);
 
   const {
     requestForData: postCustomTraining,
@@ -105,7 +107,7 @@ export default function NewTrainingForm({ isNew, isEdit }) {
     setValueHandler: setLocationValue,
     onBlurHandler: locationInputOnBlur,
     reset: resetLocationInputField,
-  } = useForm((value) => value.length > 4);
+  } = useForm((value) => value !== "");
 
   const {
     value: level,
@@ -208,6 +210,38 @@ export default function NewTrainingForm({ isNew, isEdit }) {
     }
     setTimeout(() => navigate("/my-trainings"), 3000);
   };
+
+  useEffect(() => {
+    newTrainingCtx.setTrainingItemTitle(title);
+  }, [title]);
+
+  useEffect(() => {
+    newTrainingCtx.setTrainingItemDate(startDate, endDate);
+  }, [startDate, endDate]);
+
+  useEffect(() => {
+    newTrainingCtx.setTrainingItemTime(startTime, endTime);
+  }, [startTime, endTime]);
+
+  useEffect(() => {
+    newTrainingCtx.setTrainingItemLanguage(language);
+  }, [language]);
+
+  useEffect(() => {
+    newTrainingCtx.setTrainingItemLevel(level);
+  }, [level]);
+
+  useEffect(() => {
+    newTrainingCtx.setTrainingItemLocation(location);
+  }, [location]);
+
+  useEffect(() => {
+    newTrainingCtx.setTrainingItemDescription(description);
+  }, [description]);
+
+  useEffect(() => {
+    newTrainingCtx.setItemImage(image);
+  }, [image]);
 
   return (
     <div className={"container"}>

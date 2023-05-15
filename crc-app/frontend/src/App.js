@@ -12,6 +12,8 @@ import TrainingsPage from "./pages/Trainings";
 import UserTrainingsRoot from "./pages/UserTrainingsRoot";
 import TrainingsRoot from "./pages/TrainingsRoot";
 
+import NewTrainingItemProvider from "./context/newTrainingItemContext";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -59,5 +61,9 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <NewTrainingItemProvider>
+      <RouterProvider router={router} />
+    </NewTrainingItemProvider>
+  );
 }
