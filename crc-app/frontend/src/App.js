@@ -11,6 +11,8 @@ import NewTrainingPage from "./pages/NewTraining";
 import TrainingsPage from "./pages/Trainings";
 import UserTrainingsRoot from "./pages/UserTrainingsRoot";
 import TrainingsRoot from "./pages/TrainingsRoot";
+import EditTrainingPage from "./pages/EditTraining";
+import IdRoot from "./pages/IdRoot";
 
 import NewTrainingItemProvider from "./context/newTrainingItemContext";
 
@@ -49,6 +51,16 @@ const router = createBrowserRouter([
           {
             path: "new-training",
             element: <NewTrainingPage />,
+          },
+          {
+            path: ":trainingId",
+            element: <IdRoot />,
+            children: [
+              {
+                path: "edit",
+                element: <EditTrainingPage />,
+              },
+            ],
           },
         ],
       },
