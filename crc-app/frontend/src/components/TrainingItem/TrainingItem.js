@@ -1,4 +1,5 @@
 import { useCallback, useState, useContext } from "react";
+import { Link } from "react-router-dom";
 
 import { newTrainingItemContext } from "../../context/newTrainingItemContext";
 
@@ -163,9 +164,14 @@ export default function TrainingItem({
         </div>
         {isUserTraining && (
           <div className={"item-description-label"}>
-            <div className={"update-training"}>
-              <i className={"bx bx-edit"}></i>
-            </div>
+            <Link
+              to={`${item.id}/edit`}
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              <div className={"update-training"}>
+                <i className={"bx bx-edit"}></i>
+              </div>
+            </Link>
             <div className={"delete-training"}>
               <i className={"bx bx-trash"}></i>
             </div>
