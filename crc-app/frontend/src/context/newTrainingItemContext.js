@@ -4,6 +4,7 @@ import { formatDate } from "../utils/formatTrainingData";
 export const newTrainingItemContext = React.createContext({
   trainingItem: {},
   image: null,
+  clearTrainingItem: () => {},
   setTrainingItemTitle: () => {},
   setTrainingItemDate: () => {},
   setTrainingItemTime: () => {},
@@ -90,10 +91,15 @@ const NewTrainingItemProvider = ({ children }) => {
     setImage(img);
   };
 
+  const clearTrainingItem = () => {
+    setTrainingItem(() => {});
+  };
+
   return (
     <newTrainingItemContext.Provider
       value={{
         trainingItem,
+        clearTrainingItem,
         setTrainingItemTitle,
         setTrainingItemDate,
         setTrainingItemTime,
