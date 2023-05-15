@@ -10,14 +10,14 @@ import { newTrainingItemContext } from "../../context/newTrainingItemContext";
 import Form from "../Reusable/Form";
 import "./NewTrainingForm.scss";
 
-export default function NewTrainingForm({ isNew, isEdit }) {
+export default function NewTrainingForm({ isEdit }) {
   const [image, setImage] = useState(null);
   const [showDescription, setshowDescription] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [send, setSend] = useState(false);
   const link = window.location.href.split("/");
   const createLink = link.length === 5;
-  const editLink = link.length === 7;
+  const editLink = link.length === 6;
   const { trainingId } = useParams();
   const navigate = useNavigate();
   const newTrainingCtx = useContext(newTrainingItemContext);
@@ -251,7 +251,6 @@ export default function NewTrainingForm({ isNew, isEdit }) {
 
   return (
     <div className={"container"}>
-      <h2>Create training</h2>
       <div className={"form-container"}>
         <Form className={"form"} onSubmit={onTrainingFormHandler}>
           <div className={"form-left"}>

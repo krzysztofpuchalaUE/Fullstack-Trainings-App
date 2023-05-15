@@ -213,7 +213,7 @@
   }
 }
 
-.is-edit {
+.is-created {
   height: max-content;
   position: relative;
 
@@ -223,6 +223,25 @@
 
   &::before {
     content: "New training";
+    background-color: $main-dark;
+    padding: 5px;
+    border-radius: 15px;
+    position: absolute;
+    top: -15px;
+    font-size: 26px;
+  }
+}
+
+.is-edited {
+  height: max-content;
+  position: relative;
+
+  &:hover {
+    scale: unset;
+  }
+
+  &::before {
+    content: "Update training";
     background-color: $main-dark;
     padding: 5px;
     border-radius: 15px;

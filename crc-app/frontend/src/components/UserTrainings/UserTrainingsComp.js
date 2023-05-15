@@ -93,12 +93,19 @@ export default function UserTrainingsComp({ isNewTraining, isEdited }) {
       )}
       {isNewTraining && !isEdited && (
         <div className={"right training-item"}>
-          <TrainingItem isEdit={true} item={newTrainingItemCtx.trainingItem} />
+          <TrainingItem
+            isCreate={true}
+            item={newTrainingItemCtx.trainingItem}
+          />
         </div>
       )}
       {isNewTraining && isEdited && (
         <div className={"right training-item"}>
-          <TrainingItem isEdit={true} item={newTrainingItemCtx.trainingItem} />
+          <TrainingItem
+            isCreate={true}
+            isEdit={true}
+            item={newTrainingItemCtx.trainingItem}
+          />
         </div>
       )}
     </div>
