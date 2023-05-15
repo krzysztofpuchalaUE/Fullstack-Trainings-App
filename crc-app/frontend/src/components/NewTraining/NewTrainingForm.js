@@ -3,21 +3,22 @@ import useForm from "../../hooks/useForm";
 import useHttp from "../../hooks/useHttp";
 import { useParams, useNavigate } from "react-router-dom";
 import { categories, languages, levels } from "../../appConfig";
+import { formatTrainingData } from "../../utils/formatTrainingData";
 
-import { setConfig } from "../../utils/requestConfig";
+import { setConfig, requestGetConfig } from "../../utils/requestConfig";
 import { newTrainingItemContext } from "../../context/newTrainingItemContext";
 
 import Form from "../Reusable/Form";
 import "./NewTrainingForm.scss";
 
-export default function NewTrainingForm({ isNew, isEdit }) {
+export default function NewTrainingForm({ isEdit }) {
   const [image, setImage] = useState(null);
   const [showDescription, setshowDescription] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [send, setSend] = useState(false);
   const link = window.location.href.split("/");
   const createLink = link.length === 5;
-  const editLink = link.length === 7;
+  const editLink = link.length === 6;
   const { trainingId } = useParams();
   const navigate = useNavigate();
   const newTrainingCtx = useContext(newTrainingItemContext);
@@ -29,8 +30,15 @@ export default function NewTrainingForm({ isNew, isEdit }) {
   } = useHttp((value) => value);
 
   const {
+    requestForData: getTrainingByID,
+    isLoading: getTrainingByIDLoading,
+    isError: getTrainingByIDError,
+  } = useHttp((value) => value);
+
+  const {
     value: title,
     activated: titleInputActivated,
+    setInitialValue: setTitleInitialValue,
     isValid: titleIsValid,
     setValueHandler: setTitleValue,
     onBlurHandler: titleInputOnBlur,
@@ -40,6 +48,7 @@ export default function NewTrainingForm({ isNew, isEdit }) {
   const {
     value: category,
     activated: categoryInputActivated,
+    setInitialValue: setCategoryInitialValue,
     isValid: categoryIsValid,
     setValueHandler: setCategoryValue,
     onBlurHandler: categoryInputOnBlur,
@@ -49,6 +58,7 @@ export default function NewTrainingForm({ isNew, isEdit }) {
   const {
     value: startDate,
     activated: startDateInputActivated,
+    setInitialValue: setStartDateInitialValue,
     isValid: startDateIsValid,
     setValueHandler: setStartDateValue,
     onBlurHandler: startDateInputOnBlur,
@@ -65,6 +75,7 @@ export default function NewTrainingForm({ isNew, isEdit }) {
   const {
     value: endDate,
     activated: endDateInputActivated,
+    setInitialValue: setEndDateInitialValue,
     isValid: endDateIsValid,
     setValueHandler: setEndDateValue,
     onBlurHandler: endDateInputOnBlur,
@@ -79,6 +90,7 @@ export default function NewTrainingForm({ isNew, isEdit }) {
   const {
     value: startTime,
     activated: startTimeInputActivated,
+    setInitialValue: setStartTimeInitialValue,
     isValid: startTimeIsValid,
     setValueHandler: setStartTimeValue,
     onBlurHandler: startTimeInputOnBlur,
@@ -88,6 +100,7 @@ export default function NewTrainingForm({ isNew, isEdit }) {
   const {
     value: endTime,
     activated: endTimeInputActivated,
+    setInitialValue: setEndTimeInitialValue,
     isValid: endTimeIsValid,
     setValueHandler: setEndTimeValue,
     onBlurHandler: endTimeInputOnBlur,
@@ -97,6 +110,7 @@ export default function NewTrainingForm({ isNew, isEdit }) {
   const {
     value: language,
     activated: languageInputActivated,
+    setInitialValue: setLanguageInitialValue,
     isValid: languageIsValid,
     setValueHandler: setLanguageValue,
     onBlurHandler: languageInputOnBlur,
@@ -106,6 +120,7 @@ export default function NewTrainingForm({ isNew, isEdit }) {
   const {
     value: location,
     activated: locationInputActivated,
+    setInitialValue: setLocationInitialValue,
     isValid: locationIsValid,
     setValueHandler: setLocationValue,
     onBlurHandler: locationInputOnBlur,
@@ -115,6 +130,7 @@ export default function NewTrainingForm({ isNew, isEdit }) {
   const {
     value: level,
     activated: levelInputActivated,
+    setInitialValue: setLevelInitialValue,
     isValid: levelIsValid,
     setValueHandler: setLevelValue,
     onBlurHandler: levelInputOnBlur,
@@ -124,6 +140,7 @@ export default function NewTrainingForm({ isNew, isEdit }) {
   const {
     value: description,
     activated: descriptionInputActivated,
+    setInitialValue: setDescriptionInitialValue,
     isValid: descriptionIsValid,
     setValueHandler: setDescriptionValue,
     onBlurHandler: descriptionInputOnBlur,
@@ -154,7 +171,7 @@ export default function NewTrainingForm({ isNew, isEdit }) {
     e.preventDefault();
     let img = null;
     const trainerId = 1;
-    if (image !== null) {
+    if (image !== null && image !== undefined) {
       img = URL.createObjectURL(image);
     }
 
@@ -249,9 +266,34 @@ export default function NewTrainingForm({ isNew, isEdit }) {
     newTrainingCtx.setItemImage(image);
   }, [image]);
 
+  useEffect(() => {
+    newTrainingCtx.clearTrainingItem();
+    if (isEdit) {
+      async function getTraining() {
+        const getTraining = await getTrainingByID(
+          `http://localhost:8800/user-trainings/${trainingId}/edit`,
+          requestGetConfig
+        );
+        const formattedData = formatTrainingData(getTraining);
+        setTitleInitialValue(formattedData.title);
+        setCategoryInitialValue(formattedData.category);
+        setStartDateInitialValue(getTraining.training_start_date.slice(0, 10));
+        setEndDateInitialValue(getTraining.training_end_date.slice(0, 10));
+        setStartTimeInitialValue(getTraining.training_start_time);
+        setEndTimeInitialValue(getTraining.training_end_time);
+        setLanguageInitialValue(formattedData.language);
+        setLocationInitialValue(formattedData.location);
+        setLevelInitialValue(formattedData.level);
+        setDescriptionInitialValue(formattedData.description);
+        setImage(getTraining.icon);
+        newTrainingCtx.setItemImage(image);
+      }
+      getTraining();
+    }
+  }, []);
+
   return (
     <div className={"container"}>
-      <h2>Create training</h2>
       <div className={"form-container"}>
         <Form className={"form"} onSubmit={onTrainingFormHandler}>
           <div className={"form-left"}>

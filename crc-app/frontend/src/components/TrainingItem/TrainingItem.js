@@ -1,4 +1,5 @@
 import { useCallback, useState, useContext } from "react";
+import { Link } from "react-router-dom";
 
 import { newTrainingItemContext } from "../../context/newTrainingItemContext";
 
@@ -8,11 +9,11 @@ import { setConfig } from "../../utils/requestConfig";
 export default function TrainingItem({
   item,
   isUserTraining,
+  isCreate,
   isEdit,
   registerAction,
   onShowDetails,
   watchedTraining,
-  editImage,
 }) {
   const [userRegistered, setUserRegistered] = useState(
     item?.isRegistered || null
@@ -96,14 +97,20 @@ export default function TrainingItem({
   return (
     <div
       className={`item-container ${
-        isUserTraining ? "is-user-training" : isEdit ? "is-edit" : undefined
+        isUserTraining
+          ? "is-user-training"
+          : isCreate && isEdit
+          ? "is-edited"
+          : isCreate
+          ? "is-created"
+          : undefined
       } ${watchedTraining?.id === item?.id ? "select" : undefined}`}
       onClick={onShowDetailshandler}
     >
       <img
-        className={isEdit ? "edited-image" : ""}
+        className={isCreate ? "edited-image" : ""}
         src={
-          isEdit && newTrainingItemCtx.image
+          isCreate && newTrainingItemCtx.image
             ? URL.createObjectURL(newTrainingItemCtx.image)
             : item?.image
         }
@@ -163,16 +170,21 @@ export default function TrainingItem({
         </div>
         {isUserTraining && (
           <div className={"item-description-label"}>
-            <div className={"update-training"}>
-              <i className={"bx bx-edit"}></i>
-            </div>
+            <Link
+              to={`${item.id}/edit`}
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              <div className={"update-training"}>
+                <i className={"bx bx-edit"}></i>
+              </div>
+            </Link>
             <div className={"delete-training"}>
               <i className={"bx bx-trash"}></i>
             </div>
           </div>
         )}
       </div>
-      {!isUserTraining && !isEdit && (
+      {!isUserTraining && !isCreate && (
         <div
           className={`register-btn ${
             !userRegistered ? undefined : "unregsiter"

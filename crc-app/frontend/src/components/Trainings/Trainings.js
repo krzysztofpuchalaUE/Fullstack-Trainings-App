@@ -50,7 +50,6 @@ export default function Trainings({ trainingCategory }) {
         "http://localhost:8800/trainings",
         requestGetConfig
       );
-      console.log(getTrainings);
       setTrainings(getTrainings);
     }
     getTrainings();

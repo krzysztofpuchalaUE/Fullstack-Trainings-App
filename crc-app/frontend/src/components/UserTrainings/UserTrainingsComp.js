@@ -10,10 +10,11 @@ import { Link } from "react-router-dom";
 import { requestGetConfig } from "../../utils/requestConfig";
 import { formatTrainingData } from "../../utils/formatTrainingData";
 
-export default function UserTrainingsComp({ isNewTraining }) {
+export default function UserTrainingsComp({ isNewTraining, isEdited }) {
   const [userTrainings, setUserTrainings] = useState([]);
   const [watchedTraining, setWatchedTraining] = useState({});
   const newTrainingItemCtx = useContext(newTrainingItemContext);
+  const [trainingId, setTrainingId] = useState("");
 
   const applyData = (data) => {
     const appliedData = data.map((item) => {
@@ -46,19 +47,22 @@ export default function UserTrainingsComp({ isNewTraining }) {
   return (
     <div className={"Items-container"}>
       <div className={isNewTraining ? "left-new-training" : "left-trainings"}>
-        {isNewTraining && <NewTrainingForm />}
-        {userTrainings?.map((training) => {
-          return (
-            <TrainingItem
-              item={training}
-              isUserTraining={true}
-              onShowDetails={onShowDetails}
-              watchedTraining={watchedTraining}
-            />
-          );
-        })}
+        {isNewTraining && !isEdited && <NewTrainingForm />}
+        {isNewTraining && isEdited && <NewTrainingForm isEdit={true} />}
+        {!isNewTraining &&
+          !isEdited &&
+          userTrainings?.map((training) => {
+            return (
+              <TrainingItem
+                item={training}
+                isUserTraining={true}
+                onShowDetails={onShowDetails}
+                watchedTraining={watchedTraining}
+              />
+            );
+          })}
       </div>
-      {!isNewTraining && (
+      {!isNewTraining && !isEdited && (
         <div className={"right"}>
           <Link
             to={"/user-trainings/new-training"}
@@ -71,26 +75,48 @@ export default function UserTrainingsComp({ isNewTraining }) {
             </div>
           </Link>
           <div className={"item-description"}>
-            <h3>{watchedTraining.title}</h3>
-            <p>{watchedTraining.description}</p>
+            {Object.keys(watchedTraining).length === 0 && (
+              <h3>Select training to see the description</h3>
+            )}
+            <h3>{watchedTraining?.title}</h3>
+            <p>{watchedTraining?.description}</p>
             <div>
-              <div className={"item-features"}>
-                <div className={"update-training"}>
-                  <i className={"bx bx-edit"}></i>
-                  <p>Update</p>
+              {Object.keys(watchedTraining).length > 0 && (
+                <div className={"item-features"}>
+                  <Link
+                    to={`${watchedTraining.id}/edit`}
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    <div className={"update-training"}>
+                      <i className={"bx bx-edit"}></i>
+                      <p>Update</p>
+                    </div>
+                  </Link>
+                  <div className={"delete-training"}>
+                    <i className={"bx bx-trash"}></i>
+                    <p>Delete</p>
+                  </div>
                 </div>
-                <div className={"delete-training"}>
-                  <i className={"bx bx-trash"}></i>
-                  <p>Delete</p>
-                </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
       )}
-      {isNewTraining && (
+      {isNewTraining && !isEdited && (
         <div className={"right training-item"}>
-          <TrainingItem isEdit={true} item={newTrainingItemCtx.trainingItem} />
+          <TrainingItem
+            isCreate={true}
+            item={newTrainingItemCtx.trainingItem}
+          />
+        </div>
+      )}
+      {isNewTraining && isEdited && (
+        <div className={"right training-item"}>
+          <TrainingItem
+            isCreate={true}
+            isEdit={true}
+            item={newTrainingItemCtx.trainingItem}
+          />
         </div>
       )}
     </div>

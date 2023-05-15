@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 
-export default function useForm(validateFn, property) {
+export default function useForm(validateFn) {
   const [value, setValue] = useState("");
   const [activated, setIsActivated] = useState(false);
   const [isValid, setIsValid] = useState(false);
@@ -9,6 +9,12 @@ export default function useForm(validateFn, property) {
     setValue(e.target.value);
 
     checkIsValid(validateFn);
+  };
+
+  const setInitialValue = (value) => {
+    setIsActivated(true);
+    setIsValid(true);
+    setValue(value);
   };
 
   const checkIsValid = (validateFn) => {
@@ -30,6 +36,7 @@ export default function useForm(validateFn, property) {
     value,
     activated,
     isValid,
+    setInitialValue,
     setValueHandler,
     onBlurHandler,
     reset,

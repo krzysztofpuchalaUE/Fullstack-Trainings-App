@@ -47,6 +47,14 @@ export const getAllUserTrainings = async () => {
   return result;
 };
 
+export const getTrainingByID = async (id) => {
+  const [result] = await connectionPool.query(
+    "SELECT * FROM Trainings WHERE id = ?",
+    [id]
+  );
+  return result[0];
+};
+
 export const createTraining = async (
   title,
   category,
@@ -88,6 +96,43 @@ export const createTraining = async (
       location,
       trainer_id,
       iconUrl,
+    ]
+  );
+  return result;
+};
+
+export const updateTraining = async (
+  id,
+  title,
+  startDate,
+  endDate,
+  startTime,
+  endTime,
+  language,
+  description,
+  level,
+  category,
+  location,
+  trainer_id,
+  iconUrl
+) => {
+  const [result] = await connectionPool.query(
+    `UPDATE Trainings SET training_title = ?, training_start_date = ?, training_end_date = ?, training_start_time = ?, training_end_time = ?, training_language = ?, training_description = ?,training_level = ?, training_category = ?,training_location = ?,trainer_id = ?,training_icon = '?'
+    WHERE id = ?`,
+    [
+      title,
+      startDate,
+      endDate,
+      startTime,
+      endTime,
+      language,
+      description,
+      level,
+      category,
+      location,
+      trainer_id,
+      iconUrl,
+      id,
     ]
   );
   return result;
