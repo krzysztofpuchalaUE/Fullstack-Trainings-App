@@ -13,9 +13,11 @@ import "./NewTrainingForm.scss";
 export default function NewTrainingForm({ isNew, isEdit }) {
   const [image, setImage] = useState(null);
   const [showDescription, setshowDescription] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [send, setSend] = useState(false);
   const link = window.location.href.split("/");
-  const createLink = link.length === 4;
-  const editLink = link.length === 6;
+  const createLink = link.length === 5;
+  const editLink = link.length === 7;
   const { trainingId } = useParams();
   const navigate = useNavigate();
   const newTrainingCtx = useContext(newTrainingItemContext);
@@ -181,6 +183,7 @@ export default function NewTrainingForm({ isNew, isEdit }) {
             })
           );
         };
+        console.log(data);
         addCustomTraining();
       }
 
@@ -209,7 +212,9 @@ export default function NewTrainingForm({ isNew, isEdit }) {
       // resetDescriptionInputField();
       // setImage(null);
     }
-    setTimeout(() => navigate("/my-trainings"), 3000);
+
+    setSend(true);
+    setTimeout(() => navigate("/user-trainings"), 3000);
   };
 
   useEffect(() => {
@@ -370,8 +375,15 @@ export default function NewTrainingForm({ isNew, isEdit }) {
                 )}
               </label>
             </div>
-            <button type="submit" className="submit-button">
-              Send <i class="bx bxs-send"></i>
+            <button
+              type="submit"
+              disabled={!formIsValid || send}
+              className="submit-button"
+            >
+              {!send && createLink && "Create"}
+              {!send && editLink && "Edit"}
+              {send && "Success"}
+              <i class="bx bxs-send"></i>
             </button>
           </div>
           <div className={"form-right"}>

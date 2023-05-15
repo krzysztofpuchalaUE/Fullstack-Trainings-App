@@ -172,3 +172,12 @@
     width: 27rem;
   }
 }
+
+button:disabled,
+button:disabled:hover,
+button:disabled:active {
+  background-color: $font-white;
+  color: #3f3f3f;
+  border-color: #ccc;
+  cursor: not-allowed;
+}
