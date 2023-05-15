@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import useForm from "../../hooks/useForm";
 import useHttp from "../../hooks/useHttp";
 import { useParams, useNavigate } from "react-router-dom";
+import { categories, languages, levels } from "../../appConfig";
 
 import { setConfig } from "../../utils/requestConfig";
 import { newTrainingItemContext } from "../../context/newTrainingItemContext";
@@ -275,6 +276,13 @@ export default function NewTrainingForm({ isNew, isEdit }) {
                 onBlur={categoryInputOnBlur}
               >
                 <option hidden>Category</option>
+                {categories.map((category) => {
+                  return (
+                    <option key={Math.random() * 1000} value={category}>
+                      {category}
+                    </option>
+                  );
+                })}
               </select>
             </div>
             <div className={`training-property`}>
@@ -377,7 +385,11 @@ export default function NewTrainingForm({ isNew, isEdit }) {
                 onBlur={languageInputOnBlur}
               >
                 <option hidden>Language</option>
-                <option>english</option>
+                {languages.map((language) => (
+                  <option key={Math.random() * 1000} value={language}>
+                    {language}
+                  </option>
+                ))}
               </select>
             </div>
             <div className={`training-property`}>
@@ -405,6 +417,11 @@ export default function NewTrainingForm({ isNew, isEdit }) {
                 onBlur={levelInputOnBlur}
               >
                 <option hidden>Level</option>
+                {levels.map((level) => (
+                  <option key={Math.random() * 1000} value={level}>
+                    {level}
+                  </option>
+                ))}
               </select>
             </div>
             <div className={"image-div"}>
