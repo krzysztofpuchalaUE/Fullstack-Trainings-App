@@ -26,11 +26,12 @@
       }
 
       .auth-property {
-        font-size: 14px;
+        font-size: 12px;
         position: relative;
         display: flex;
         flex-direction: column;
         text-align: left;
+        margin-top: 10px;
       }
 
       i {
@@ -53,6 +54,9 @@
       .links {
         margin-top: 20px;
         text-align: left;
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
 
         p {
           font-size: 12px;

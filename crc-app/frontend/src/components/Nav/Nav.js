@@ -37,7 +37,7 @@ export default function NavBar() {
           </div>
         </NavLink>
         <NavLink
-          to={"/auth?mode=login"}
+          to={"/auth/login"}
           className={({ isActive }) => (isActive ? "link-active" : undefined)}
           style={{ textDecoration: "none", color: "inherit" }}
         >

@@ -5,9 +5,10 @@ import { setConfig } from "../../utils/requestConfig";
 import useHttp from "../../hooks/useHttp";
 import useForm from "../../hooks/useForm";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function AuthForm() {
-  const link = window.location.href.split("/").at(-1);
+  const mode = window.location.href.split("/").at(-1);
   const [reloadForm, setReloadForm] = useState(true);
   const [userEmialIsValid, setUserEmailIsValid] = useState(true);
   const [passwordIsValid, setPasswordIsValid] = useState(true);
@@ -79,6 +80,8 @@ export default function AuthForm() {
   const onRegisterFormHandler = (e) => {
     e.preventDefault();
 
+    console.log("register");
+
     if (validFName && validLName && validEmail && validPassword)
       formIsValid = true;
 
@@ -108,40 +111,51 @@ export default function AuthForm() {
     setReloadForm((prev) => !prev);
   };
 
+  const nameJsx = (
+    <>
+      <div className={"auth-property"}>
+        <label htmlFor="first-name"> First Name </label>
+        <i className={"bx bxs-user"}></i>
+        <input
+          type="text"
+          id="first-name"
+          placeholder="Enter your first name"
+          value={registerFirstName}
+          onChange={setRegisterFirstNameValue}
+        />
+        {registerFirstNameIsValid === false && (
+          <p className={"invalid-info"}>First Name must not be empty</p>
+        )}
+      </div>
+      <div className="auth-property">
+        <label htmlFor="last-name"> Last Name </label>
+        <i className={"bx bxs-user"}></i>
+        <input
+          type="text"
+          id="last-name"
+          placeholder="Enter tour last name"
+          value={registerLastName}
+          onChange={setRegisterLastNameValue}
+        />
+        {registerLastNameIsValid === false && (
+          <p className={"invalid-info"}>Last Name must not be empty</p>
+        )}
+      </div>
+    </>
+  );
+
   return (
     <div className={"authentication"}>
       <div className={"auth-form-container"}>
-        <h2>Sign in</h2>
+        {mode === "signup" && <h2>Sign up</h2>}
+        {mode === "login" && <h2>Welcome back</h2>}
 
-        <Form onSubmit={onRegisterFormHandler}>
-          <div className={"auth-property"}>
-            <label htmlFor="first-name"> First Name </label>
-            <i className={"bx bxs-user"}></i>
-            <input
-              type="text"
-              id="first-name"
-              placeholder="Enter your first name"
-              value={registerFirstName}
-              onChange={setRegisterFirstNameValue}
-            />
-            {registerFirstNameIsValid === false && (
-              <p className={"invalid-info"}>First Name must not be empty</p>
-            )}
-          </div>
-          <div className="auth-property">
-            <label htmlFor="last-name"> Last Name </label>
-            <i className={"bx bxs-user"}></i>
-            <input
-              type="text"
-              id="last-name"
-              placeholder="Enter tour last name"
-              value={registerLastName}
-              onChange={setRegisterLastNameValue}
-            />
-            {registerLastNameIsValid === false && (
-              <p className={"invalid-info"}>Last Name must not be empty</p>
-            )}
-          </div>
+        <Form
+          onSubmit={
+            mode === "signup" ? onRegisterFormHandler : onLoginFormHandler
+          }
+        >
+          {mode === "signup" && nameJsx}
           <div className={"auth-property"}>
             <label htmlFor="email"> Email </label>
             <i className={"bx bxs-envelope"}></i>
@@ -173,13 +187,28 @@ export default function AuthForm() {
             )}
           </div>
           <div className={"links"}>
-            <p className={"forgot-password"}>Forgot your password?</p>
-            <div></div>
-            <p className="no-account">
-              You don't have an account? <a>Sign in</a>
-            </p>
+            {mode === "login" && (
+              <>
+                <p className={"forgot-password"}>Forgot your password?</p>
+
+                <div></div>
+                <Link
+                  to={"/auth/signup"}
+                  className={({ isActive }) =>
+                    isActive ? "link-active" : undefined
+                  }
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  <p className="no-account">
+                    You don't have an account? <a>Sign up</a>
+                  </p>
+                </Link>
+              </>
+            )}
           </div>
-          <button type="submit">Register</button>
+          <button type="submit">
+            {mode === "login" ? "Login" : "Register"}
+          </button>
         </Form>
       </div>
     </div>
