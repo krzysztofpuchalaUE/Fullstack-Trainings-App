@@ -1,7 +1,52 @@
 import "./AuthForm.scss";
 import Form from "../Reusable/Form";
+import { setConfig } from "../../utils/requestConfig";
+
+import useHttp from "../../hooks/useHttp";
+import { useEffect, useState } from "react";
 
 export default function AuthForm() {
+  const link = window.location.href.split("/").at(-1);
+  const [reloadForm, setReloadForm] = useState(true);
+  const [userEmialIsValid, setUserEmailIsValid] = useState(true);
+  const [passwordIsValid, setPasswordIsValid] = useState(true);
+  const [registerFirstNameIsValid, setRegisterFirstNameIsvalid] =
+    useState(true);
+  const [registerLastNameIsValid, setRegisterLastNameIsValid] = useState(true);
+  const { requestForData: loginUser } = useHttp((value) => value);
+  const { requestForData: registerUser } = useHttp((value) => value);
+
+  const {
+    value: password,
+    setValueHandler: setPasswordValue,
+    reset: resetPasswordInputField,
+  } = useForm();
+
+  const {
+    value: registerFirstName,
+    setValueHandler: setRegisterFirstNameValue,
+    reset: resetRegisterFirstNameInputField,
+  } = useForm();
+
+  const {
+    value: registerLastName,
+    setValueHandler: setRegisterLastNameValue,
+    reset: resetRegisterLastNameInputField,
+  } = useForm();
+
+  const {
+    value: email,
+    setValueHandler: setEmailValue,
+    reset: resetEmailInputField,
+  } = useForm();
+
+  let formIsValid = false;
+
+  let validFName = false;
+  let validLName = false;
+  let validPassword = false;
+  let validEmail = false;
+
   return (
     <div className={"authentication"}>
       <div className={"auth-form-container"}>
