@@ -91,7 +91,7 @@ export default function AuthForm() {
       const data = { registerFirstName, registerLastName, email, password };
       const registerUserAuth = () => {
         registerUser(
-          "http://localhost:8800/auth?=signup",
+          "http://localhost:8800/auth/signup",
           setConfig("POST", {
             data,
           })
