@@ -99,3 +99,10 @@ router
     const training = await queries.getTrainingByID(id);
     res.send(training);
   });
+
+router.route("/user-trainings/:trainingId/delete").delete(async (req, res) => {
+  console.log("active");
+  const { trainingId } = req.body;
+  const deleteCustomTraining = await queries.deleteCustomTraining(trainingId);
+  return res.send(deleteCustomTraining);
+});

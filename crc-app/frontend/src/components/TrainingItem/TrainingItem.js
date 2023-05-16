@@ -178,9 +178,14 @@ export default function TrainingItem({
                 <i className={"bx bx-edit"}></i>
               </div>
             </Link>
-            <div className={"delete-training"}>
-              <i className={"bx bx-trash"}></i>
-            </div>
+            <Link
+              to={`${item.id}/delete`}
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              <div className={"delete-training"}>
+                <i className={"bx bx-trash"}></i>
+              </div>
+            </Link>
           </div>
         )}
       </div>
