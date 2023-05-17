@@ -14,8 +14,10 @@ import TrainingsRoot from "./pages/TrainingsRoot";
 import EditTrainingPage from "./pages/EditTraining";
 import DeletePage from "./pages/Delete";
 import IdRoot from "./pages/IdRoot";
+import AuthRoot from "./pages/AuthRoot";
 
 import NewTrainingItemProvider from "./context/newTrainingItemContext";
+import AuthTokenProvider from "./context/authContext";
 
 const router = createBrowserRouter([
   {
@@ -77,7 +79,11 @@ const router = createBrowserRouter([
       },
       {
         path: "auth",
-        element: <AuthenticationPage />,
+        element: <AuthRoot />,
+        children: [
+          { path: "login", element: <AuthenticationPage /> },
+          { path: "signup", element: <AuthenticationPage /> },
+        ],
       },
     ],
   },
@@ -85,8 +91,10 @@ const router = createBrowserRouter([
 
 export default function App() {
   return (
-    <NewTrainingItemProvider>
-      <RouterProvider router={router} />
-    </NewTrainingItemProvider>
+    <AuthTokenProvider>
+      <NewTrainingItemProvider>
+        <RouterProvider router={router} />
+      </NewTrainingItemProvider>
+    </AuthTokenProvider>
   );
 }

@@ -1,5 +1,6 @@
 import * as queries from "../database.js";
 import express from "express";
+import { authenticateToken } from "../utils/authToken.js";
 
 export const router = express.Router();
 
@@ -21,8 +22,9 @@ router
     res.send(deleteTraining);
   });
 
-router.route("/user-trainings").get(async (req, res) => {
-  const myTrainings = await queries.getAllUserTrainings();
+router.route("/user-trainings").get(authenticateToken, async (req, res) => {
+  const email = req.email.email;
+  const myTrainings = await queries.getAllUserTrainings(email);
   res.json(myTrainings);
 });
 

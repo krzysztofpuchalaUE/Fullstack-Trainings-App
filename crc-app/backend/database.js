@@ -40,9 +40,10 @@ export const getIsRegistered = async () => {
   return result;
 };
 
-export const getAllUserTrainings = async () => {
+export const getAllUserTrainings = async (userEmail) => {
   const [result] = await connectionPool.query(
-    "SELECT Trainings.id, Trainings.training_title, Trainings.training_start_date, Trainings.training_end_date, Trainings.training_start_time, Trainings.training_end_time, Trainings.training_language, Trainings.training_description,Trainings.training_level, Trainings.training_category,Trainings.training_location,Trainings.trainer_id,Trainings.training_icon FROM Trainings INNER JOIN User_trainings ON Trainings.trainer_id = User_trainings.trainer_id AND Trainings.id = User_trainings.training_id"
+    "SELECT Trainings.id, Trainings.training_title, Trainings.training_start_date, Trainings.training_end_date, Trainings.training_start_time, Trainings.training_end_time, Trainings.training_language, Trainings.training_description,Trainings.training_level, Trainings.training_category,Trainings.training_location,Trainings.trainer_id,Trainings.training_icon FROM Trainings INNER JOIN User_trainings ON Trainings.trainer_id = User_trainings.trainer_id AND Trainings.id = User_trainings.training_id WHERE User_trainings.user_email = ?",
+    [userEmail]
   );
   return result;
 };
@@ -150,6 +151,22 @@ export const deleteCustomTraining = async (id) => {
   const [result] = await connectionPool.query(
     "DELETE User_trainings, Trainings FROM User_trainings INNER JOIN Trainings ON User_trainings.training_id = Trainings.id AND User_trainings.trainer_id = Trainings.trainer_id WHERE Trainings.id = ?",
     [id]
+  );
+  return result;
+};
+
+export const registerUser = async (firstName, lastName, email, password) => {
+  const [result] = await connectionPool.query(
+    `INSERT INTO Users (user_first_name, user_last_name, user_email, user_password) VALUES (?, ?, ?, ?)`,
+    [firstName, lastName, email, password]
+  );
+  return result;
+};
+
+export const loginUser = async (userEmail) => {
+  const [result] = await connectionPool.query(
+    `SELECT user_password FROM Users WHERE user_email = ?`,
+    [userEmail]
   );
   return result;
 };
