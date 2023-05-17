@@ -2,6 +2,7 @@ import { useCallback, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 
 import { newTrainingItemContext } from "../../context/newTrainingItemContext";
+import { authContext } from "../../context/authContext";
 
 import "./TrainingItem.scss";
 import useHttp from "../../hooks/useHttp";
@@ -20,6 +21,7 @@ export default function TrainingItem({
   );
 
   const newTrainingItemCtx = useContext(newTrainingItemContext);
+  const authCtx = useContext(authContext);
 
   const expandDescription = {
     chevron: "rotate-chevron-up",
@@ -60,10 +62,15 @@ export default function TrainingItem({
     const register = () => {
       postTraining(
         "http://localhost:8800/trainings",
-        setConfig("POST", {
-          trainingId: item?.id,
-          trainerId: item?.trainerId,
-        })
+        setConfig(
+          "POST",
+          {
+            trainingId: item?.id,
+            trainerId: item?.trainerId,
+          },
+          true,
+          authCtx.authToken
+        )
       );
       setUserRegistered(!userRegistered);
       registerAction();
