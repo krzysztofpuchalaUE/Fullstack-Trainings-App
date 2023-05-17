@@ -9,9 +9,12 @@ export default function useHttp(applyData) {
     try {
       const response = await fetch(url, {
         method: requestConfig?.method,
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: requestConfig?.headers
+          ? requestConfig.headers
+          : {
+              "Content-Type": "application/json",
+            },
+
         body: requestConfig?.body,
       });
 

@@ -73,8 +73,7 @@ export default function AuthForm() {
           data,
         })
       );
-      authCtx.onSetToken(response.authToken);
-      console.log(authCtx.authToken);
+      return authCtx.onSetToken(response.authToken);
     };
     loginUserAuth(loginData);
     // resetEmailInputField();
