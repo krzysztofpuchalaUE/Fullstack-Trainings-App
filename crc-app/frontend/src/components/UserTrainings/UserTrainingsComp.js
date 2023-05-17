@@ -7,13 +7,15 @@ import TrainingItem from "../TrainingItem/TrainingItem";
 import NewTrainingForm from "../NewTraining/NewTrainingForm";
 import { Link } from "react-router-dom";
 
-import { requestGetConfig } from "../../utils/requestConfig";
 import { formatTrainingData } from "../../utils/formatTrainingData";
+import { authContext } from "../../context/authContext";
+import { setConfig } from "../../utils/requestConfig";
 
 export default function UserTrainingsComp({ isNewTraining, isEdited }) {
   const [userTrainings, setUserTrainings] = useState([]);
   const [watchedTraining, setWatchedTraining] = useState({});
   const newTrainingItemCtx = useContext(newTrainingItemContext);
+  const authCtx = useContext(authContext);
   const [trainingId, setTrainingId] = useState("");
 
   const applyData = (data) => {
@@ -33,7 +35,7 @@ export default function UserTrainingsComp({ isNewTraining, isEdited }) {
     async function getMyTrainings() {
       const myTrainings = await fetchMyTrainings(
         "http://localhost:8800/user-trainings",
-        requestGetConfig
+        setConfig("GET", null, true, authCtx.authToken)
       );
       setUserTrainings(myTrainings);
     }
