@@ -79,9 +79,14 @@ export default function TrainingItem({
     const unregister = () => {
       postTraining(
         "http://localhost:8800/trainings",
-        setConfig("DELETE", {
-          trainingId: item?.id,
-        })
+        setConfig(
+          "DELETE",
+          {
+            trainingId: item?.id,
+          },
+          true,
+          authCtx.authToken
+        )
       );
       setUserRegistered(!userRegistered);
     };
