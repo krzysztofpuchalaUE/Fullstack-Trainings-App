@@ -5,7 +5,7 @@ export const authContext = React.createContext({
   onSetToken: () => {},
 });
 
-const authTokenProvider = ({ chlidren }) => {
+const AuthTokenProvider = ({ chlidren }) => {
   const [authToken, setAuthToken] = useState(null);
 
   const onSetToken = (string) => {
@@ -24,4 +24,4 @@ const authTokenProvider = ({ chlidren }) => {
   );
 };
 
-export default authTokenProvider;
+export default AuthTokenProvider;

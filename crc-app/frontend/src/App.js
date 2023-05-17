@@ -17,6 +17,7 @@ import IdRoot from "./pages/IdRoot";
 import AuthRoot from "./pages/AuthRoot";
 
 import NewTrainingItemProvider from "./context/newTrainingItemContext";
+import AuthTokenProvider from "./context/authContext";
 
 const router = createBrowserRouter([
   {
@@ -90,8 +91,10 @@ const router = createBrowserRouter([
 
 export default function App() {
   return (
-    <NewTrainingItemProvider>
-      <RouterProvider router={router} />
-    </NewTrainingItemProvider>
+    <AuthTokenProvider>
+      <NewTrainingItemProvider>
+        <RouterProvider router={router} />
+      </NewTrainingItemProvider>
+    </AuthTokenProvider>
   );
 }
