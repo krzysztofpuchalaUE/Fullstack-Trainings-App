@@ -15,3 +15,7 @@ export const requestGetConfig = {
     "Content-Type": "application/json",
   },
 };
+
+export const requestAuthorizationHeaders = {
+  headers: { Authorization: "Bearer " },
+};

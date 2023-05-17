@@ -23,6 +23,8 @@ export default function useHttp(applyData) {
 
       const appliedData = applyData(data);
 
+      console.log(data);
+
       setIsLoading(false);
       return appliedData;
     } catch (err) {

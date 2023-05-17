@@ -64,17 +64,18 @@ export default function AuthForm() {
   const onLoginFormHandler = (e) => {
     e.preventDefault();
     const loginData = [email, password];
-    const loginUserAuth = (data) => {
-      loginUser(
-        "http://localhost:8800/login",
+    const loginUserAuth = async (data) => {
+      const response = await loginUser(
+        "http://localhost:8800/auth/login",
         setConfig("POST", {
           data,
         })
       );
+      return response.authToken;
     };
     loginUserAuth(loginData);
-    resetEmailInputField();
-    resetPasswordInputField();
+    // resetEmailInputField();
+    // resetPasswordInputField();
   };
 
   const onRegisterFormHandler = (e) => {
