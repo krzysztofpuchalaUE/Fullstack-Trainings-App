@@ -4,8 +4,9 @@ import { setConfig } from "../../utils/requestConfig";
 
 import useHttp from "../../hooks/useHttp";
 import useForm from "../../hooks/useForm";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import { authContext } from "../../context/authContext";
 
 export default function AuthForm() {
   const mode = window.location.href.split("/").at(-1);
@@ -17,6 +18,7 @@ export default function AuthForm() {
   const [registerLastNameIsValid, setRegisterLastNameIsValid] = useState(true);
   const { requestForData: loginUser } = useHttp((value) => value);
   const { requestForData: registerUser } = useHttp((value) => value);
+  const authCtx = useContext(authContext);
 
   const {
     value: password,
@@ -71,7 +73,8 @@ export default function AuthForm() {
           data,
         })
       );
-      return response.authToken;
+      authCtx.onSetToken(response.authToken);
+      console.log(authCtx.authToken);
     };
     loginUserAuth(loginData);
     // resetEmailInputField();
