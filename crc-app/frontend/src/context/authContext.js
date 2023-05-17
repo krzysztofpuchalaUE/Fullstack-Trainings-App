@@ -2,14 +2,14 @@ import React, { useState } from "react";
 
 export const authContext = React.createContext({
   authToken: "",
-  onSetToken: () => {},
+  onSetToken: () => "",
 });
 
-const AuthTokenProvider = ({ chlidren }) => {
+const AuthTokenProvider = ({ children }) => {
   const [authToken, setAuthToken] = useState(null);
 
-  const onSetToken = (string) => {
-    setAuthToken(string);
+  const onSetToken = (str) => {
+    setAuthToken(str);
   };
 
   return (
@@ -19,7 +19,7 @@ const AuthTokenProvider = ({ chlidren }) => {
         onSetToken,
       }}
     >
-      {chlidren}
+      {children}
     </authContext.Provider>
   );
 };
