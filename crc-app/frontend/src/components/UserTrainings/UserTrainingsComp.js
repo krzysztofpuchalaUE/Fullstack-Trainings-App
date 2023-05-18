@@ -20,6 +20,7 @@ export default function UserTrainingsComp({ isNewTraining, isEdited }) {
 
   const applyData = (data) => {
     const appliedData = data.map((item) => {
+      console.log(item);
       return formatTrainingData(item);
     });
     return appliedData;
