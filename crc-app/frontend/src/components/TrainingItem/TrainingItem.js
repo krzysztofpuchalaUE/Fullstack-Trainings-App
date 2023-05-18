@@ -192,7 +192,7 @@ export default function TrainingItem({
         <div className={`description-chevron ${showClass.chevron}`}>
           <i className={"bx bxs-chevron-down"} onClick={onShowDescription}></i>
         </div>
-        {isUserTraining && (
+        {isUserTraining && item.createdByUser && (
           <div className={"item-description-label"}>
             <Link
               to={`${item.id}/edit`}

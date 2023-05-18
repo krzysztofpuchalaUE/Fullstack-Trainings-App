@@ -16,12 +16,13 @@ export default function UserTrainingsComp({ isNewTraining, isEdited }) {
   const [watchedTraining, setWatchedTraining] = useState({});
   const newTrainingItemCtx = useContext(newTrainingItemContext);
   const authCtx = useContext(authContext);
-  const [trainingId, setTrainingId] = useState("");
 
   const applyData = (data) => {
-    const appliedData = data.map((item) => {
-      console.log(item);
-      return formatTrainingData(item);
+    const { userId, myTrainings } = data;
+    const appliedData = myTrainings.map((item) => {
+      const formattedItem = formatTrainingData(item);
+      formattedItem.createdByUser = userId[0].id === item.trainer_id;
+      return formattedItem;
     });
     return appliedData;
   };
@@ -33,14 +34,14 @@ export default function UserTrainingsComp({ isNewTraining, isEdited }) {
   } = useHttp(applyData);
 
   useEffect(() => {
-    async function getMyTrainings() {
+    async function getUserTrainings() {
       const myTrainings = await fetchMyTrainings(
         "http://localhost:8800/user-trainings",
         setConfig("GET", null, true, authCtx.authToken)
       );
       setUserTrainings(myTrainings);
     }
-    getMyTrainings();
+    getUserTrainings();
   }, []);
 
   const onShowDetails = (item) => {
@@ -84,23 +85,24 @@ export default function UserTrainingsComp({ isNewTraining, isEdited }) {
             <h3>{watchedTraining?.title}</h3>
             <p>{watchedTraining?.description}</p>
             <div>
-              {Object.keys(watchedTraining).length > 0 && (
-                <div className={"item-features"}>
-                  <Link
-                    to={`${watchedTraining.id}/edit`}
-                    style={{ textDecoration: "none", color: "inherit" }}
-                  >
-                    <div className={"update-training"}>
-                      <i className={"bx bx-edit"}></i>
-                      <p>Update</p>
+              {Object.keys(watchedTraining).length > 0 &&
+                watchedTraining.createdByUser && (
+                  <div className={"item-features"}>
+                    <Link
+                      to={`${watchedTraining.id}/edit`}
+                      style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      <div className={"update-training"}>
+                        <i className={"bx bx-edit"}></i>
+                        <p>Update</p>
+                      </div>
+                    </Link>
+                    <div className={"delete-training"}>
+                      <i className={"bx bx-trash"}></i>
+                      <p>Delete</p>
                     </div>
-                  </Link>
-                  <div className={"delete-training"}>
-                    <i className={"bx bx-trash"}></i>
-                    <p>Delete</p>
                   </div>
-                </div>
-              )}
+                )}
             </div>
           </div>
         </div>
