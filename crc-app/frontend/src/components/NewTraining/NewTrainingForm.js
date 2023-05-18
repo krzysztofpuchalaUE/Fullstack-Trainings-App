@@ -215,10 +215,15 @@ export default function NewTrainingForm({ isEdit }) {
         const updateTraining = () => {
           postCustomTraining(
             `http://localhost:8800/user-trainings/${trainingId}/edit`,
-            setConfig("PATCH", {
-              trainingId,
-              data,
-            })
+            setConfig(
+              "PATCH",
+              {
+                trainingId,
+                data,
+              },
+              true,
+              authCtx.authToken
+            )
           );
         };
         updateTraining();
