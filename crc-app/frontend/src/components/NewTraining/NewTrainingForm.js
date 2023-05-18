@@ -281,10 +281,14 @@ export default function NewTrainingForm({ isEdit }) {
     newTrainingCtx.clearTrainingItem();
     if (isEdit) {
       async function getTraining() {
-        const getTraining = await getTrainingByID(
+        if (authCtx.authToken === null) {
+          return navigate("/auth/login");
+        }
+        const getTrainingData = await getTrainingByID(
           `http://localhost:8800/user-trainings/${trainingId}/edit`,
-          requestGetConfig
+          setConfig("GET", null, true, authCtx.authToken)
         );
+        const getTraining = await getTrainingData.training;
         const formattedData = formatTrainingData(getTraining);
         setTitleInitialValue(formattedData.title);
         setCategoryInitialValue(formattedData.category);
