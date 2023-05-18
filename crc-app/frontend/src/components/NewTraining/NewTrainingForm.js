@@ -10,6 +10,7 @@ import { newTrainingItemContext } from "../../context/newTrainingItemContext";
 
 import Form from "../Reusable/Form";
 import "./NewTrainingForm.scss";
+import { authContext } from "../../context/authContext";
 
 export default function NewTrainingForm({ isEdit }) {
   const [image, setImage] = useState(null);
@@ -22,6 +23,7 @@ export default function NewTrainingForm({ isEdit }) {
   const { trainingId } = useParams();
   const navigate = useNavigate();
   const newTrainingCtx = useContext(newTrainingItemContext);
+  const authCtx = useContext(authContext);
 
   const {
     requestForData: postCustomTraining,
@@ -195,9 +197,14 @@ export default function NewTrainingForm({ isEdit }) {
         const addCustomTraining = () => {
           postCustomTraining(
             "http://localhost:8800/user-trainings/new-training",
-            setConfig("POST", {
-              data,
-            })
+            setConfig(
+              "POST",
+              {
+                data,
+              },
+              true,
+              authCtx.authToken
+            )
           );
         };
         console.log(data);
@@ -231,7 +238,7 @@ export default function NewTrainingForm({ isEdit }) {
     }
 
     setSend(true);
-    setTimeout(() => navigate("/user-trainings"), 3000);
+    // setTimeout(() => navigate("/user-trainings"), 3000);
   };
 
   useEffect(() => {
@@ -419,7 +426,7 @@ export default function NewTrainingForm({ isEdit }) {
             </div>
             <button
               type="submit"
-              disabled={!formIsValid || send}
+              // disabled={!formIsValid || send}
               className="submit-button"
             >
               {!send && createLink && "Create"}
