@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { setConfig } from "../../utils/requestConfig.js";
 import { formatTrainingData } from "../../utils/formatTrainingData.js";
 import { authContext } from "../../context/authContext.js";
+import { useNavigate } from "react-router-dom";
 
 import TrainingItem from "../TrainingItem/TrainingItem";
 import useHttp from "../../hooks/useHttp";
@@ -24,6 +25,7 @@ export default function Trainings({ trainingCategory }) {
   const [trainings, setTrainings] = useState([]);
   const [registerAction, setRegisterAction] = useState(false);
   const authCtx = useContext(authContext);
+  const navigate = useNavigate();
 
   const applyData = (data) => {
     const { isRegistered, trainings } = data;
@@ -48,6 +50,9 @@ export default function Trainings({ trainingCategory }) {
 
   useEffect(() => {
     async function getTrainings() {
+      if (authCtx.authToken === null) {
+        return navigate("/auth/login");
+      }
       const getTrainings = await fetchTrainings(
         "http://localhost:8800/trainings",
         setConfig("GET", null, true, authCtx.authToken)

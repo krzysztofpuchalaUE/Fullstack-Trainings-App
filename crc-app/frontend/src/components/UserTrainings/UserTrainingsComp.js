@@ -5,7 +5,7 @@ import { newTrainingItemContext } from "../../context/newTrainingItemContext";
 
 import TrainingItem from "../TrainingItem/TrainingItem";
 import NewTrainingForm from "../NewTraining/NewTrainingForm";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { formatTrainingData } from "../../utils/formatTrainingData";
 import { authContext } from "../../context/authContext";
@@ -14,6 +14,7 @@ import { setConfig } from "../../utils/requestConfig";
 export default function UserTrainingsComp({ isNewTraining, isEdited }) {
   const [userTrainings, setUserTrainings] = useState([]);
   const [watchedTraining, setWatchedTraining] = useState({});
+  const navigate = useNavigate();
   const newTrainingItemCtx = useContext(newTrainingItemContext);
   const authCtx = useContext(authContext);
 
@@ -35,6 +36,9 @@ export default function UserTrainingsComp({ isNewTraining, isEdited }) {
 
   useEffect(() => {
     async function getUserTrainings() {
+      if (authCtx.authToken === null) {
+        return navigate("/auth/login");
+      }
       const myTrainings = await fetchMyTrainings(
         "http://localhost:8800/user-trainings",
         setConfig("GET", null, true, authCtx.authToken)
