@@ -33,7 +33,6 @@ export default function Categories({ setTrainingCategory }) {
           return category.training_category;
         })
       );
-      console.log(categories);
     }
     getCategories();
   }, []);
