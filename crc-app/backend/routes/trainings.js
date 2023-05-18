@@ -6,26 +6,38 @@ export const router = express.Router();
 
 router
   .route("/trainings")
-  .get(async (req, res) => {
+  .get(authenticateToken, async (req, res) => {
+    const email = req.email.email;
     const trainings = await queries.getAllTrainings();
-    const isRegistered = await queries.getIsRegistered();
-    return res.json({ trainings, isRegistered });
+    const isRegistered = await queries.getIsRegistered(email);
+    const allCategories = await queries.getAllCategories();
+    return res.json({ trainings, isRegistered, allCategories });
   })
-  .post(async (req, res) => {
+  .post(authenticateToken, async (req, res) => {
     const { trainingId, trainerId } = req.body;
-    const addTraining = await queries.registerOnTraining(trainingId, trainerId);
+    const email = req.email.email;
+    const addTraining = await queries.registerOnTraining(
+      trainingId,
+      trainerId,
+      email
+    );
     res.send(addTraining);
   })
-  .delete(async (req, res) => {
+  .delete(authenticateToken, async (req, res) => {
     const { trainingId } = req.body;
-    const deleteTraining = await queries.unregisterFromTraining(trainingId);
+    const email = req.email.email;
+    const deleteTraining = await queries.unregisterFromTraining(
+      trainingId,
+      email
+    );
     res.send(deleteTraining);
   });
 
 router.route("/user-trainings").get(authenticateToken, async (req, res) => {
   const email = req.email.email;
   const myTrainings = await queries.getAllUserTrainings(email);
-  res.json(myTrainings);
+  const userId = await queries.getUserByEmail(email);
+  res.json({ myTrainings, userId });
 });
 
 router.get("/trainings/:category", async (req, res) => {
@@ -34,42 +46,61 @@ router.get("/trainings/:category", async (req, res) => {
   res.send(training);
 });
 
-router.post("/user-trainings/new-training", async (req, res) => {
-  const {
-    title,
-    category,
-    startDate,
-    endDate,
-    startTime,
-    endTime,
-    language,
-    location,
-    description,
-    level,
-    trainerId,
-    iconUrl,
-  } = req.body.data;
-  console.log(req.body.data);
-  const training = await queries.createTraining(
-    title,
-    category,
-    startDate,
-    endDate,
-    startTime,
-    endTime,
-    language,
-    location,
-    description,
-    level,
-    trainerId,
-    iconUrl
-  );
-  res.send(training);
-});
+router.post(
+  "/user-trainings/new-training",
+  authenticateToken,
+  async (req, res) => {
+    const email = req.email.email;
+    const trainerData = await queries.getUserByEmail(email);
+    const { user_first_name, user_last_name, id: trainerId } = trainerData[0];
+    const {
+      title,
+      category,
+      startDate,
+      endDate,
+      startTime,
+      endTime,
+      language,
+      location,
+      description,
+      level,
+      iconUrl,
+    } = req.body.data;
+    const training = await queries.createTraining(
+      title,
+      category,
+      startDate,
+      endDate,
+      startTime,
+      endTime,
+      language,
+      location,
+      description,
+      level,
+      user_first_name.concat(" ", user_last_name),
+      trainerId,
+      iconUrl
+    );
+    const trainingDbId = await queries.getTrainingByProperties(
+      title,
+      category,
+      trainerId
+    );
+    const register = await queries.registerOnTraining(
+      trainingDbId[0].id,
+      trainerId,
+      email
+    );
+    res.send(training);
+  }
+);
 
 router
   .route("/user-trainings/:trainingId/edit")
-  .patch(async (req, res) => {
+  .patch(authenticateToken, async (req, res) => {
+    const email = req.email.email;
+    const trainerData = await queries.getUserByEmail(email);
+    const { user_first_name, user_last_name, id: trainerId } = trainerData[0];
     const { trainingId, data } = req.body;
     const {
       title,
@@ -82,7 +113,6 @@ router
       location,
       description,
       level,
-      trainerId,
       iconUrl,
     } = data;
     const updatedTraining = await queries.updateTraining(
@@ -97,6 +127,7 @@ router
       level,
       category,
       location,
+      user_first_name.concat(" ", user_last_name),
       trainerId,
       iconUrl
     );
@@ -109,7 +140,6 @@ router
   });
 
 router.route("/user-trainings/:trainingId/delete").delete(async (req, res) => {
-  console.log("active");
   const { trainingId } = req.body;
   const deleteCustomTraining = await queries.deleteCustomTraining(trainingId);
   return res.send(deleteCustomTraining);

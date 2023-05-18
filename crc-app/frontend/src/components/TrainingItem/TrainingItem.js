@@ -2,6 +2,7 @@ import { useCallback, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 
 import { newTrainingItemContext } from "../../context/newTrainingItemContext";
+import { authContext } from "../../context/authContext";
 
 import "./TrainingItem.scss";
 import useHttp from "../../hooks/useHttp";
@@ -18,8 +19,10 @@ export default function TrainingItem({
   const [userRegistered, setUserRegistered] = useState(
     item?.isRegistered || null
   );
+  const [isCreatedByUser, setIsCreatedByUser] = useState(false);
 
   const newTrainingItemCtx = useContext(newTrainingItemContext);
+  const authCtx = useContext(authContext);
 
   const expandDescription = {
     chevron: "rotate-chevron-up",
@@ -56,14 +59,30 @@ export default function TrainingItem({
     isError: postTrainingError,
   } = useHttp(applyPostData);
 
+  const { requestForData: getIsCreatedByUser } = useHttp((value) => value);
+
+  const checkIsCreatedByUser = () => {
+    const checkIsCreated = () => {
+      getIsCreatedByUser(
+        "http://localhost:8800/user-trainings",
+        setConfig("GET", null, true, authCtx.authToken)
+      );
+    };
+  };
+
   const onTrainingRegisterHandler = () => {
     const register = () => {
       postTraining(
         "http://localhost:8800/trainings",
-        setConfig("POST", {
-          trainingId: item?.id,
-          trainerId: item?.trainerId,
-        })
+        setConfig(
+          "POST",
+          {
+            trainingId: item?.id,
+            trainerId: item?.trainerId,
+          },
+          true,
+          authCtx.authToken
+        )
       );
       setUserRegistered(!userRegistered);
       registerAction();
@@ -72,9 +91,14 @@ export default function TrainingItem({
     const unregister = () => {
       postTraining(
         "http://localhost:8800/trainings",
-        setConfig("DELETE", {
-          trainingId: item?.id,
-        })
+        setConfig(
+          "DELETE",
+          {
+            trainingId: item?.id,
+          },
+          true,
+          authCtx.authToken
+        )
       );
       setUserRegistered(!userRegistered);
     };
@@ -151,8 +175,8 @@ export default function TrainingItem({
             <i className={"bx bx-user-circle"}></i> <p>Trainer</p>
           </div>
           <div className={"trainer"}>
-            <p>{item?.trainerId}</p>
-            <p>{item?.trainerId}</p>
+            <p>{item?.trainerFirstName}</p>
+            <p>{item?.trainerLastName}</p>
           </div>
         </div>
         <div className={"item-description-label"}>
@@ -168,7 +192,7 @@ export default function TrainingItem({
         <div className={`description-chevron ${showClass.chevron}`}>
           <i className={"bx bxs-chevron-down"} onClick={onShowDescription}></i>
         </div>
-        {isUserTraining && (
+        {isUserTraining && item.createdByUser && (
           <div className={"item-description-label"}>
             <Link
               to={`${item.id}/edit`}

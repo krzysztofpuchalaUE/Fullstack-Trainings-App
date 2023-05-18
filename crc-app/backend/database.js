@@ -17,32 +17,45 @@ export const getAllTrainings = async () => {
   return result;
 };
 
-export const registerOnTraining = async (trainingId, trainerId) => {
+export const registerOnTraining = async (trainingId, trainerId, email) => {
   const [result] = await connectionPool.query(
-    `INSERT INTO User_trainings (trainer_id, training_id) VALUES (?,?)`,
-    [trainerId, trainingId]
+    `INSERT INTO User_trainings (trainer_id, training_id, user_email) VALUES (?,?,?)`,
+    [trainerId, trainingId, email]
   );
   return result;
 };
 
-export const unregisterFromTraining = async (trainingId) => {
+export const unregisterFromTraining = async (trainingId, email) => {
   const [result] = await connectionPool.query(
-    "DELETE FROM User_trainings WHERE User_trainings.training_id = ?",
-    [trainingId]
+    "DELETE FROM User_trainings WHERE User_trainings.training_id = ? AND User_trainings.user_email = ?",
+    [trainingId, email]
   );
   return result;
 };
 
-export const getIsRegistered = async () => {
+export const getIsRegistered = async (email) => {
   const [result] = await connectionPool.query(
-    "SELECT training_id FROM User_trainings INNER JOIN Trainings ON User_trainings.training_id = Trainings.id AND User_trainings.trainer_id = Trainings.trainer_id WHERE User_trainings.training_id = Trainings.id"
+    "SELECT training_id FROM User_trainings INNER JOIN Trainings ON User_trainings.training_id = Trainings.id AND User_trainings.trainer_id = Trainings.trainer_id WHERE User_trainings.training_id = Trainings.id AND User_trainings.user_email = ?",
+    [email]
+  );
+  return result;
+};
+
+export const getTrainingByProperties = async (
+  trainingTitle,
+  trainingCategory,
+  trainerId
+) => {
+  const [result] = await connectionPool.query(
+    "SELECT Trainings.id FROM Trainings WHERE Trainings.training_title = ? AND Trainings.training_category = ? AND Trainings.trainer_id = ?",
+    [trainingTitle, trainingCategory, trainerId]
   );
   return result;
 };
 
 export const getAllUserTrainings = async (userEmail) => {
   const [result] = await connectionPool.query(
-    "SELECT Trainings.id, Trainings.training_title, Trainings.training_start_date, Trainings.training_end_date, Trainings.training_start_time, Trainings.training_end_time, Trainings.training_language, Trainings.training_description,Trainings.training_level, Trainings.training_category,Trainings.training_location,Trainings.trainer_id,Trainings.training_icon FROM Trainings INNER JOIN User_trainings ON Trainings.trainer_id = User_trainings.trainer_id AND Trainings.id = User_trainings.training_id WHERE User_trainings.user_email = ?",
+    "SELECT Trainings.id, Trainings.training_title, Trainings.training_start_date, Trainings.training_end_date, Trainings.training_start_time, Trainings.training_end_time, Trainings.training_language, Trainings.training_description,Trainings.training_level, Trainings.training_category,Trainings.training_location, Trainings.trainer, Trainings.trainer_id,Trainings.training_icon FROM Trainings INNER JOIN User_trainings ON Trainings.trainer_id = User_trainings.trainer_id AND Trainings.id = User_trainings.training_id WHERE User_trainings.user_email = ?",
     [userEmail]
   );
   return result;
@@ -75,6 +88,7 @@ export const createTraining = async (
   location,
   description,
   level,
+  trainer,
   trainer_id,
   iconUrl
 ) => {
@@ -90,8 +104,9 @@ export const createTraining = async (
     training_level,
     training_category,
     training_location,
+    trainer,
     trainer_id,
-    training_icon) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`,
+    training_icon) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)`,
     [
       title,
       startDate,
@@ -103,6 +118,7 @@ export const createTraining = async (
       level,
       category,
       location,
+      trainer,
       trainer_id,
       iconUrl,
     ]
@@ -122,11 +138,12 @@ export const updateTraining = async (
   level,
   category,
   location,
+  trainer,
   trainer_id,
   iconUrl
 ) => {
   const [result] = await connectionPool.query(
-    `UPDATE Trainings SET training_title = ?, training_start_date = ?, training_end_date = ?, training_start_time = ?, training_end_time = ?, training_language = ?, training_description = ?,training_level = ?, training_category = ?,training_location = ?,trainer_id = ?,training_icon = '?'
+    `UPDATE Trainings SET training_title = ?, training_start_date = ?, training_end_date = ?, training_start_time = ?, training_end_time = ?, training_language = ?, training_description = ?,training_level = ?, training_category = ?,training_location = ?, trainer = ?, trainer_id = ?,training_icon = '?'
     WHERE id = ?`,
     [
       title,
@@ -139,6 +156,7 @@ export const updateTraining = async (
       level,
       category,
       location,
+      trainer,
       trainer_id,
       iconUrl,
       id,
@@ -167,6 +185,25 @@ export const loginUser = async (userEmail) => {
   const [result] = await connectionPool.query(
     `SELECT user_password FROM Users WHERE user_email = ?`,
     [userEmail]
+  );
+  return result;
+};
+
+export const checkCreatedByUser = async (userEmail) => {
+  const [result] = await connectionPool.query();
+};
+
+export const getUserByEmail = async (userEmail) => {
+  const [result] = await connectionPool.query(
+    "SELECT id, user_first_name, user_last_name FROM Users WHERE user_email = ?",
+    [userEmail]
+  );
+  return result;
+};
+
+export const getAllCategories = async () => {
+  const [result] = await connectionPool.query(
+    "SELECT DISTINCT Trainings.training_category FROM Trainings"
   );
   return result;
 };

@@ -10,6 +10,7 @@ import { newTrainingItemContext } from "../../context/newTrainingItemContext";
 
 import Form from "../Reusable/Form";
 import "./NewTrainingForm.scss";
+import { authContext } from "../../context/authContext";
 
 export default function NewTrainingForm({ isEdit }) {
   const [image, setImage] = useState(null);
@@ -22,6 +23,7 @@ export default function NewTrainingForm({ isEdit }) {
   const { trainingId } = useParams();
   const navigate = useNavigate();
   const newTrainingCtx = useContext(newTrainingItemContext);
+  const authCtx = useContext(authContext);
 
   const {
     requestForData: postCustomTraining,
@@ -195,12 +197,16 @@ export default function NewTrainingForm({ isEdit }) {
         const addCustomTraining = () => {
           postCustomTraining(
             "http://localhost:8800/user-trainings/new-training",
-            setConfig("POST", {
-              data,
-            })
+            setConfig(
+              "POST",
+              {
+                data,
+              },
+              true,
+              authCtx.authToken
+            )
           );
         };
-        console.log(data);
         addCustomTraining();
       }
 
@@ -208,26 +214,31 @@ export default function NewTrainingForm({ isEdit }) {
         const updateTraining = () => {
           postCustomTraining(
             `http://localhost:8800/user-trainings/${trainingId}/edit`,
-            setConfig("PATCH", {
-              trainingId,
-              data,
-            })
+            setConfig(
+              "PATCH",
+              {
+                trainingId,
+                data,
+              },
+              true,
+              authCtx.authToken
+            )
           );
         };
         updateTraining();
       }
 
-      // resetTitleInputField();
-      // resetCategoryInputField();
-      // resetStartDateInputField();
-      // resetEndDateInputField();
-      // resetStartTimeInputField();
-      // resetEndTimeInputField();
-      // resetLanguageInputField();
-      // resetLevelInputField();
-      // resetLocationInputField();
-      // resetDescriptionInputField();
-      // setImage(null);
+      resetTitleInputField();
+      resetCategoryInputField();
+      resetStartDateInputField();
+      resetEndDateInputField();
+      resetStartTimeInputField();
+      resetEndTimeInputField();
+      resetLanguageInputField();
+      resetLevelInputField();
+      resetLocationInputField();
+      resetDescriptionInputField();
+      setImage(null);
     }
 
     setSend(true);
