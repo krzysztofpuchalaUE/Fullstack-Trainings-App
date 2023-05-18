@@ -1,18 +1,13 @@
 import { NavLink } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { authContext } from "../../context/authContext";
 import { useNavigate } from "react-router-dom";
 
 import "./Nav.scss";
 
 export default function NavBar() {
-  const [displayLogIn, setDisplayLogIn] = useState(false);
   const authCtx = useContext(authContext);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    console.log(authCtx.authToken);
-  });
 
   const onLogout = () => {
     authCtx.authToken = "";

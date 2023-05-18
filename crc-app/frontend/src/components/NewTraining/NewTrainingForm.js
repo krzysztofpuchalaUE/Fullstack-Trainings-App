@@ -207,7 +207,6 @@ export default function NewTrainingForm({ isEdit }) {
             )
           );
         };
-        console.log(data);
         addCustomTraining();
       }
 
@@ -229,21 +228,21 @@ export default function NewTrainingForm({ isEdit }) {
         updateTraining();
       }
 
-      // resetTitleInputField();
-      // resetCategoryInputField();
-      // resetStartDateInputField();
-      // resetEndDateInputField();
-      // resetStartTimeInputField();
-      // resetEndTimeInputField();
-      // resetLanguageInputField();
-      // resetLevelInputField();
-      // resetLocationInputField();
-      // resetDescriptionInputField();
-      // setImage(null);
+      resetTitleInputField();
+      resetCategoryInputField();
+      resetStartDateInputField();
+      resetEndDateInputField();
+      resetStartTimeInputField();
+      resetEndTimeInputField();
+      resetLanguageInputField();
+      resetLevelInputField();
+      resetLocationInputField();
+      resetDescriptionInputField();
+      setImage(null);
     }
 
     setSend(true);
-    // setTimeout(() => navigate("/user-trainings"), 3000);
+    setTimeout(() => navigate("/user-trainings"), 3000);
   };
 
   useEffect(() => {
@@ -431,7 +430,7 @@ export default function NewTrainingForm({ isEdit }) {
             </div>
             <button
               type="submit"
-              // disabled={!formIsValid || send}
+              disabled={!formIsValid || send}
               className="submit-button"
             >
               {!send && createLink && "Create"}

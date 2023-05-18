@@ -27,7 +27,6 @@ export default function Categories({ setTrainingCategory }) {
         setConfig("GET", null, true, authCtx.authToken)
       );
       const { allCategories } = getCategories;
-      console.log(allCategories);
       setCategories(
         allCategories.map((category) => {
           return category.training_category;

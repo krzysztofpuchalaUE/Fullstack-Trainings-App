@@ -5,7 +5,7 @@ import { setConfig } from "../../utils/requestConfig";
 import useHttp from "../../hooks/useHttp";
 import useForm from "../../hooks/useForm";
 import { useEffect, useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { authContext } from "../../context/authContext";
 
 export default function AuthForm() {
@@ -19,6 +19,7 @@ export default function AuthForm() {
   const { requestForData: loginUser } = useHttp((value) => value);
   const { requestForData: registerUser } = useHttp((value) => value);
   const authCtx = useContext(authContext);
+  const navigate = useNavigate();
 
   const {
     value: password,
@@ -73,17 +74,18 @@ export default function AuthForm() {
           data,
         })
       );
+      setTimeout(() => {
+        navigate("/trainings");
+      }, 1000);
       return authCtx.onSetToken(response.authToken);
     };
     loginUserAuth(loginData);
-    // resetEmailInputField();
-    // resetPasswordInputField();
+    resetEmailInputField();
+    resetPasswordInputField();
   };
 
   const onRegisterFormHandler = (e) => {
     e.preventDefault();
-
-    console.log("register");
 
     if (validFName && validLName && validEmail && validPassword)
       formIsValid = true;
@@ -104,12 +106,15 @@ export default function AuthForm() {
         );
       };
       registerUserAuth();
+      setTimeout(() => {
+        navigate("/auth/login");
+      }, 1000);
     }
 
-    // if (!validEmail) resetEmailInputField();
-    // if (!validPassword) resetPasswordInputField();
-    // if (!validFName) resetRegisterFirstNameInputField();
-    // if (!validLName) resetRegisterLastNameInputField();
+    if (!validEmail) resetEmailInputField();
+    if (!validPassword) resetPasswordInputField();
+    if (!validFName) resetRegisterFirstNameInputField();
+    if (!validLName) resetRegisterLastNameInputField();
 
     setReloadForm((prev) => !prev);
   };
