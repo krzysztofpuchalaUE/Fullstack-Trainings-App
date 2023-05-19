@@ -66,7 +66,7 @@ export default function Trainings({ trainingCategory }) {
 
   return (
     <>
-      {trainings?.length < 1 && (
+      {trainings?.length < 1 && !isLoading && (
         <div className={"trainings-container no-trainings"}>
           {" "}
           <h2>

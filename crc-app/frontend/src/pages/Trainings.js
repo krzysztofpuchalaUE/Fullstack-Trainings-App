@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 
 import Trainings from "../components/Trainings/Trainings";
 import Categories from "../components/Categories/Categories";
+import Loader from "../components/Reusable/Loader";
 
 export default function TrainingsPage() {
   const [trainingCategory, setTrainingCategory] = useState("");
@@ -15,6 +16,7 @@ export default function TrainingsPage() {
 
   return (
     <>
+      <Loader />
       <Categories setTrainingCategory={filterByCategory} />
       <Trainings trainingCategory={categoryURL.category} />
     </>
