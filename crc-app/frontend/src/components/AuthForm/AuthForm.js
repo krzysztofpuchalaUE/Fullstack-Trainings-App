@@ -16,8 +16,12 @@ export default function AuthForm() {
   const [registerFirstNameIsValid, setRegisterFirstNameIsvalid] =
     useState(true);
   const [registerLastNameIsValid, setRegisterLastNameIsValid] = useState(true);
-  const { requestForData: loginUser } = useHttp((value) => value);
-  const { requestForData: registerUser } = useHttp((value) => value);
+  const { requestForData: loginUser, isError: loginUserError } = useHttp(
+    (value) => value
+  );
+  const { requestForData: registerUser, isError: registerUserError } = useHttp(
+    (value) => value
+  );
   const authCtx = useContext(authContext);
   const navigate = useNavigate();
 
@@ -74,6 +78,7 @@ export default function AuthForm() {
           data,
         })
       );
+      if (!response) return;
       setTimeout(() => {
         navigate("/trainings");
       }, 300);
@@ -177,6 +182,9 @@ export default function AuthForm() {
             {userEmialIsValid === false && (
               <p className={"invalid-info"}>Email must contains '@'</p>
             )}
+            {mode === "login" && loginUserError && (
+              <p className={"invalid-info"}>Invalid email</p>
+            )}
           </div>
           <div className={"auth-property"}>
             <label htmlFor="password"> Password </label>
@@ -192,6 +200,9 @@ export default function AuthForm() {
               <p className={"invalid-info"}>
                 Password must be at least 7 characters
               </p>
+            )}
+            {mode === "login" && loginUserError && (
+              <p className={"invalid-info"}>Invalid password</p>
             )}
           </div>
           <div className={"links"}>

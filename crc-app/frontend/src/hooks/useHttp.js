@@ -6,6 +6,7 @@ export default function useHttp(applyData) {
 
   const request = async (url, requestConfig) => {
     setIsLoading(true);
+    setError(null);
     try {
       const response = await fetch(url, {
         method: requestConfig?.method,
@@ -19,20 +20,19 @@ export default function useHttp(applyData) {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to fetch data");
+        throw new Error("It looks like request failed");
       }
 
       const data = await response.json();
 
       const appliedData = applyData(data);
 
-      setIsLoading(false);
       return appliedData;
     } catch (err) {
-      console.log(err);
+      setError(err.message);
       setIsLoading(false);
-      setError(err);
     }
+    setIsLoading(false);
   };
 
   return {
