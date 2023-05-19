@@ -73,7 +73,9 @@ export default function TrainingItem({
       if (!data) return;
       const { userId } = data;
       const isTrainer = item?.trainerId !== userId[0].id;
-      setIsUserTrainer(isTrainer);
+      if (isTrainer === true) {
+        setIsUserTrainer(true);
+      }
     }
     getUserId();
   }, []);
@@ -221,23 +223,24 @@ export default function TrainingItem({
           </div>
         )}
       </div>
-      {!isUserTraining &&
-        !isCreate &&
-        isUserTrainer && ( // dokonczyc
-          <div
-            className={`register-btn ${
-              !userRegistered ? undefined : "unregsiter"
-            }`}
-            onClick={onTrainingRegisterHandler}
-          >
-            {postTrainingLoading
-              ? "Processing..."
-              : userRegistered
-              ? "Unregister"
-              : "Register"}
-            {postTrainingError && " failed"}
-          </div>
-        )}
+      {!isUserTraining && !isCreate && (
+        <button
+          className={`register-btn ${
+            !userRegistered ? undefined : "unregsiter"
+          }`}
+          onClick={onTrainingRegisterHandler}
+          disabled={!isUserTrainer}
+        >
+          {!isUserTrainer
+            ? "You are a trainer"
+            : postTrainingLoading
+            ? "Processing..."
+            : userRegistered
+            ? "Unregister"
+            : "Register"}
+          {postTrainingError && " failed"}
+        </button>
+      )}
     </div>
   );
 }
