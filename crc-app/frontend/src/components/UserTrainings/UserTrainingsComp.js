@@ -10,6 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { formatTrainingData } from "../../utils/formatTrainingData";
 import { authContext } from "../../context/authContext";
 import { setConfig } from "../../utils/requestConfig";
+import Loader from "../Reusable/Loader";
 
 export default function UserTrainingsComp({ isNewTraining, isEdited }) {
   const [userTrainings, setUserTrainings] = useState([]);
@@ -55,9 +56,14 @@ export default function UserTrainingsComp({ isNewTraining, isEdited }) {
   return (
     <div className={"Items-container"}>
       <div className={isNewTraining ? "left-new-training" : "left-trainings"}>
+        {isLoading && !isNewTraining && !isEdited && (
+          <div className="user-no-trainings">
+            <Loader />
+          </div>
+        )}
         {isNewTraining && !isEdited && <NewTrainingForm />}
         {isNewTraining && isEdited && <NewTrainingForm isEdit={true} />}
-        {userTrainings?.length < 1 && (
+        {userTrainings?.length < 1 && !isLoading && (
           <div className="user-no-trainings">
             <h2>You have no trainings yet, create your first </h2>
             <i class="bx bx-wink-smile"></i>
@@ -82,7 +88,7 @@ export default function UserTrainingsComp({ isNewTraining, isEdited }) {
             );
           })}
       </div>
-      {!isNewTraining && !isEdited && (
+      {!isNewTraining && !isEdited && !isLoading && (
         <div className={"right"}>
           <Link
             to={"/user-trainings/new-training"}
@@ -91,7 +97,7 @@ export default function UserTrainingsComp({ isNewTraining, isEdited }) {
           >
             <div className={"create-training"}>
               <i class="bx bx-tennis-ball"></i>
-              <h3>Create training</h3>
+              {!isLoading && <h3>Create training</h3>}
             </div>
           </Link>
           <div className={"item-description"}>

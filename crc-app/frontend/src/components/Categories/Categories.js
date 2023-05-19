@@ -43,23 +43,25 @@ export default function Categories({ setTrainingCategory }) {
 
   return (
     <header className="main-header">
-      <nav className="categories">
-        {isError && <p>Failed to load categories</p>}
-        {categories?.map((category) => (
-          <Link
-            to={`/trainings/${category}`}
-            style={{ textDecoration: "none" }}
-          >
-            <span
-              className={category ? "active" : undefined}
-              key={Math.random() * 1000}
-              onClick={() => onChangeCategoryHandler(category)}
+      {!isLoading && (
+        <nav className="categories">
+          {isError && <p>Failed to load categories</p>}
+          {categories?.map((category) => (
+            <Link
+              to={`/trainings/${category}`}
+              style={{ textDecoration: "none" }}
             >
-              {category}
-            </span>
-          </Link>
-        ))}
-      </nav>
+              <span
+                className={category ? "active" : undefined}
+                key={Math.random() * 1000}
+                onClick={() => onChangeCategoryHandler(category)}
+              >
+                {category}
+              </span>
+            </Link>
+          ))}
+        </nav>
+      )}
     </header>
   );
 }
