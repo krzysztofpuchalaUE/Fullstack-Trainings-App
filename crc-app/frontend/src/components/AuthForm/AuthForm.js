@@ -76,7 +76,7 @@ export default function AuthForm() {
       );
       setTimeout(() => {
         navigate("/trainings");
-      }, 1000);
+      }, 300);
       return authCtx.onSetToken(response.authToken);
     };
     loginUserAuth(loginData);
