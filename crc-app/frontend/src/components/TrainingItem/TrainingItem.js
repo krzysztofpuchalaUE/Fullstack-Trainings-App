@@ -1,4 +1,4 @@
-import { useCallback, useState, useContext } from "react";
+import { useCallback, useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { newTrainingItemContext } from "../../context/newTrainingItemContext";
@@ -19,6 +19,7 @@ export default function TrainingItem({
   const [userRegistered, setUserRegistered] = useState(
     item?.isRegistered || null
   );
+  const [isUserTrainer, setIsUserTrainer] = useState(false);
   const newTrainingItemCtx = useContext(newTrainingItemContext);
   const authCtx = useContext(authContext);
 
@@ -56,6 +57,28 @@ export default function TrainingItem({
     isLoading: postTrainingLoading,
     isError: postTrainingError,
   } = useHttp(applyPostData);
+
+  const {
+    requestForData: getUser,
+    isLoading: getUserLoading,
+    isError: getUserError,
+  } = useHttp((value) => value);
+
+  useEffect(() => {
+    async function getUserId() {
+      const data = await getUser(
+        "http://localhost:8800/trainings",
+        setConfig("GET", null, true, authCtx.authToken)
+      );
+      if (!data) return;
+      const { userId } = data;
+      const isTrainer = item?.trainerId !== userId[0].id;
+      if (isTrainer === true) {
+        setIsUserTrainer(true);
+      }
+    }
+    getUserId();
+  }, []);
 
   const onTrainingRegisterHandler = () => {
     const register = () => {
@@ -201,19 +224,22 @@ export default function TrainingItem({
         )}
       </div>
       {!isUserTraining && !isCreate && (
-        <div
+        <button
           className={`register-btn ${
             !userRegistered ? undefined : "unregsiter"
           }`}
           onClick={onTrainingRegisterHandler}
+          disabled={!isUserTrainer}
         >
-          {postTrainingLoading
+          {!isUserTrainer
+            ? "You are a trainer"
+            : postTrainingLoading
             ? "Processing..."
             : userRegistered
             ? "Unregister"
             : "Register"}
           {postTrainingError && " failed"}
-        </div>
+        </button>
       )}
     </div>
   );

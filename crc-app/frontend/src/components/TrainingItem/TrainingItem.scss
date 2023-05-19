@@ -61,6 +61,7 @@
     font-size: 14px;
     margin-top: 5px;
     margin-bottom: 5px;
+    color: $font-white;
 
     &:hover {
       background-color: $select;
@@ -68,6 +69,16 @@
 
     .unregister {
       background-color: gray;
+    }
+
+    &:disabled,
+    &:disabled:hover,
+    &:disabled:active {
+      background-color: $form-dark;
+      border: 1px red solid;
+      color: $font-white;
+      border-color: $main-dark;
+      cursor: not-allowed;
     }
   }
 
