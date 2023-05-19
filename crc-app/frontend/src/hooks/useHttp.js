@@ -27,12 +27,12 @@ export default function useHttp(applyData) {
 
       const appliedData = applyData(data);
 
+      setIsLoading(false);
       return appliedData;
     } catch (err) {
       setError(err.message);
       setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   return {

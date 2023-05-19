@@ -19,8 +19,6 @@ export default function TrainingItem({
   const [userRegistered, setUserRegistered] = useState(
     item?.isRegistered || null
   );
-  const [isCreatedByUser, setIsCreatedByUser] = useState(false);
-
   const newTrainingItemCtx = useContext(newTrainingItemContext);
   const authCtx = useContext(authContext);
 
@@ -58,17 +56,6 @@ export default function TrainingItem({
     isLoading: postTrainingLoading,
     isError: postTrainingError,
   } = useHttp(applyPostData);
-
-  const { requestForData: getIsCreatedByUser } = useHttp((value) => value);
-
-  const checkIsCreatedByUser = () => {
-    const checkIsCreated = () => {
-      getIsCreatedByUser(
-        "http://localhost:8800/user-trainings",
-        setConfig("GET", null, true, authCtx.authToken)
-      );
-    };
-  };
 
   const onTrainingRegisterHandler = () => {
     const register = () => {
@@ -225,6 +212,7 @@ export default function TrainingItem({
             : userRegistered
             ? "Unregister"
             : "Register"}
+          {postTrainingError && " failed"}
         </div>
       )}
     </div>
