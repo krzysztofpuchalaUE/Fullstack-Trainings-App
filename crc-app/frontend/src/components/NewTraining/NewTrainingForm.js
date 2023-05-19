@@ -15,7 +15,6 @@ import { authContext } from "../../context/authContext";
 export default function NewTrainingForm({ isEdit }) {
   const [image, setImage] = useState(null);
   const [showDescription, setshowDescription] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [send, setSend] = useState(false);
   const link = window.location.href.split("/");
   const createLink = link.length === 5;
@@ -285,22 +284,23 @@ export default function NewTrainingForm({ isEdit }) {
           return navigate("/auth/login");
         }
         const getTrainingData = await getTrainingByID(
-          `http://localhost:8800/user-trainings/${trainingId}/edit`,
+          `http://localhost:8800/user-trainings/${trainingId}/editd`,
           setConfig("GET", null, true, authCtx.authToken)
         );
-        const getTraining = await getTrainingData.training;
+        if (!getTrainingData) return;
+        const getTraining = await getTrainingData?.training;
         const formattedData = formatTrainingData(getTraining);
-        setTitleInitialValue(formattedData.title);
-        setCategoryInitialValue(formattedData.category);
-        setStartDateInitialValue(getTraining.training_start_date.slice(0, 10));
-        setEndDateInitialValue(getTraining.training_end_date.slice(0, 10));
-        setStartTimeInitialValue(getTraining.training_start_time);
-        setEndTimeInitialValue(getTraining.training_end_time);
-        setLanguageInitialValue(formattedData.language);
-        setLocationInitialValue(formattedData.location);
-        setLevelInitialValue(formattedData.level);
-        setDescriptionInitialValue(formattedData.description);
-        setImage(getTraining.icon);
+        setTitleInitialValue(formattedData?.title);
+        setCategoryInitialValue(formattedData?.category);
+        setStartDateInitialValue(getTraining?.training_start_date.slice(0, 10));
+        setEndDateInitialValue(getTraining?.training_end_date.slice(0, 10));
+        setStartTimeInitialValue(getTraining?.training_start_time);
+        setEndTimeInitialValue(getTraining?.training_end_time);
+        setLanguageInitialValue(formattedData?.language);
+        setLocationInitialValue(formattedData?.location);
+        setLevelInitialValue(formattedData?.level);
+        setDescriptionInitialValue(formattedData?.description);
+        setImage(getTraining?.icon);
         newTrainingCtx.setItemImage(image);
       }
       getTraining();
@@ -437,9 +437,10 @@ export default function NewTrainingForm({ isEdit }) {
               disabled={!formIsValid || send}
               className="submit-button"
             >
-              {!send && createLink && "Create"}
-              {!send && editLink && "Edit"}
-              {send && "Success"}
+              {!send && !postCustomTrainingError && createLink && "Create"}
+              {!send && !postCustomTrainingError && editLink && "Edit"}
+              {send && !postCustomTrainingError && "Success"}
+              {postCustomTrainingError && "Failed to crate training"}
               <i class="bx bxs-send"></i>
             </button>
           </div>

@@ -24,6 +24,7 @@ export default function NavBar() {
       >
         <div className={"navbar-left"}>
           <h2>Trainings App</h2>
+          <i class="bx bxs-medal"></i>
         </div>
       </NavLink>
 

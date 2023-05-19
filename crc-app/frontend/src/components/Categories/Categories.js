@@ -30,6 +30,7 @@ export default function Categories({ setTrainingCategory }) {
         "http://localhost:8800/trainings",
         setConfig("GET", null, true, authCtx.authToken)
       );
+      if (!getCategories) return;
       const { allCategories } = getCategories;
       setCategories(
         allCategories.map((category) => {
@@ -43,6 +44,7 @@ export default function Categories({ setTrainingCategory }) {
   return (
     <header className="main-header">
       <nav className="categories">
+        {isError && <p>Failed to load categories</p>}
         {categories?.map((category) => (
           <Link
             to={`/trainings/${category}`}
