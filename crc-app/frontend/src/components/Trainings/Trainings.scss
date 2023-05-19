@@ -54,3 +54,15 @@
     }
   }
 }
+
+.no-trainings {
+  margin-top: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  i {
+    font-size: 40px;
+  }
+}
