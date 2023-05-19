@@ -57,6 +57,12 @@ export default function UserTrainingsComp({ isNewTraining, isEdited }) {
       <div className={isNewTraining ? "left-new-training" : "left-trainings"}>
         {isNewTraining && !isEdited && <NewTrainingForm />}
         {isNewTraining && isEdited && <NewTrainingForm isEdit={true} />}
+        {userTrainings.length < 1 && (
+          <div className="user-no-trainings">
+            <h2>You have no trainings yet, create your first </h2>
+            <i class="bx bx-wink-smile"></i>
+          </div>
+        )}
         {!isNewTraining &&
           !isEdited &&
           userTrainings?.map((training) => {
