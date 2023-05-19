@@ -8,6 +8,7 @@ import TrainingItem from "../TrainingItem/TrainingItem";
 import useHttp from "../../hooks/useHttp";
 
 import "./Trainings.scss";
+import Loader from "../Reusable/Loader.js";
 
 const slideLeftHandler = () => {
   let trainingsSelector = document.querySelector(".trainings");
@@ -107,6 +108,11 @@ export default function Trainings({ trainingCategory }) {
           >
             <i className={"bx bxs-chevron-left"}></i>
           </button>
+        </div>
+      )}
+      {isLoading && (
+        <div className={"trainings-container loader-trainings"}>
+          <Loader />
         </div>
       )}
       {isError && (
