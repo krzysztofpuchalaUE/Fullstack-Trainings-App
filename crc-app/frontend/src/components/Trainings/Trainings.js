@@ -65,26 +65,50 @@ export default function Trainings({ trainingCategory }) {
   const onRegisterUser = () => setRegisterAction((prev) => !prev);
 
   return (
-    <div className={"trainings-container"}>
-      <div className={"trainings"}>
-        {trainings &&
-          trainings?.map((training) => {
-            if (training.category === trainingCategory)
-              return (
-                <TrainingItem item={training} registerAction={onRegisterUser} />
-              );
-            if (trainingCategory === undefined)
-              return (
-                <TrainingItem item={training} registerAction={onRegisterUser} />
-              );
-          })}
-      </div>
-      <button className={"slider-button btn-right"} onClick={slideRightHandler}>
-        <i className={"bx bxs-chevron-right"}></i>
-      </button>
-      <button className={"slider-button btn-left"} onClick={slideLeftHandler}>
-        <i className={"bx bxs-chevron-left"}></i>
-      </button>
-    </div>
+    <>
+      {trainings.length < 1 && (
+        <div className={"trainings-container no-trainings"}>
+          {" "}
+          <h2>
+            No trainings yet <i class="bx bx-message-error"></i>
+          </h2>
+        </div>
+      )}
+      {trainings.length > 1 && (
+        <div className={"trainings-container"}>
+          <div className={"trainings"}>
+            {trainings &&
+              trainings?.map((training) => {
+                if (training.category === trainingCategory)
+                  return (
+                    <TrainingItem
+                      item={training}
+                      registerAction={onRegisterUser}
+                    />
+                  );
+                if (trainingCategory === undefined)
+                  return (
+                    <TrainingItem
+                      item={training}
+                      registerAction={onRegisterUser}
+                    />
+                  );
+              })}
+          </div>
+          <button
+            className={"slider-button btn-right"}
+            onClick={slideRightHandler}
+          >
+            <i className={"bx bxs-chevron-right"}></i>
+          </button>
+          <button
+            className={"slider-button btn-left"}
+            onClick={slideLeftHandler}
+          >
+            <i className={"bx bxs-chevron-left"}></i>
+          </button>
+        </div>
+      )}
+    </>
   );
 }
