@@ -9,6 +9,18 @@
 
   .navbar-left {
     margin-left: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    i {
+      font-size: 40px;
+      color: $yellow;
+    }
+
+    h2::first-letter {
+      font-size: 35px;
+    }
   }
 
   .navbar-right {
@@ -35,7 +47,7 @@
     cursor: pointer;
 
     i {
-      color: $font-white;
+      color: $yellow;
       font-size: 20px;
     }
   }

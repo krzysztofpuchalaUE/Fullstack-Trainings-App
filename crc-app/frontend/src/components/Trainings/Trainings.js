@@ -66,7 +66,7 @@ export default function Trainings({ trainingCategory }) {
 
   return (
     <>
-      {trainings.length < 1 && (
+      {trainings?.length < 1 && (
         <div className={"trainings-container no-trainings"}>
           {" "}
           <h2>
@@ -74,7 +74,7 @@ export default function Trainings({ trainingCategory }) {
           </h2>
         </div>
       )}
-      {trainings.length > 1 && (
+      {trainings?.length > 0 && (
         <div className={"trainings-container"}>
           <div className={"trainings"}>
             {trainings &&
@@ -107,6 +107,12 @@ export default function Trainings({ trainingCategory }) {
           >
             <i className={"bx bxs-chevron-left"}></i>
           </button>
+        </div>
+      )}
+      {isError && (
+        <div className={"trainings-container no-trainings"}>
+          <h2>Failed to fetch trainings </h2>
+          <i class="bx bx-confused"></i>
         </div>
       )}
     </>
