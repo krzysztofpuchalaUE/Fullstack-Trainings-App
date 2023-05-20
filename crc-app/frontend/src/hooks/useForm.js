@@ -8,7 +8,7 @@ export default function useForm(validateFn) {
   const setValueHandler = (e) => {
     setValue(e.target.value);
 
-    checkIsValid(validateFn);
+    activated && checkIsValid(validateFn);
   };
 
   const setInitialValue = (value) => {

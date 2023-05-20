@@ -128,6 +128,8 @@ export default function TrainingItem({
     }
   };
 
+  const img = `http://localhost:8800/uploads/${encodeURIComponent(item?.icon)}`;
+
   return (
     <div
       className={`item-container ${
@@ -144,9 +146,11 @@ export default function TrainingItem({
       <img
         className={isCreate ? "edited-image" : ""}
         src={
-          isCreate && newTrainingItemCtx.image
+          isCreate && newTrainingItemCtx.image !== null
             ? URL.createObjectURL(newTrainingItemCtx.image)
-            : `http://localhost:8800/uploads/${encodeURIComponent(item?.icon)}`
+            : item?.icon !== null
+            ? img
+            : ""
         }
         alt={""}
       />
