@@ -17,6 +17,7 @@ export default function NewTrainingForm({ isEdit }) {
   const [image, setImage] = useState(null);
   const [showDescription, setshowDescription] = useState(false);
   const [send, setSend] = useState(false);
+  const [descriptionIsValid, setDescriptionIsValid] = useState(true);
   const link = window.location.href.split("/");
   const createLink = link.length === 5;
   const editLink = link.length === 6;
@@ -143,7 +144,6 @@ export default function NewTrainingForm({ isEdit }) {
     value: description,
     activated: descriptionInputActivated,
     setInitialValue: setDescriptionInitialValue,
-    isValid: descriptionIsValid,
     setValueHandler: setDescriptionValue,
     onBlurHandler: descriptionInputOnBlur,
     reset: resetDescriptionInputField,
@@ -156,6 +156,12 @@ export default function NewTrainingForm({ isEdit }) {
 
   let formIsValid = false;
 
+  useEffect(() => {
+    if (description.length > 250) {
+      setDescriptionIsValid(false);
+    }
+  });
+
   if (
     titleIsValid &&
     categoryIsValid &&
@@ -164,6 +170,7 @@ export default function NewTrainingForm({ isEdit }) {
     startTimeIsValid &&
     endTimeIsValid &&
     languageIsValid &&
+    descriptionIsValid &&
     locationIsValid &&
     levelIsValid
   )
@@ -202,12 +209,16 @@ export default function NewTrainingForm({ isEdit }) {
 
       if (createLink) {
         const addCustomTraining = async () => {
-          const res = await axios.post(
-            "http://localhost:8800/user-trainings/new-training",
-            formData,
-            config,
-            authCtx.authToken
-          );
+          try {
+            const res = await axios.post(
+              "http://localhost:8800/user-trainings/new-training",
+              formData,
+              config,
+              authCtx.authToken
+            );
+          } catch (err) {
+            console.log(err);
+          }
         };
         addCustomTraining();
       }
@@ -216,31 +227,35 @@ export default function NewTrainingForm({ isEdit }) {
         formData.append("trainingId", trainingId);
 
         const updateTraining = async () => {
-          const res = await axios.patch(
-            `http://localhost:8800/user-trainings/${trainingId}/edit`,
-            formData,
-            config,
-            authCtx.authToken
-          );
+          try {
+            const res = await axios.patch(
+              `http://localhost:8800/user-trainings/${trainingId}/edit`,
+              formData,
+              config,
+              authCtx.authToken
+            );
+          } catch (err) {
+            console.log(err);
+          }
         };
         updateTraining();
       }
 
-      // resetTitleInputField();
-      // resetCategoryInputField();
-      // resetStartDateInputField();
-      // resetEndDateInputField();
-      // resetStartTimeInputField();
-      // resetEndTimeInputField();
-      // resetLanguageInputField();
-      // resetLevelInputField();
-      // resetLocationInputField();
-      // resetDescriptionInputField();
-      // setImage(null);
+      resetTitleInputField();
+      resetCategoryInputField();
+      resetStartDateInputField();
+      resetEndDateInputField();
+      resetStartTimeInputField();
+      resetEndTimeInputField();
+      resetLanguageInputField();
+      resetLevelInputField();
+      resetLocationInputField();
+      resetDescriptionInputField();
+      setImage(null);
     }
 
     setSend(true);
-    // setTimeout(() => navigate("/user-trainings"), 3000);
+    setTimeout(() => navigate("/user-trainings"), 3000);
   };
 
   useEffect(() => {
@@ -291,8 +306,10 @@ export default function NewTrainingForm({ isEdit }) {
         const formattedData = formatTrainingData(getTraining);
         setTitleInitialValue(formattedData?.title);
         setCategoryInitialValue(formattedData?.category);
-        setStartDateInitialValue(getTraining?.training_start_date.slice(0, 10));
-        setEndDateInitialValue(getTraining?.training_end_date.slice(0, 10));
+        setStartDateInitialValue(
+          getTraining?.training_start_date.slice(0, 10) + 2
+        );
+        setEndDateInitialValue(getTraining?.training_end_date.slice(0, 10) + 2);
         setStartTimeInitialValue(getTraining?.training_start_time);
         setEndTimeInitialValue(getTraining?.training_end_time);
         setLanguageInitialValue(formattedData?.language);
@@ -356,7 +373,9 @@ export default function NewTrainingForm({ isEdit }) {
                 onBlur={startDateInputOnBlur}
               />
               {!startDateIsValid && startDateInputActivated && (
-                <p className="invalid-info">Date must be greater than today</p>
+                <p className="invalid-info">
+                  Date must be greater than today and before end date
+                </p>
               )}
             </div>
             <div className={`training-property`}>
@@ -372,7 +391,8 @@ export default function NewTrainingForm({ isEdit }) {
               />
               {!endDateIsValid && endDateInputActivated && (
                 <p className="invalid-info">
-                  Date must be greater than today and training start date
+                  Date must be greater than today and gerater or equal training
+                  start date
                 </p>
               )}
             </div>
@@ -424,14 +444,21 @@ export default function NewTrainingForm({ isEdit }) {
                       value={description}
                       onChange={setDescriptionValue}
                     ></textarea>
-                    <span>{description.length}/250</span>
+                    <span>
+                      {!descriptionIsValid && descriptionInputActivated && (
+                        <p className={"invalid-info"}>
+                          Description must be no longer than 250 characters
+                        </p>
+                      )}
+                      {descriptionIsValid && `${description.length}/250`}
+                    </span>
                   </div>
                 )}
               </label>
             </div>
             <button
               type="submit"
-              // disabled={!formIsValid || send}
+              disabled={!formIsValid || send}
               className="submit-button"
             >
               {!send && !postCustomTrainingError && createLink && "Create"}
