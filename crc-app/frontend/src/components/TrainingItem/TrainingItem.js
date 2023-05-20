@@ -80,6 +80,12 @@ export default function TrainingItem({
     getUserId();
   }, []);
 
+  useEffect(() => {
+    console.log(
+      `http://localhost:8800/uploads/${encodeURIComponent(item?.icon)}`
+    );
+  });
+
   const onTrainingRegisterHandler = () => {
     const register = () => {
       postTraining(
@@ -146,7 +152,7 @@ export default function TrainingItem({
         src={
           isCreate && newTrainingItemCtx.image
             ? URL.createObjectURL(newTrainingItemCtx.image)
-            : item?.image
+            : `http://localhost:8800/uploads/${encodeURIComponent(item?.icon)}`
         }
         alt={""}
       />
