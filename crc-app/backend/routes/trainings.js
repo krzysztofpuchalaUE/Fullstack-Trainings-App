@@ -94,9 +94,10 @@ router.post(
     const email = req.email.email;
     const trainerData = await queries.getUserByEmail(email);
     const { user_first_name, user_last_name, id: trainerId } = trainerData[0];
+    const img = req.file ? req.file.filename : null;
 
-    const { filename } = req.file;
     let errors = {};
+
     const {
       title,
       category,
@@ -159,7 +160,7 @@ router.post(
         level,
         user_first_name.concat(" ", user_last_name),
         trainerId,
-        filename
+        img
       );
       const trainingDbId = await queries.getTrainingByProperties(
         title,
@@ -180,8 +181,8 @@ router
     const email = req.email.email;
     const trainerData = await queries.getUserByEmail(email);
     const { user_first_name, user_last_name, id: trainerId } = trainerData[0];
-    const { filename } = req.file;
-    console.log(filename);
+    const img = req.file ? req.file.filename : null;
+
     const {
       title,
       category,
@@ -248,7 +249,7 @@ router
         location,
         user_first_name.concat(" ", user_last_name),
         trainerId,
-        filename
+        img
       );
       res.json({ message: "Successfully updated training" });
     } catch {
