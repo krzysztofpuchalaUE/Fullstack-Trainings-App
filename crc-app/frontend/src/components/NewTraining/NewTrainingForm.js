@@ -302,14 +302,11 @@ export default function NewTrainingForm({ isEdit }) {
           setConfig("GET", null, true, authCtx.authToken)
         );
         if (!getTrainingData) return;
+        console.log(getTrainingData);
         const getTraining = await getTrainingData?.training;
         const formattedData = formatTrainingData(getTraining);
         setTitleInitialValue(formattedData?.title);
         setCategoryInitialValue(formattedData?.category);
-        setStartDateInitialValue(
-          getTraining?.training_start_date.slice(0, 10) + 2
-        );
-        setEndDateInitialValue(getTraining?.training_end_date.slice(0, 10) + 2);
         setStartTimeInitialValue(getTraining?.training_start_time);
         setEndTimeInitialValue(getTraining?.training_end_time);
         setLanguageInitialValue(formattedData?.language);
