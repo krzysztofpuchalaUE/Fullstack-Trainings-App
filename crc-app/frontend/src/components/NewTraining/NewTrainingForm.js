@@ -193,10 +193,6 @@ export default function NewTrainingForm({ isEdit }) {
       formData.append("trainerId", trainerId);
       formData.append("image", image);
 
-      for (const entry of formData.entries()) {
-        console.log(entry);
-      }
-
       const config = {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -217,18 +213,14 @@ export default function NewTrainingForm({ isEdit }) {
       }
 
       if (editLink) {
-        const updateTraining = () => {
-          postCustomTraining(
+        formData.append("trainingId", trainingId);
+
+        const updateTraining = async () => {
+          const res = await axios.patch(
             `http://localhost:8800/user-trainings/${trainingId}/edit`,
-            setConfig(
-              "PATCH",
-              {
-                trainingId,
-                formData,
-              },
-              true,
-              authCtx.authToken
-            )
+            formData,
+            config,
+            authCtx.authToken
           );
         };
         updateTraining();
@@ -291,7 +283,7 @@ export default function NewTrainingForm({ isEdit }) {
           return navigate("/auth/login");
         }
         const getTrainingData = await getTrainingByID(
-          `http://localhost:8800/user-trainings/${trainingId}/editd`,
+          `http://localhost:8800/user-trainings/${trainingId}/edit`,
           setConfig("GET", null, true, authCtx.authToken)
         );
         if (!getTrainingData) return;
@@ -307,8 +299,6 @@ export default function NewTrainingForm({ isEdit }) {
         setLocationInitialValue(formattedData?.location);
         setLevelInitialValue(formattedData?.level);
         setDescriptionInitialValue(formattedData?.description);
-        setImage(getTraining?.icon);
-        newTrainingCtx.setItemImage(image);
       }
       getTraining();
     }
