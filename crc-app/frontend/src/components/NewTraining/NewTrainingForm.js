@@ -4,6 +4,7 @@ import useHttp from "../../hooks/useHttp";
 import { useParams, useNavigate } from "react-router-dom";
 import { categories, languages, levels } from "../../appConfig";
 import { formatTrainingData } from "../../utils/formatTrainingData";
+import axios from "axios";
 
 import { setConfig, requestGetConfig } from "../../utils/requestConfig";
 import { newTrainingItemContext } from "../../context/newTrainingItemContext";
@@ -173,75 +174,73 @@ export default function NewTrainingForm({ isEdit }) {
     let img = null;
     const trainerId = 1;
     if (image !== null && image !== undefined) {
-      img = URL.createObjectURL(image);
+      img = image;
     }
 
     if (formIsValid) {
-      const data = {
-        title,
-        category,
-        startDate,
-        endDate,
-        startTime,
-        endTime,
-        language,
-        location,
-        level,
-        description,
-        trainerId, // user id
-        img,
+      const formData = new FormData();
+
+      formData.append("title", title);
+      formData.append("category", category);
+      formData.append("startDate", startDate);
+      formData.append("endDate", endDate);
+      formData.append("startTime", startTime);
+      formData.append("endTime", endTime);
+      formData.append("language", language);
+      formData.append("location", location);
+      formData.append("level", level);
+      formData.append("description", description);
+      formData.append("trainerId", trainerId);
+      formData.append("image", image);
+
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "Authorization": "Bearer " + authCtx.authToken,
+        },
       };
 
       if (createLink) {
-        const addCustomTraining = () => {
-          postCustomTraining(
+        const addCustomTraining = async () => {
+          const res = await axios.post(
             "http://localhost:8800/user-trainings/new-training",
-            setConfig(
-              "POST",
-              {
-                data,
-              },
-              true,
-              authCtx.authToken
-            )
+            formData,
+            config,
+            authCtx.authToken
           );
         };
         addCustomTraining();
       }
 
       if (editLink) {
-        const updateTraining = () => {
-          postCustomTraining(
+        formData.append("trainingId", trainingId);
+
+        const updateTraining = async () => {
+          const res = await axios.patch(
             `http://localhost:8800/user-trainings/${trainingId}/edit`,
-            setConfig(
-              "PATCH",
-              {
-                trainingId,
-                data,
-              },
-              true,
-              authCtx.authToken
-            )
+            formData,
+            config,
+            authCtx.authToken
           );
         };
         updateTraining();
       }
 
-      resetTitleInputField();
-      resetCategoryInputField();
-      resetStartDateInputField();
-      resetEndDateInputField();
-      resetStartTimeInputField();
-      resetEndTimeInputField();
-      resetLanguageInputField();
-      resetLevelInputField();
-      resetLocationInputField();
-      resetDescriptionInputField();
-      setImage(null);
+      // resetTitleInputField();
+      // resetCategoryInputField();
+      // resetStartDateInputField();
+      // resetEndDateInputField();
+      // resetStartTimeInputField();
+      // resetEndTimeInputField();
+      // resetLanguageInputField();
+      // resetLevelInputField();
+      // resetLocationInputField();
+      // resetDescriptionInputField();
+      // setImage(null);
     }
 
     setSend(true);
-    setTimeout(() => navigate("/user-trainings"), 3000);
+    // setTimeout(() => navigate("/user-trainings"), 3000);
   };
 
   useEffect(() => {
@@ -284,7 +283,7 @@ export default function NewTrainingForm({ isEdit }) {
           return navigate("/auth/login");
         }
         const getTrainingData = await getTrainingByID(
-          `http://localhost:8800/user-trainings/${trainingId}/editd`,
+          `http://localhost:8800/user-trainings/${trainingId}/edit`,
           setConfig("GET", null, true, authCtx.authToken)
         );
         if (!getTrainingData) return;
@@ -300,8 +299,6 @@ export default function NewTrainingForm({ isEdit }) {
         setLocationInitialValue(formattedData?.location);
         setLevelInitialValue(formattedData?.level);
         setDescriptionInitialValue(formattedData?.description);
-        setImage(getTraining?.icon);
-        newTrainingCtx.setItemImage(image);
       }
       getTraining();
     }
@@ -434,7 +431,7 @@ export default function NewTrainingForm({ isEdit }) {
             </div>
             <button
               type="submit"
-              disabled={!formIsValid || send}
+              // disabled={!formIsValid || send}
               className="submit-button"
             >
               {!send && !postCustomTrainingError && createLink && "Create"}
@@ -500,7 +497,6 @@ export default function NewTrainingForm({ isEdit }) {
                   type="file"
                   id="file"
                   accept="image/jpeg, image/png image/jpg"
-                  name="training_image"
                   onChange={(e) => {
                     setImage(e.target.files[0]);
                   }}
