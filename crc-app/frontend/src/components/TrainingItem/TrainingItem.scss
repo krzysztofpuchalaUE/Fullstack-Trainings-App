@@ -2,6 +2,9 @@
 
 .item-container {
   min-width: 280px;
+  max-width: 280px;
+  max-height: 470px;
+  min-height: 470px;
   height: min-content;
   padding: 16px;
   background: $form-dark;
@@ -27,7 +30,8 @@
     width: 50%;
     max-width: 150px;
     max-height: 150px;
-    overflow: hidden;
+    min-height: 120px;
+    object-fit: contain;
     padding: 20px;
     border-radius: 8px;
     transition: 0.3s ease-in-out;
