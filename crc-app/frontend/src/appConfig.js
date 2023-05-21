@@ -1,10 +1,5 @@
-export const categories = [
-  "data science",
-  "software engineering",
-  "game development",
-  "mobile development",
-];
+export const categories = ["popular", "programming", "cooking"];
 
-export const languages = ["english", "polish", "spanish"];
+export const languages = ["English", "Polish", "Spanish"];
 
 export const levels = ["beginner", "intermediate", "advanced"];
