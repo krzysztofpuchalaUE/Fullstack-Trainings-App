@@ -132,6 +132,7 @@ export default function TrainingItem({
 
   return (
     <div
+      data-testid={`item-${item.id}`}
       className={`item-container ${
         isUserTraining
           ? "is-user-training"
@@ -229,6 +230,7 @@ export default function TrainingItem({
       </div>
       {!isUserTraining && !isCreate && (
         <button
+          data-testid={`button-test-${item.id}`}
           className={`register-btn ${
             !userRegistered ? undefined : "unregsiter"
           }`}
