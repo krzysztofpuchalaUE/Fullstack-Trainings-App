@@ -133,7 +133,7 @@ export default function UserTrainingsComp({ isNewTraining, isEdited }) {
       {isNewTraining && !isEdited && (
         <div className={"right training-item"}>
           <TrainingItem
-            key={Math.random() * 1000}
+            key={1005}
             isCreate={true}
             item={newTrainingItemCtx.trainingItem}
           />
@@ -142,7 +142,7 @@ export default function UserTrainingsComp({ isNewTraining, isEdited }) {
       {isNewTraining && isEdited && (
         <div className={"right training-item"}>
           <TrainingItem
-            key={Math.random() * 1000}
+            key={1010}
             isCreate={true}
             isEdit={true}
             item={newTrainingItemCtx.trainingItem}
