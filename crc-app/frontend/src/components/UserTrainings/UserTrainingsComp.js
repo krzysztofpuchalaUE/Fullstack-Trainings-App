@@ -92,7 +92,7 @@ export default function UserTrainingsComp({ isNewTraining, isEdited }) {
       {!isNewTraining && !isEdited && !isLoading && (
         <div className={"right"}>
           <Link
-            to={"/user-trainings/new-training"}
+            to={isError ? "/user-trainings" : "/user-trainings/new-training"}
             className={({ isActive }) => (isActive ? "link-active" : undefined)}
             style={{ textDecoration: "none", color: "inherit" }}
           >

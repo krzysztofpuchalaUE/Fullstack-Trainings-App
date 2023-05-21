@@ -371,7 +371,7 @@ export default function NewTrainingForm({ isEdit }) {
               />
               {!startDateIsValid && startDateInputActivated && (
                 <p className="invalid-info">
-                  Date must be greater than today and before end date
+                  Start date must be greater than today and before the end date
                 </p>
               )}
             </div>
@@ -388,8 +388,7 @@ export default function NewTrainingForm({ isEdit }) {
               />
               {!endDateIsValid && endDateInputActivated && (
                 <p className="invalid-info">
-                  Date must be greater than today and gerater or equal training
-                  start date
+                  End date must be later than today and start date
                 </p>
               )}
             </div>
