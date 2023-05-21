@@ -42,6 +42,10 @@
   width: 100%;
   gap: 20px;
 
+  input {
+    padding: 0 12px 0 20px;
+  }
+
   .training-property {
     width: 100%;
     display: grid;
@@ -180,4 +184,16 @@ button:disabled:active {
   color: #3f3f3f;
   border-color: #ccc;
   cursor: not-allowed;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.8);
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.8);
+}
+
+input[type="time"]::-webkit-datetime-edit-hour-field {
+  margin-left: 20px;
 }
