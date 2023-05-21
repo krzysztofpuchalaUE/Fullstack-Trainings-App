@@ -20,7 +20,7 @@ export default function Error({ status }) {
       <h1>{error.title}</h1>
       <div className={"error-message"}>
         <h3>{error.message}</h3>
-        <i class="bx bx-sad"></i>
+        <i className="bx bx-sad"></i>
       </div>
     </div>
   );

@@ -189,8 +189,10 @@ export default function TrainingItem({
             <i className={"bx bx-user-circle"}></i> <p>Trainer</p>
           </div>
           <div className={"trainer"}>
-            <p>{item?.trainerFirstName}</p>
-            <p>{item?.trainerLastName}</p>
+            {isEdit || (isCreate && "You")}
+            {isEdit && isCreate && "You"}
+            {!isEdit && !isCreate && <p>{item?.trainerFirstName}</p>}
+            {!isEdit && !isCreate && <p>{item?.trainerLastName}</p>}
           </div>
         </div>
         <div className={"item-description-label"}>

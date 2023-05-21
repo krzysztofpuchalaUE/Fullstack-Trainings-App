@@ -24,7 +24,7 @@ export default function NavBar() {
       >
         <div className={"navbar-left"}>
           <h2>Trainings App</h2>
-          <i class="bx bxs-medal"></i>
+          <i className="bx bxs-medal"></i>
         </div>
       </NavLink>
 
@@ -35,7 +35,7 @@ export default function NavBar() {
           style={{ textDecoration: "none", color: "inherit" }}
         >
           <div className={"navbar-element"}>
-            <i class="bx bx-meteor"></i> <p>Trainings</p>
+            <i className="bx bx-meteor"></i> <p>Trainings</p>
           </div>
         </NavLink>
         {authCtx.authToken && (
@@ -45,7 +45,7 @@ export default function NavBar() {
             style={{ textDecoration: "none", color: "inherit" }}
           >
             <div className={"navbar-element"}>
-              <i class="bx bx-face"></i>
+              <i className="bx bx-face"></i>
               <p>User trainings</p>
             </div>
           </NavLink>
@@ -57,13 +57,13 @@ export default function NavBar() {
             style={{ textDecoration: "none", color: "inherit" }}
           >
             <div className={"navbar-element"}>
-              <i class="bx bx-user"></i> <p>Login</p>
+              <i className="bx bx-user"></i> <p>Login</p>
             </div>
           </NavLink>
         )}
         {authCtx.authToken && (
           <div className={"navbar-element"} onClick={onLogout}>
-            <i class="bx bx-user"></i> <p>Logout</p>
+            <i className="bx bx-user"></i> <p>Logout</p>
           </div>
         )}
       </div>

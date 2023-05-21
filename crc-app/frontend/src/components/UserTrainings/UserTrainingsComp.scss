@@ -94,7 +94,6 @@
     flex-direction: column;
     align-items: center;
     width: 35%;
-    overflow: scroll;
     padding-top: 30px;
 
     h2 {
@@ -160,7 +159,8 @@
 }
 
 .training-item {
-  padding-right: 150px;
+  margin-right: 150px;
+  z-index: 900;
 
   &:hover {
     scale: unset;

@@ -302,7 +302,6 @@ export default function NewTrainingForm({ isEdit }) {
           setConfig("GET", null, true, authCtx.authToken)
         );
         if (!getTrainingData) return;
-        console.log(getTrainingData);
         const getTraining = await getTrainingData?.training;
         const formattedData = formatTrainingData(getTraining);
         setTitleInitialValue(formattedData?.title);
@@ -371,7 +370,7 @@ export default function NewTrainingForm({ isEdit }) {
               />
               {!startDateIsValid && startDateInputActivated && (
                 <p className="invalid-info">
-                  Date must be greater than today and before end date
+                  Start date must be greater than today and before the end date
                 </p>
               )}
             </div>
@@ -388,8 +387,7 @@ export default function NewTrainingForm({ isEdit }) {
               />
               {!endDateIsValid && endDateInputActivated && (
                 <p className="invalid-info">
-                  Date must be greater than today and gerater or equal training
-                  start date
+                  End date must be later than today and start date
                 </p>
               )}
             </div>
@@ -430,7 +428,7 @@ export default function NewTrainingForm({ isEdit }) {
                   className={`description-button`}
                 >
                   Set description
-                  <i class="bx bx-comment-minus"></i>
+                  <i className="bx bx-comment-minus"></i>
                 </button>
                 {showDescription && (
                   <div>
@@ -462,7 +460,7 @@ export default function NewTrainingForm({ isEdit }) {
               {!send && !postCustomTrainingError && editLink && "Edit"}
               {send && !postCustomTrainingError && "Success"}
               {postCustomTrainingError && "Failed to crate training"}
-              <i class="bx bxs-send"></i>
+              <i className="bx bxs-send"></i>
             </button>
           </div>
           <div className={"form-right"}>
@@ -533,7 +531,7 @@ export default function NewTrainingForm({ isEdit }) {
         <div className="custom-training-form--image"></div>
         {image && (
           <button className="delete-image" onClick={() => setImage(null)}>
-            <i class="bx bx-repost"></i>
+            <i className="bx bx-repost"></i>
           </button>
         )}
       </div>

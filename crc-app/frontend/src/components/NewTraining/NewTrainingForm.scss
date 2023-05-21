@@ -2,8 +2,9 @@
 
 .container {
   position: relative;
-  width: 70%;
+  // width: 70%;
   margin: 0 100px;
+  max-width: 700px;
 
   h2 {
     position: absolute;
@@ -41,6 +42,10 @@
   justify-content: space-between;
   width: 100%;
   gap: 20px;
+
+  input {
+    padding: 0 12px 0 20px;
+  }
 
   .training-property {
     width: 100%;
@@ -90,7 +95,9 @@
   select {
     background-color: $main-dark;
     border-radius: 15px;
+    font-size: 13px;
     padding: 5px;
+    padding-left: 20px;
     color: #fff;
   }
 
@@ -140,7 +147,8 @@
     background-color: $main-dark;
     color: $font-white;
     border-radius: 5px;
-    width: 27rem;
+    max-height: 2rem;
+    width: 28rem;
     animation-name: show-description;
     animation-duration: 0.3s;
 
@@ -169,7 +177,7 @@
     width: 0rem;
   }
   to {
-    width: 27rem;
+    width: rem;
   }
 }
 
@@ -180,4 +188,16 @@ button:disabled:active {
   color: #3f3f3f;
   border-color: #ccc;
   cursor: not-allowed;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.8);
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.8);
+}
+
+input[type="time"]::-webkit-datetime-edit-hour-field {
+  margin-left: 20px;
 }

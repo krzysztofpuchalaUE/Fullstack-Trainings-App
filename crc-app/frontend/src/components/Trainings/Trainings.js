@@ -71,7 +71,7 @@ export default function Trainings({ trainingCategory }) {
         <div className={"trainings-container no-trainings"}>
           {" "}
           <h2>
-            No trainings yet <i class="bx bx-message-error"></i>
+            No trainings yet <i className="bx bx-message-error"></i>
           </h2>
         </div>
       )}
@@ -83,6 +83,7 @@ export default function Trainings({ trainingCategory }) {
                 if (training.category === trainingCategory)
                   return (
                     <TrainingItem
+                      key={training.id}
                       item={training}
                       registerAction={onRegisterUser}
                     />
@@ -90,6 +91,7 @@ export default function Trainings({ trainingCategory }) {
                 if (trainingCategory === undefined)
                   return (
                     <TrainingItem
+                      key={training.id}
                       item={training}
                       registerAction={onRegisterUser}
                     />
@@ -118,7 +120,7 @@ export default function Trainings({ trainingCategory }) {
       {isError && (
         <div className={"trainings-container no-trainings"}>
           <h2>Failed to fetch trainings </h2>
-          <i class="bx bx-confused"></i>
+          <i className="bx bx-confused"></i>
         </div>
       )}
     </>
