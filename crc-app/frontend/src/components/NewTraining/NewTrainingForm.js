@@ -301,6 +301,7 @@ export default function NewTrainingForm({ isEdit }) {
           `http://localhost:8800/user-trainings/${trainingId}/edit`,
           setConfig("GET", null, true, authCtx.authToken)
         );
+        console.log(getTrainingData);
         if (!getTrainingData) return;
         const getTraining = await getTrainingData?.training;
         const formattedData = formatTrainingData(getTraining);

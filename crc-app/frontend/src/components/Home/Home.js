@@ -21,7 +21,7 @@ export default function Home() {
         </div>
       )}
       <Link
-        to={"/auth/login"}
+        to={authCtx.authToken ? "/trainings" : "/auth/login"}
         style={{ textDecoration: "none", color: "inherit" }}
       >
         <div className={"home-login"}>
