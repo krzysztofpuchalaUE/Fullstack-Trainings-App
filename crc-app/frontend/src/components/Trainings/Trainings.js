@@ -76,40 +76,42 @@ export default function Trainings({ trainingCategory }) {
         </div>
       )}
       {trainings?.length > 0 && (
-        <div className={"trainings-container"}>
-          <div className={"trainings"}>
-            {trainings &&
-              trainings?.map((training) => {
-                if (training.category === trainingCategory)
-                  return (
-                    <TrainingItem
-                      key={training.id}
-                      item={training}
-                      registerAction={onRegisterUser}
-                    />
-                  );
-                if (trainingCategory === undefined)
-                  return (
-                    <TrainingItem
-                      key={training.id}
-                      item={training}
-                      registerAction={onRegisterUser}
-                    />
-                  );
-              })}
+        <div className={"trainings-wrapper"}>
+          <div className={"trainings-container"}>
+            <div className={"trainings"}>
+              {trainings &&
+                trainings?.map((training) => {
+                  if (training.category === trainingCategory)
+                    return (
+                      <TrainingItem
+                        key={training.id}
+                        item={training}
+                        registerAction={onRegisterUser}
+                      />
+                    );
+                  if (trainingCategory === undefined)
+                    return (
+                      <TrainingItem
+                        key={training.id}
+                        item={training}
+                        registerAction={onRegisterUser}
+                      />
+                    );
+                })}
+            </div>
+            <button
+              className={"slider-button btn-right"}
+              onClick={slideRightHandler}
+            >
+              <i className={"bx bxs-chevron-right"}></i>
+            </button>
+            <button
+              className={"slider-button btn-left"}
+              onClick={slideLeftHandler}
+            >
+              <i className={"bx bxs-chevron-left"}></i>
+            </button>
           </div>
-          <button
-            className={"slider-button btn-right"}
-            onClick={slideRightHandler}
-          >
-            <i className={"bx bxs-chevron-right"}></i>
-          </button>
-          <button
-            className={"slider-button btn-left"}
-            onClick={slideLeftHandler}
-          >
-            <i className={"bx bxs-chevron-left"}></i>
-          </button>
         </div>
       )}
       {isLoading && (
