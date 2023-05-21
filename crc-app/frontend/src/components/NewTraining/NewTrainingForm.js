@@ -302,7 +302,6 @@ export default function NewTrainingForm({ isEdit }) {
           setConfig("GET", null, true, authCtx.authToken)
         );
         if (!getTrainingData) return;
-        console.log(getTrainingData);
         const getTraining = await getTrainingData?.training;
         const formattedData = formatTrainingData(getTraining);
         setTitleInitialValue(formattedData?.title);
