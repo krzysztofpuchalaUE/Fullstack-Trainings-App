@@ -1,0 +1,33 @@
+@import "../../variables.scss";
+
+.home-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 30px;
+  height: 60vh;
+}
+
+.home-h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+
+  i {
+    font-size: 40px;
+  }
+}
+
+.home-login {
+  padding: 16px;
+  margin-top: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  transition: 0.3s;
+
+  &:hover {
+    box-shadow: 0 0 10px rgba(144, 143, 143, 0.5);
+  }
+}
