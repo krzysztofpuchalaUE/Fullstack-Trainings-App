@@ -172,7 +172,7 @@ export default function TrainingItem({
         </div>
         <div className={"item-description-label"}>
           <div>
-            <i class={"bx bx-chat"}></i>
+            <i className={"bx bx-chat"}></i>
             <p>Language</p>
           </div>
           <p>{item?.language}</p>
@@ -195,7 +195,7 @@ export default function TrainingItem({
         </div>
         <div className={"item-description-label"}>
           <div>
-            <i class={"bx bx-been-here"}></i> <p>Location</p>
+            <i className={"bx bx-been-here"}></i> <p>Location</p>
           </div>
           <p>{item?.location}</p>
         </div>
