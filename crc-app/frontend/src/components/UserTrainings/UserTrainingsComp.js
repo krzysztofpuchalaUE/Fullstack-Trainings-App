@@ -66,13 +66,13 @@ export default function UserTrainingsComp({ isNewTraining, isEdited }) {
         {userTrainings?.length < 1 && !isLoading && (
           <div className="user-no-trainings">
             <h2>You have no trainings yet, create your first </h2>
-            <i class="bx bx-wink-smile"></i>
+            <i className="bx bx-wink-smile"></i>
           </div>
         )}
         {isError && (
           <div className={"user-no-trainings"}>
             <h2>Failed to fetch your trainings</h2>
-            <i class="bx bx-confused"></i>
+            <i className="bx bx-confused"></i>
           </div>
         )}
         {!isNewTraining &&
@@ -80,6 +80,7 @@ export default function UserTrainingsComp({ isNewTraining, isEdited }) {
           userTrainings?.map((training) => {
             return (
               <TrainingItem
+                key={training.id}
                 item={training}
                 isUserTraining={true}
                 onShowDetails={onShowDetails}
@@ -96,7 +97,7 @@ export default function UserTrainingsComp({ isNewTraining, isEdited }) {
             style={{ textDecoration: "none", color: "inherit" }}
           >
             <div className={"create-training"}>
-              <i class="bx bx-tennis-ball"></i>
+              <i className="bx bx-tennis-ball"></i>
               {!isLoading && <h3>Create training</h3>}
             </div>
           </Link>

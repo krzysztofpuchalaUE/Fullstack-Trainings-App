@@ -430,7 +430,7 @@ export default function NewTrainingForm({ isEdit }) {
                   className={`description-button`}
                 >
                   Set description
-                  <i class="bx bx-comment-minus"></i>
+                  <i className="bx bx-comment-minus"></i>
                 </button>
                 {showDescription && (
                   <div>
@@ -462,7 +462,7 @@ export default function NewTrainingForm({ isEdit }) {
               {!send && !postCustomTrainingError && editLink && "Edit"}
               {send && !postCustomTrainingError && "Success"}
               {postCustomTrainingError && "Failed to crate training"}
-              <i class="bx bxs-send"></i>
+              <i className="bx bxs-send"></i>
             </button>
           </div>
           <div className={"form-right"}>
@@ -533,7 +533,7 @@ export default function NewTrainingForm({ isEdit }) {
         <div className="custom-training-form--image"></div>
         {image && (
           <button className="delete-image" onClick={() => setImage(null)}>
-            <i class="bx bx-repost"></i>
+            <i className="bx bx-repost"></i>
           </button>
         )}
       </div>
