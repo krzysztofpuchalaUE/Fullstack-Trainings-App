@@ -128,7 +128,7 @@ export default function TrainingItem({
     }
   };
 
-  const img = `http://localhost:8800/uploads/${encodeURIComponent(item?.icon)}`;
+  const img = item?.icon;
 
   return (
     <div
