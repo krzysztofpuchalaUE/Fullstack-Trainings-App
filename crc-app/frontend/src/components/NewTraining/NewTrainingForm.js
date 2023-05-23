@@ -184,6 +184,8 @@ export default function NewTrainingForm({ isEdit }) {
       img = image;
     }
 
+    console.log(image);
+
     if (formIsValid) {
       const formData = new FormData();
 
