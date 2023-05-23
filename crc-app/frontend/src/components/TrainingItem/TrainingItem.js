@@ -128,7 +128,7 @@ export default function TrainingItem({
     }
   };
 
-  const img = `http://localhost:8800/uploads/${encodeURIComponent(item?.icon)}`;
+  const img = item?.icon;
 
   return (
     <div
@@ -148,7 +148,7 @@ export default function TrainingItem({
         src={
           isCreate && newTrainingItemCtx.image !== null
             ? URL.createObjectURL(newTrainingItemCtx.image)
-            : item?.icon !== null
+            : item?.icon !== undefined
             ? img
             : ""
         }
