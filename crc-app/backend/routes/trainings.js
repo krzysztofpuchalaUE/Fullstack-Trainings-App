@@ -95,23 +95,26 @@ router.post(
     const trainerData = await queries.getUserByEmail(email);
     const { user_first_name, user_last_name, id: trainerId } = trainerData[0];
     const img = req.file ? req.file : null;
+    let imgUrl;
 
-    const storageRef = ref(
-      storage,
-      `images/${req.file.originalname + "    " + Date.now()}`
-    );
+    if (req.file !== undefined) {
+      const storageRef = ref(
+        storage,
+        `images/${req.file.originalname + "    " + Date.now()}`
+      );
 
-    const metadata = {
-      contentType: img.mimetype,
-    };
+      const metadata = {
+        contentType: img.mimetype,
+      };
 
-    const snapshot = await uploadBytesResumable(
-      storageRef,
-      img.buffer,
-      metadata
-    );
+      const snapshot = await uploadBytesResumable(
+        storageRef,
+        img.buffer,
+        metadata
+      );
 
-    const imgUrl = await getDownloadURL(snapshot.ref);
+      imgUrl = await getDownloadURL(snapshot.ref);
+    }
 
     let errors = {};
 
@@ -199,23 +202,26 @@ router
     const trainerData = await queries.getUserByEmail(email);
     const { user_first_name, user_last_name, id: trainerId } = trainerData[0];
     const img = req.file ? req.file : null;
+    let imgUrl;
 
-    const storageRef = ref(
-      storage,
-      `images/${req.file.originalname + "    " + Date.now()}`
-    );
+    if (req.file !== undefined) {
+      const storageRef = ref(
+        storage,
+        `images/${req.file.originalname + "    " + Date.now()}`
+      );
 
-    const metadata = {
-      contentType: img.mimetype,
-    };
+      const metadata = {
+        contentType: img.mimetype,
+      };
 
-    const snapshot = await uploadBytesResumable(
-      storageRef,
-      img.buffer,
-      metadata
-    );
+      const snapshot = await uploadBytesResumable(
+        storageRef,
+        img.buffer,
+        metadata
+      );
 
-    const imgUrl = await getDownloadURL(snapshot.ref);
+      imgUrl = await getDownloadURL(snapshot.ref);
+    }
 
     const {
       title,
