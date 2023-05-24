@@ -338,7 +338,7 @@ export default function NewTrainingForm({ isEdit }) {
               />
               {!titleIsValid && titleInputActivated && (
                 <p className="invalid-info">
-                  Training title must have at least 4 characters
+                  Training title must have at least 5 characters
                 </p>
               )}
             </div>
