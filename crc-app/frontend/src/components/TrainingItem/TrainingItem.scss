@@ -151,7 +151,6 @@
   min-width: 248px;
   left: 0px;
   bottom: 40px;
-  display: flex;
   inline-size: 150px;
   inline-size: min-content;
   overflow-wrap: break-word;
@@ -160,6 +159,7 @@
   border-radius: 10px;
   overflow: scroll;
   overflow-x: hidden;
+  white-space: normal;
 
   p:first-child {
     padding: 30px;
