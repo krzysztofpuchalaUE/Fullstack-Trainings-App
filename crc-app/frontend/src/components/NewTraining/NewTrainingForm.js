@@ -87,7 +87,8 @@ export default function NewTrainingForm({ isEdit }) {
     if (startDate.length === 0) {
       return Date.parse(inputDate) > Date.now();
     }
-    if (startDate.length > 0) return Date.parse(inputDate) > Date.now() + 1;
+    if (startDate.length > 0)
+      return Date.parse(inputDate) > Date.parse(startDate);
   });
 
   const {
